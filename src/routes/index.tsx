@@ -8,11 +8,11 @@ export default function Home() {
       <h1>Hello world!</h1>
       <Counter />
       <p>
-        Visit{" "}
-        <a href="https://start.solidjs.com" target="_blank">
-          start.solidjs.com
-        </a>{" "}
-        to learn how to build SolidStart apps.
+        The app should probably open to the sign-in page. I dont know if that means we need to make this file that system or what atm<br />
+        List of quick links (remove this later):<br />
+        <a href="Sign-In">sign-in page</a><br />
+        <a href="/dashboard">dashboard</a><br />
+        <a href="/settings">settings</a><br />
       </p>
     </main>
   );
