@@ -8,7 +8,7 @@ export function GoogleOAuth(){
         const { data } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: "http://localhost:3000",
+                redirectTo: "http://localhost:3000/about",
                 queryParams: {
                 access_type: 'offline',
                 prompt: 'consent',
