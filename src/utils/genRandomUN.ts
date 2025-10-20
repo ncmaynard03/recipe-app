@@ -2,7 +2,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-export function generateRandomUsername() {
+export function generateRandomUsername(): string {
 
     const adjFilePath: string = path.resolve(__dirname, "../assets/names/cooking-adj.txt");
     const nounFilePath: string = path.resolve(__dirname, "../assets/names/cooking-noun.txt");
