@@ -1,7 +1,7 @@
 import { supabase } from "~/supabase/supabase-client";
 import "../../styling/google-btn.css"
 import GoogleBtn from "~/assets/googlebtn.png"
-import {addNewUser} from "~/supabase/supabase-queries";
+
 
 export function GoogleOAuth(){
     
@@ -16,7 +16,6 @@ export function GoogleOAuth(){
                 },
             },
         });
-
     };
 
     return (
