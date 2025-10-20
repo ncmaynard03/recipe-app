@@ -1,6 +1,5 @@
 import { Title } from "@solidjs/meta";
 import { HttpStatusCode } from "@solidjs/start";
-
 //Set of random 404 pages to serve
 //(Mostly this is practice for me to learn what Im doing)
 function RecipeLost404() {
