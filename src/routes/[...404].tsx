@@ -1,11 +1,12 @@
 import { Title } from "@solidjs/meta";
 import { HttpStatusCode } from "@solidjs/start";
+
 //Set of random 404 pages to serve
 //(Mostly this is practice for me to learn what Im doing)
 function RecipeLost404() {
   return (
     <>
-      <h1 class="text-6xl font-bold mb-4">4🍳4</h1>
+      <h1>4🍳4</h1>
       <p>Oops! Looks like this recipe got lost in the oven.</p>
     </>
   );
@@ -14,7 +15,7 @@ function RecipeLost404() {
 function BurntToast404() {
   return (
     <>
-      <h1 class="text-6xl font-bold mb-4">404</h1>
+      <h1>404</h1>
       <p>Uh oh… you've toasted the wrong page! 🍞</p>
     </>
   );
@@ -23,7 +24,7 @@ function BurntToast404() {
 function EmptyPlate404() {
   return (
     <>
-      <h1 class="text-6xl font-bold mb-4">404</h1>
+      <h1>404</h1>
       <p>Nothing served here. 🍽️</p>
     </>
   );
@@ -32,7 +33,7 @@ function EmptyPlate404() {
 function BrokenEgg404() {
   return (
     <>
-      <h1 class="text-6xl font-bold mb-4">4🥚4</h1>
+      <h1>4🥚4</h1>
       <p>Yolk's on us - this page doesn't exist!</p>
     </>
   );
@@ -41,7 +42,7 @@ function BrokenEgg404() {
 function SpilledMilk404() {
   return (
     <>
-      <h1 class="text-6xl font-bold mb-4">404</h1>
+      <h1>404</h1>
       <p>404 - No use crying over spilled pages. 🥛</p>
     </>
   );
@@ -50,7 +51,7 @@ function SpilledMilk404() {
 function CardLost404() {
   return (
     <>
-      <h1 class="text-6xl font-bold mb-4">404</h1>
+      <h1>404</h1>
       <p>This recipe card fell out of the cookbook. 📄</p>
     </>
   );
@@ -59,8 +60,8 @@ function CardLost404() {
 function KitchenClosed404() {
   return (
     <>
-      <h1 class="text-6xl font-bold mb-4 text-white">404</h1>
-      <p class="text-white">The kitchen is closed for the night. 🌙</p>
+      <h1>404</h1>
+      <p>The kitchen is closed for the night. 🌙</p>
     </>
   );
 }
@@ -74,14 +75,14 @@ export default function NotFound() {
     BrokenEgg404,
     SpilledMilk404,
     CardLost404,
-    KitchenClosed404,
+    KitchenClosed404
   ];
 
   const randomIndex = Math.floor(Math.random() * variants.length);
   const Selected404 = variants[randomIndex];
 
   return (
-    <main class="min-h-screen flex flex-col justify-center items-center text-center bg-amber-50 p-6">
+    <main>
       <Title>Not Found</Title>
       <HttpStatusCode code={404} />
       <Selected404 />
