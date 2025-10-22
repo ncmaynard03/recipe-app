@@ -13,6 +13,7 @@ export default function Home() {
         Hello world!
       </h1>
       <GoogleOAuth />
+      <Counter />
       <p>
         The app should probably open to the sign-in page. I dont know if that means we need to make this file that system or what atm<br />
         List of quick links (remove this later):<br />
