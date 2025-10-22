@@ -1,19 +1,91 @@
 import { Title } from "@solidjs/meta";
 import { HttpStatusCode } from "@solidjs/start";
 
+//Set of random 404 pages to serve
+//(Mostly this is practice for me to learn what Im doing)
+function RecipeLost404() {
+  return (
+    <>
+      <h1>4🍳4</h1>
+      <p>Oops! Looks like this recipe got lost in the oven.</p>
+    </>
+  );
+}
+
+function BurntToast404() {
+  return (
+    <>
+      <h1>404</h1>
+      <p>Uh oh… you've toasted the wrong page! 🍞</p>
+    </>
+  );
+}
+
+function EmptyPlate404() {
+  return (
+    <>
+      <h1>404</h1>
+      <p>Nothing served here. 🍽️</p>
+    </>
+  );
+}
+
+function BrokenEgg404() {
+  return (
+    <>
+      <h1>4🥚4</h1>
+      <p>Yolk's on us - this page doesn't exist!</p>
+    </>
+  );
+}
+
+function SpilledMilk404() {
+  return (
+    <>
+      <h1>404</h1>
+      <p>404 - No use crying over spilled pages. 🥛</p>
+    </>
+  );
+}
+
+function CardLost404() {
+  return (
+    <>
+      <h1>404</h1>
+      <p>This recipe card fell out of the cookbook. 📄</p>
+    </>
+  );
+}
+
+function KitchenClosed404() {
+  return (
+    <>
+      <h1>404</h1>
+      <p>The kitchen is closed for the night. 🌙</p>
+    </>
+  );
+}
+
+//This serves the random 404s
 export default function NotFound() {
+  const variants = [
+    RecipeLost404,
+    BurntToast404,
+    EmptyPlate404,
+    BrokenEgg404,
+    SpilledMilk404,
+    CardLost404,
+    KitchenClosed404
+  ];
+
+  const randomIndex = Math.floor(Math.random() * variants.length);
+  const Selected404 = variants[randomIndex];
+
   return (
     <main>
       <Title>Not Found</Title>
       <HttpStatusCode code={404} />
-      <h1>Page Not Found</h1>
-      <p>
-        Visit{" "}
-        <a href="https://start.solidjs.com" target="_blank">
-          start.solidjs.com
-        </a>{" "}
-        to learn how to build SolidStart apps.
-      </p>
+      <Selected404 />
     </main>
   );
 }
