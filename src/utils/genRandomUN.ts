@@ -1,18 +1,11 @@
-
-import * as fs from 'fs';
-import * as path from 'path';
+import adjectives from "~/assets/names/cooking-adj.txt?raw"
+import nouns from "~/assets/names/cooking-noun.txt?raw"
 
 //Function generates a random username from two text files, UN format: "AdjectiveNounNumber"
 export function generateRandomUsername(): string {
 
-    const adjFilePath: string = path.resolve(__dirname, "../assets/names/cooking-adj.txt");
-    const nounFilePath: string = path.resolve(__dirname, "../assets/names/cooking-noun.txt");
-
-    const adjFileContent: string = fs.readFileSync(adjFilePath, 'utf-8');
-    const nounFileContent: string = fs.readFileSync(nounFilePath, 'utf-8');
-
-    const cookingAdjs: string[] = adjFileContent.replace(/\r/g, "").split('\n');
-    const cookingNouns: string[] = nounFileContent.replace(/\r/g, "").split('\n');
+    const cookingAdjs: string[] = adjectives.replace(/\r/g, "").split('\n');
+    const cookingNouns: string[] = nouns.replace(/\r/g, "").split('\n');
 
     const adj: string = cookingAdjs[Math.floor(Math.random() * cookingAdjs.length)];
     const noun: string = cookingNouns[Math.floor(Math.random() * cookingNouns.length)];
