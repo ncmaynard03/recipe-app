@@ -1,13 +1,13 @@
 import { Title } from "@solidjs/meta";
 
-export default function Settings() {
+export default function AccountDelete() {
     return (
         <main>
             <Title>
-                About
+                Delete Account
             </Title>
             <h1>
-                About
+                No dont leave youre so sexy
             </h1>
         </main>
     );

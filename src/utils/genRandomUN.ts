@@ -2,7 +2,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-//Function generates a random username from two text files, UN format: "AdjNounNumber"
+//Function generates a random username from two text files, UN format: "AdjectiveNounNumber"
 export function generateRandomUsername(): string {
 
     const adjFilePath: string = path.resolve(__dirname, "../assets/names/cooking-adj.txt");
