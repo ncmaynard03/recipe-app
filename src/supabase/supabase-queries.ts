@@ -20,13 +20,17 @@ export async function ensureUserExists() {
     }
 
     if (existingUser){
-        return existingUser;
+        return existingUser.username;
     }
 
     const newUserUN = generateRandomUsername();
-    await supabase
+    const { error: userInsertError } = await supabase
     .from("users")
     .insert({"username": newUserUN, "user_id": userID});
+
+    if (userInsertError){
+        console.log("The following error occurred:", userInsertError);
+    }
     return newUserUN;
 }
 
