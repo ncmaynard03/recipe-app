@@ -3,7 +3,6 @@ Airy
 Appetizing
 Aromatic
 Bitter
-Blah
 Bland
 Blistered
 Bold
@@ -16,9 +15,8 @@ Candied
 Caramelized
 Charred
 Chewy
-Chocolate
+Chocolatey
 Citrusy
-Cloudy
 Colorful
 Comforting
 Cooling
@@ -44,7 +42,6 @@ Fizzy
 Flaky
 Flavorful
 Flavorsome
-Flowing
 Foamy
 Fragile
 Fragrant
@@ -71,7 +68,6 @@ Jammy
 Juicy
 Light
 Liquified
-Lumpy
 Luscious
 Lush
 Marbled
@@ -85,7 +81,6 @@ Nutty
 Oily
 Opaque
 Organic
-Overpowering
 Peppery
 Perfumed
 Petite
@@ -104,7 +99,6 @@ Prickly
 Pulpy
 Pungent
 Pureed
-Rancid
 Reduced
 Refreshing
 Rich
@@ -143,7 +137,6 @@ Spiced
 Spicy
 Spongy
 Sprinkled
-Stale
 Steamed
 Sticky
 Stiff
@@ -183,12 +176,10 @@ Vibrant
 Vinegary
 Warm
 Waxy
-Weak
 Whipped
 Wholesome
 Wholesome
 Woody
-Yucky
 Yummy
 Zesty
 Zingy
