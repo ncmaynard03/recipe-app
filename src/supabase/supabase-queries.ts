@@ -9,6 +9,7 @@ export async function ensureUserExists() {
         return null;
     }
     
+    //Retrieve single instance of user in public users table
     const { data: existingUser, error: retrievalErr } = await supabase
     .from("users")
     .select("username")
@@ -19,10 +20,12 @@ export async function ensureUserExists() {
         console.log("There was an error contacting Supabase:", retrievalErr.message);
     }
 
+    //Returns existing user's username
     if (existingUser){
         return existingUser.username;
     }
 
+    //Generates random username for new user, inserts the username and userID, and returns username.
     const newUserUN = generateRandomUsername();
     const { error: userInsertError } = await supabase
     .from("users")
@@ -34,6 +37,7 @@ export async function ensureUserExists() {
     return newUserUN;
 }
 
+
 //Retrieves username for the current user
 export async function getUserName(){
     const userID = await getCurrentUserID();
@@ -44,6 +48,7 @@ export async function getUserName(){
 
     return userName;
 }
+
 
 //Gets the user ID for the current user
 export async function getCurrentUserID(){
@@ -61,12 +66,34 @@ export async function getCurrentUserID(){
     return userID;
 }
 
-//Returns a litst of public recipes
+
+//Retrieves the id, image path, title, and author of all public recipes
 export async function getPublicRecipes(){
+    const {data: recipeInfo, error} = await supabase
+    .from("recipes")
+    .select("recipe_id, recipe_image_path, recipe_title, author_id")
+    .eq("is_public", true);
 
+    if (error){
+        console.log("There was an error retrieving recipe info.");
+        return null;
+    }
+
+    return recipeInfo;
 }
 
-//Returns a list of user-owned recipes
-export async function getUserRecipes(){
+//Retrieves the id, image path, title, and author of all user recipes
+export async function getUserRecipes(user_id: string){
+    const {data: recipeInfo, error} = await supabase
+    .from("recipes")
+    .select("recipe_id, recipe_image_path, recipe_title, author_id")
+    .eq("author_id", user_id)
 
+    if (error){
+        console.log("There was an error retrieving recipe info.");
+        return null;
+    }
+
+    return recipeInfo;
 }
+
