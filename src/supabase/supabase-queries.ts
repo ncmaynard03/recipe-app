@@ -97,3 +97,48 @@ export async function getUserRecipes(user_id: string){
     return recipeInfo;
 }
 
+
+/*
+UPDATES
+*/
+
+//Checks if username is not already existing in the databasse
+export async function checkUniqueUsername(username: string){
+    const {data, error } = await supabase
+    .from("users")
+    .select("username")
+    .eq("username", username)
+    .maybeSingle();
+
+    if (error){
+        console.log("There was an error retrieving information");
+    }
+
+    if(data){
+        return false;
+    }
+
+    return true;
+}
+
+export async function updateUsername(newUsername: string){
+    const userID = await getCurrentUserID();
+
+    if (userID){
+
+        const uniqueName = await checkUniqueUsername(newUsername);
+
+        if (uniqueName){
+            const {error} = await supabase
+            .from("users")
+            .update({"username": newUsername})
+            .eq('user_id', userID)
+
+            if (error){
+                console.log("There was an error updating the database");
+                return;
+            }
+        }
+    }
+}
+
