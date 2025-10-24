@@ -2,6 +2,7 @@ import { Title } from "@solidjs/meta";
 import { onMount, createSignal } from "solid-js";
 import { supabase } from "~/supabase/supabase-client";
 import * as supabaseFn from "~/supabase/supabase-queries";
+import "./index.css";
 
 export default function Dashboard() {
     const [username, setUsername] = createSignal("")
@@ -12,11 +13,19 @@ export default function Dashboard() {
 
     
   return (
-    <main>
-      <Title>My Recipe Box</Title>
-      <h4>Dashboard, style as needed, pushed for reroute</h4>
-      <h5>Testing: Hello {username()}</h5>
+    <main class="dashboard">
+      <div class="main-region">
+        <div class="recipe-content">
+        </div>
+        <div class="task-bar">
+        </div>
+      </div>
+      <div class="side-region">
+        <div class="search-bar">
+        </div>
+        <div class="recipe-scrolling">
+        </div>
+      </div>
     </main>
-    
   );
 }
