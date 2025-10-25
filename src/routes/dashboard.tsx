@@ -2,7 +2,7 @@ import { Title } from "@solidjs/meta";
 import { onMount, createSignal } from "solid-js";
 import { supabase } from "~/supabase/supabase-client";
 import * as supabaseFn from "~/supabase/supabase-queries";
-import "./index.css";
+import "../styling/index.css";
 
 export default function Dashboard() {
     const [username, setUsername] = createSignal("")

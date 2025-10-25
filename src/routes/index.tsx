@@ -1,6 +1,6 @@
 import { Title } from "@solidjs/meta";
 import Counter from "~/components/Counter";
-import "./index.css";
+import "../styling/index.css";
 import { GoogleOAuth } from "~/components/auth/GoogleOAuth";
 
 export default function Home() {
