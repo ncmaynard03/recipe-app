@@ -3,10 +3,17 @@ import "../../styling/signincomp.css"
 
 export default function SignInComp() {
   return (
-    <div class="signin-pane">
-        <p>We've simplified the signing up and login experience for you!</p>
-        <p>Click the button below to sign up/in using your Google account</p>
-        <GoogleOAuth />
-    </div>
+    <main class="signin-pane">
+        <p id="welcome">Welcome!</p>
+        <p id="simp-lbl">We've simplified the sign up and login experience for you!</p>
+        <div class="google-cont">
+          <div id='google-btn'>
+          <GoogleOAuth/>
+          </div>
+          <p id="google-lbl">Just click the button above to sign up/in using your Google account!</p>
+        </div>
+        
+
+    </main>
   );
 }
