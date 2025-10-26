@@ -1,28 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Rampart+One&family=Shadows+Into+Light&display=swap');
 .main-page{
+    min-height: 100vh;
 
 }
 
 .first-section-cont{
     display: flex;
     flex-direction: row;
-    background-color: aqua;
     width: 100%;
-    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background-color: mintcream;
+    /* align-items: center; */
 }
 
+.main-page-img{
+    height: 100vh;
+}
 .main-page-img img{
-    max-height: 830px;
-    width: auto;
+    height: 100%;
+    width: 100%;
     display: block;
+    object-fit: cover;
+    z-index: 2;
 }
 
 .page-name-section{
+    flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     text-align: center;
     align-items: center;
+    gap: 5rem;
 }
 
 #page-name{
+    font-family: "Rampart One", sans-serif;
+    font-size: 4.5rem;
+    color: white;
+    background-color: black;
+    width: 100%;
+    margin: 0;
+    padding: 0 0 1.5rem 0;
 
+}
+
+
+@media (max-width: 900px) {
+  .page-name-section {
+    position: absolute;
+    /* inset: 0; */
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0);
+    color: white;
+    z-index: 2;
+    margin: 0;
+  }
+
+  
+
+  
 }
