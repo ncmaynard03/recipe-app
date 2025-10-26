@@ -1,0 +1,28 @@
+.main-page{
+
+}
+
+.first-section-cont{
+    display: flex;
+    flex-direction: row;
+    background-color: aqua;
+    width: 100%;
+    align-items: center;
+}
+
+.main-page-img img{
+    max-height: 830px;
+    width: auto;
+    display: block;
+}
+
+.page-name-section{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+#page-name{
+
+}
