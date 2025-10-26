@@ -1,27 +1,21 @@
 import { Title } from "@solidjs/meta";
-import Counter from "~/components/Counter";
-import "../styling/index.css";
-import { GoogleOAuth } from "~/components/auth/GoogleOAuth";
+import SignInComp from "~/components/auth/SignInComp";
+import MainImg from "~/assets/main-img.jpg"
 
-export default function Home() {
-  return (
-    <main>
-      <Title>
-        Hello World
-      </Title>
-      <h1>
-        Hello world!
-      </h1>
-      <GoogleOAuth />
-      <p>
-        The app should probably open to the sign-in page. I dont know if that means we need to make this file that system or what atm<br />
-        List of quick links (remove this later):<br />
-        <a href="/signin">sign-in</a><br />
-        <a href="/newuser">new user</a><br />
-        <a href="/dashboard">dashboard</a><br />
-        <a href="/settings">settings</a><br />
-        <a href="/accountdelete">delete account</a><br />
-      </p>
+
+export default function MainPage() {
+  return ( 
+    <main class='main-page'>
+      <Title>Capstone Cooking</Title>
+      <div class='first-section'>
+        <div class='main-page-img'>
+          <img src={MainImg}/>
+        </div>
+        <div class='page-name-section'>
+          <p id='page-name'>capstone cooking</p>
+        </div>
+        <SignInComp />
+      </div>
     </main>
   );
 }
