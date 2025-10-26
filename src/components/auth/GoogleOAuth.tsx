@@ -1,6 +1,5 @@
 import { supabase } from "~/supabase/supabase-client";
-import "../../styling/google-btn.css"
-import GoogleBtn from "~/assets/googlebtn.png"
+import GoogleBtn from "~/assets/web_dark_sq_ctn@2x.png"
 
 
 export function GoogleOAuth(){
