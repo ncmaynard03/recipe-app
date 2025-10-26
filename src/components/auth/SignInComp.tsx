@@ -1,4 +1,5 @@
-import { GoogleOAuth } from "~/components/auth/GoogleOAuth";
+import { GoogleOAuth } from "~/components/auth/GoogleOAuth"
+import "../../styling/signincomp.css"
 
 export default function SignInComp() {
   return (
