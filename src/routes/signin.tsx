@@ -1,5 +1,5 @@
 import { Title } from "@solidjs/meta";
-import "./signin.css";
+//import "./signin.css"; currently this isnt on the repo
 
 export default function SignIn() {
     return (

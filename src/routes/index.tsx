@@ -1,5 +1,4 @@
 import { Title } from "@solidjs/meta";
-import Counter from "~/components/Counter";
 import "../styling/index.css";
 import { GoogleOAuth } from "~/components/auth/GoogleOAuth";
 
