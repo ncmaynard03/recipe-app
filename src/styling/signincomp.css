@@ -8,16 +8,16 @@
     max-width: 400px;
     padding: 2rem;
     margin: 0 auto;
-    box-shadow: 15px 20px 25px 5px;
-    gap: 1.5rem;
+    box-shadow: 20px 25px 40px 5px;
+    gap: 1rem;
     background-color: white;
 }
 
 .google-cont{
     display: flex;
     flex-direction: column;
-    margin: 0.75rem 0 0 0;
-    gap: 2rem;
+    margin:0;
+    gap: 1.2rem;
 }
 
 #google-lbl{
@@ -35,16 +35,22 @@
 
 p{
     color: black;
-    font-family: "Caprasimo", serif;
+    font-family: "Rowdies", serif;
     font-weight: 300;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    text-shadow: 2px 4px 2px lightgray;
+}
+
+#simp-cont{
+    margin: 5% 0 0 0;
 }
 
 #simp-lbl{
+    font-family: "Caprasimo", sans-serif;
     font-weight: 400;
-    font-size: 1.7rem;
+    font-size: 1.8rem;
     text-shadow: 2px 4px 2px lightgray;
-    letter-spacing: 5px;
+    letter-spacing: 6px;
 }
 
 #welcome{
