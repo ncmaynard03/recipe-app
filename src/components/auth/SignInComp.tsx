@@ -5,7 +5,9 @@ export default function SignInComp() {
   return (
     <main class="signin-pane">
         <p id="welcome">Welcome!</p>
-        <p id="simp-lbl">We've simplified the sign up and login experience for you!</p>
+        <div id="simp-cont">
+          <p id="simp-lbl">We've simplified the sign up and login experience for you!</p>
+        </div>
         <div class="google-cont">
           <div id='google-btn'>
           <GoogleOAuth/>
