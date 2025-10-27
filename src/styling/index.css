@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Rampart+One&family=Shadows+Into+Light&display=swap');
 .main-page{
     min-height: 100vh;
-
 }
 
 .first-section-cont{
@@ -17,6 +16,7 @@
 .main-page-img{
     height: 100vh;
 }
+
 .main-page-img img{
     height: 100%;
     width: 100%;
@@ -32,7 +32,11 @@
     justify-content: flex-start;
     text-align: center;
     align-items: center;
-    gap: 5rem;
+    gap: 15%;
+}
+
+#simp-cont{
+    
 }
 
 #page-name{
@@ -60,9 +64,10 @@
     color: white;
     z-index: 2;
     margin: 0;
+    gap: 3rem;
   }
-
-  
-
   
 }
+
+
+
