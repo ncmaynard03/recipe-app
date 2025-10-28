@@ -7,7 +7,7 @@
     border: 1px solid black;
     max-width: 400px;
     padding: 2rem;
-    margin: 0 auto;
+    margin: 0px 100px 50px 100px;
     box-shadow: 20px 25px 40px 5px;
     gap: 1rem;
     background-color: white;
@@ -62,7 +62,8 @@ p{
     text-decoration: underline;
 }
 
-@media (max-width: 900px) {
+
+@media (max-width: 1200px) {
     .signin-pane {
         display: flex;
         flex-direction: column;
