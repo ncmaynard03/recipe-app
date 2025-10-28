@@ -14,7 +14,9 @@ export default function MainPage() {
         </div>
         <div class='page-name-section'>
           <p id='page-name'>capstone cooking</p>
-          <SignInComp />
+          <div id='signin-with-back-cont'>
+            <SignInComp />
+          </div>
         </div>
       </div>
     </main>
