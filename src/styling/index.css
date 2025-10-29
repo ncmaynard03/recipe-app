@@ -39,6 +39,32 @@
 }
 
 
+.dashboard {
+    position: fixed;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    grid-template-rows: 1fr;
+    height: 100vh;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    text-align: unset;
+    overflow: hidden;
+}
+
+.dashboard-main-region {
+    display: grid;
+    grid-template-columns: 26fr 1fr;
+    background-color: aqua;
+}
+
+.dashboard-side-region {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    background-color: blueviolet;
+}
+
+
 #page-name{
     font-family: "Rampart One", sans-serif;
     font-size: 4.5rem;

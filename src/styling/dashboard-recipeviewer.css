@@ -1,0 +1,104 @@
+.recipe-viewer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: blue;
+    overflow: hidden;
+}
+
+.recipe-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 80%;
+    max-width: 600px;
+}
+
+.recipe-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    position: relative;
+}
+
+.recipe-image button {
+    border: none;
+    background-color: #333;
+    color: white;
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.recipe-image button:hover {
+    background-color: #555;
+}
+
+.recipe-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.recipe-text {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: aqua;
+}
+
+.recipe-text-toolbar {
+    display: flex;
+    justify-content: flex-start;
+    background-color: white;
+}
+
+.recipe-text-toolbar button {
+    border: none;
+    background-color: #333;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.recipe-text-textarea {
+    width: 100%;
+    min-height: 150px;
+    resize: vertical;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background-color: #222;
+    color: white;
+}
+
+.recipe-card {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.recipe-card button {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.recipe-card button:hover {
+    background-color: #555;
+}
