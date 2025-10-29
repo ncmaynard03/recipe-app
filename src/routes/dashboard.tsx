@@ -2,7 +2,7 @@ import { Title } from "@solidjs/meta";
 import { onMount, createSignal } from "solid-js";
 import { supabase } from "~/supabase/supabase-client";
 import * as supabaseFn from "~/supabase/supabase-queries";
-import "../styling/index.css";
+import "../styling/login-page/index.css";
 
 import TaskBar from "~/components/dashboard-taskbar";
 import RecipeViewer from "~/components/dashboard-recipeviewer";
