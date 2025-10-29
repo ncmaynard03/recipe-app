@@ -1,7 +1,7 @@
 import { Title } from "@solidjs/meta";
 import SignInComp from "~/components/auth/SignInComp";
 import MainImg from "~/assets/cropped-main.jpg"
-import "../styling/index.css"
+import "../styling/login-page/index.css";
 
 
 export default function MainPage() {
