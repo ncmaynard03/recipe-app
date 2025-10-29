@@ -9,13 +9,26 @@ export interface RecipeNode {
     name: string;
     type: NodeType;
     parentId: string | null;
+    recipeCards?: RecipeCard[];
     content?: string;
+}
+
+export interface RecipeCard {
+    id: string;
+    title: string;
+    ingredientRows: IngredientRow[];
+    instructions: string;
+}
+
+export interface IngredientRow {
+    id: string;
+    ingredient: string;
+    quantity: string;
 }
 
 export const nodes: RecipeNode[] = [
     { id: "root", name: "Root", type: "folder", parentId: null }
 ];
-
 
 export function loadNodes() {
     if (fs.existsSync(file)) {

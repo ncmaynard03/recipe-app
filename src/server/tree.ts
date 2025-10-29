@@ -1,7 +1,7 @@
 import { loadNodes, RecipeNode } from "./data";
 
 export function buildTree(parentId: string | null = "root"): RecipeNode[] {
-    console.log("Building tree for parentId:", parentId);
+    // console.log("Building tree for parentId:", parentId);
 
     const nodes = loadNodes();
     // console.log("Current nodes:", nodes);

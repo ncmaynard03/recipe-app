@@ -31,11 +31,15 @@ export function getNodeByName(name: string): RecipeNode | undefined {
 }
 
 export function updateNode(id: string, updates: Partial<RecipeNode>): RecipeNode | undefined {
-    const node = getNode(id);
-    if (node) {
-        Object.assign(node, updates);
-    }
-    return node;
+    const nodes = loadNodes();
+    const index = nodes.findIndex((n: { id: string }) => n.id === id);
+    if (index === -1) return undefined;
+
+    const node = nodes[index];
+    const updated = Object.assign(node, updates);
+    nodes[index] = updated;
+    saveNodes(nodes);
+    return updated;
 }
 
 export function deleteNode(id: string): boolean {
@@ -43,9 +47,20 @@ export function deleteNode(id: string): boolean {
     const index = nodes.findIndex((node: { id: string; }) => node.id === id);
     if (index !== -1) {
         nodes.splice(index, 1);
+        saveNodes(nodes);
         return true;
     }
     return false;
+}
+
+export function changeParent(id: string, newParentId: string | null): RecipeNode | undefined {
+    const nodes = loadNodes();
+    const index = nodes.findIndex((n: { id: string }) => n.id === id);
+    if (index === -1) return undefined;
+
+    nodes[index].parentId = newParentId;
+    saveNodes(nodes);
+    return nodes[index];
 }
 
 export function getChildren(parentId: string): RecipeNode[] {
