@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import "../styling/dashboard-searchbar.css";
+import "../../styling/dashboard/dashboard-searchbar.css";
 
 export default function RecipeSearchbar(){
     return(

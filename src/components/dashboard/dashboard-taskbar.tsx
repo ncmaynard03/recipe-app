@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import "../styling/dashboard-taskbar.css";
+import "../../styling/dashboard/dashboard-taskbar.css";
 
 export default function TaskBar(){
     return(

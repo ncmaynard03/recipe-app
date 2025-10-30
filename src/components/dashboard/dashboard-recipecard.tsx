@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import "../styling/dashboard-recipeviewer.css";
+import "../../styling/dashboard/dashboard-recipeviewer.css";
 
 export default function RecipeCard(){
     return(        

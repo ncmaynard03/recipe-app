@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import "../styling/dashboard-recipebrowser.css";
+import "../../styling/dashboard/dashboard-recipebrowser.css";
 
 export default function RecipeBrowser(){
     return (

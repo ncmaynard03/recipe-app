@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import "../styling/dashboard-recipeviewer.css";
+import "../../styling/dashboard/dashboard-recipeviewer.css";
 
 import RecipeImage from "./dashboard-recipeimage";
 import RecipeText from "./dashboard-recipetext";
