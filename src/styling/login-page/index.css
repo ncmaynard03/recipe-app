@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Rampart+One&family=Shadows+Into+Light&display=swap');
+html, body {
+    overflow: hidden;
+}
+
 .main-page{
     min-height: 100vh;
 }
