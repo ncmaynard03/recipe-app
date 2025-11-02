@@ -14,6 +14,16 @@ export function IngredientsForm(){
         setIngredients([...ingredients, {quantity: "", units: "", ingredientName: ""}]);
     }
 
+    function deleteNewIngredient(index: number){
+        if(ingredients.length > 1){
+            setIngredients(ingredients.filter((_, ingIndex) => ingIndex !== index));
+        }
+        else{
+            return
+        }
+
+    }
+
     //Updates the values stored in array of ingredients if user changes value in text fields or dropdown
     function updateIngredient( index: number, field: "quantity" | "units" | "ingredientName", value: string){
         setIngredients(index, field, value);
@@ -29,7 +39,7 @@ export function IngredientsForm(){
                 {/* Creates initial and additional row for ingredients */}
                 <For each={ingredients}>
                     {(newIng, index) => (
-                        <NewIngredient ingredient={newIng} index={index()} onChange={updateIngredient}/>
+                        <NewIngredient ingredient={newIng} index={index()} onChange={updateIngredient} onDelete={deleteNewIngredient}/>
                     )}
                 </For>
 
