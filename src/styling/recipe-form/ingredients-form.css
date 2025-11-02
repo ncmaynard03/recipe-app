@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 8% 0;
 }
 .def_ing{
     display: flex;
@@ -10,5 +11,50 @@
 }
 
 .ing-lbl-cont label{
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.new-ing-row{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-top: 5%;
+}
+
+.ing-qty input{
+    font-size: 1.5rem;
+    width: 60px;
+    text-align: center;
+    font-weight: lighter;
+}
+
+.ing-units select{
+    font-size: 1.7rem;
+    width: 125px;
+    text-align: center;
+    font-weight: lighter;
+}
+
+.ing-name input{
+    font-size: 1.5rem;
+    width: 200px;
+    text-align: center;
+
+}
+
+.ingredients-form button{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
     font-size: 2rem;
+    margin-top: 5%;
+    background-color: #6495ED;
+    color: white;
+    border: 3px solid black;
+}
+
+.ingredients-form button:hover{
+    cursor: pointer;
 }
