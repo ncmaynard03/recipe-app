@@ -28,8 +28,8 @@ export function IngredientsForm(){
                 
                 {/* Creates initial and additional row for ingredients */}
                 <For each={ingredients}>
-                    {(newIng, i) => (
-                        <NewIngredient ingredient={newIng} index={i()} onChange={updateIngredient}/>
+                    {(newIng, index) => (
+                        <NewIngredient ingredient={newIng} index={index()} onChange={updateIngredient}/>
                     )}
                 </For>
 
