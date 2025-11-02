@@ -1,5 +1,6 @@
 import { IngredientsForm } from "./IngredientsForm"
 import { InstructionsForm } from "./InstructionsForm"
+import EmptyPlate from "~/assets/empty-plate-2.jpg"
 
 import "../../styling/recipe-form/recipe-form.css"
 
@@ -15,6 +16,9 @@ export function RecipeForm(){
                 <p>Create New Recipe</p>
             </div>
             <div class="recipe-image">
+                <div class="recipe-img-cont">
+                    <img src={EmptyPlate} class="def-img"/>
+                </div>
                 <label id="image-label">Recipe Image</label>
                 <input type="file" accept="image/*"/>
                 {/* Code for user to upload image in form */}
