@@ -11,7 +11,7 @@
 }
 
 .ing-lbl-cont label{
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: bold;
     text-decoration: underline;
 }
@@ -24,29 +24,29 @@
 }
 
 .ing-qty input{
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     width: 60px;
     text-align: center;
     font-weight: lighter;
 }
 
 .ing-units select{
-    font-size: 1.7rem;
+    font-size: 1.4rem;
     width: 125px;
     text-align: center;
     font-weight: lighter;
 }
 
 .ing-name input{
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     width: 200px;
     text-align: center;
 
 }
 
 .ingredients-form button{
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     font-size: 2rem;
     margin-top: 5%;
