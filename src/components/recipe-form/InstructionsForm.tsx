@@ -1,18 +1,18 @@
-import { createSignal, For } from "solid-js";
+import { createSignal, For, Index } from "solid-js";
+import { createStore } from "solid-js/store"
 import "../../styling/recipe-form/instructions-form.css"
 
 export function InstructionsForm(){
 
-    const [instructions, setInstructions] = createSignal([""]);
+    // const [instructions, setInstructions] = createSignal([""]);
+    const [instructions, setInstructions] = createStore([""]);
     
     function addNewInstruction(){
-        setInstructions([...instructions(), ""]);
+        setInstructions(instructions.length, "");
     }
 
     function updateInstruction( index: number, value: string){
-        const updatedIns = [...instructions()];
-        updatedIns[index] = value;
-        setInstructions(updatedIns);
+        setInstructions(index, value);
     }
 
     return(
@@ -23,11 +23,11 @@ export function InstructionsForm(){
 
             {/* Creates inital and addtional recipe instructions/steps */}
             <div class="def_ins">
-                <For each={instructions()}>
+                <Index each={instructions}>
                     {(step, index) => (
-                        <textarea placeholder={`Step ${index() + 1}`} value={step} onInput={(event) => updateInstruction(index(), event.currentTarget.value)}/>
+                        <textarea placeholder={`Step ${index + 1}`} value={step()} onInput={(event) => updateInstruction(index, event.currentTarget.value)}/>
                     )}
-                </For>
+                </Index>
 
             </div>
             <button id="add-ins-btn" type="button" onClick={addNewInstruction}>+</button>
