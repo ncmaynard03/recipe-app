@@ -21,6 +21,8 @@
     flex-direction: row;
     gap: 1rem;
     margin-top: 5%;
+    align-items: center;
+    justify-content: center;
 }
 
 .ing-qty input{
@@ -53,8 +55,20 @@
     background-color: #6495ED;
     color: white;
     border: 3px solid black;
+    text-align: center;
 }
 
 .ingredients-form button:hover{
     cursor: pointer;
+}
+
+.delete-btn button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    color: white;
+    background-color: red;
+
 }
