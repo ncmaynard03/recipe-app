@@ -1,4 +1,4 @@
-import { IngredientsForm } from "./ingredients-form"
+import { IngredientsForm } from "./IngredientsForm"
 import "../../styling/recipe-form/recipe-form.css"
 export function RecipeForm(){
 
