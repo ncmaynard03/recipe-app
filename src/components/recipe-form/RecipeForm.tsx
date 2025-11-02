@@ -13,14 +13,17 @@ export function RecipeForm(){
     return (
         <form onSubmit={submitRecipe}>
             <div id="form-title">
-                <p>Create New Recipe</p>
+                <p>New Recipe</p>
             </div>
             <div class="recipe-image">
                 <div class="recipe-img-cont">
                     <img src={EmptyPlate} class="def-img"/>
                 </div>
+                
                 <label id="image-label">Recipe Image</label>
-                <input type="file" accept="image/*"/>
+                <div class='choose-file-cont'>
+                    <input type="file" accept="image/*"/>
+                </div>
                 {/* Code for user to upload image in form */}
             </div>
             <div class="recipe-title-section">
