@@ -3,9 +3,10 @@ export function NewIngredient( props: {
     index: number;
     onChange: (index: number, field: "quantity" | "units" | "ingredientName",
                value: string) => void;
+    onDelete: (index: number) => void;
 
 }) {
-    const { ingredient, index, onChange } = props;
+    const { ingredient, index, onChange, onDelete } = props;
 
     const usUnitsList = [
                         { value: "pounds", label: "lb(s)" },
@@ -44,6 +45,11 @@ export function NewIngredient( props: {
             {/* Ingredient Name */}
             <div class="ing-name">
                 <input type="text" value={ingredient.ingredientName} placeholder="Ingredient Name" onInput={(event) => onChange(index, "ingredientName", event.currentTarget.value)}/>
+            </div>
+
+            {/* Delete button */}
+            <div class="delete-btn">
+                <button onClick={() => onDelete(index)}>-</button>
             </div>
         </div>
     );
