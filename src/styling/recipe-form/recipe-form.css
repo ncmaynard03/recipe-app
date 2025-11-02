@@ -1,8 +1,10 @@
+
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 
 #form-title{
     display: flex;
@@ -14,12 +16,23 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-items: center;
+    gap: 0.5rem;
+    margin-top: 1%;
+
+}
+
+.recipe-title-section label{
+    font-size: 2rem;
+}
+
+.recipe-title-section input{
+    font-size: 2rem;
+    font-style: italic;
 }
 
 .recipe-img-cont{
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
     overflow: hidden;
 }
@@ -37,22 +50,29 @@ form {
     justify-content: center;
 }
 
-img.def-img{
-    scale: 70%;
-    border-radius: 50%;
-}
-
 .time-fields{
     display: flex;
     flex-direction: row;
     align-self: center;
     align-items: center;
-    justify-items: center;
+    justify-content: center;
     gap: 2rem;
+    margin: 1.5% 0;
+}
+
+.time-fields label{
+    font-size: 1.5rem;
+    
+}
+
+.time-fields input{
+    width: 50px;
+    text-align: center;
+    font-size: 1.4rem;
 }
 
 .prep-time, .cook-time{
     display: flex;
     flex-direction: row;
-    gap: 1rem;
+    gap: 0.7rem;
 }
