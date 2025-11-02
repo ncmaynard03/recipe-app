@@ -44,6 +44,13 @@ export function RecipeForm(){
             </div>
             <IngredientsForm/>
             <InstructionsForm />
+            <div class="recipe-notes">
+                <label>Recipe Notes</label>
+                <textarea></textarea>
+            </div>
+            <div id="save-recipe-btn">
+                <button type="button">Save Recipe</button>
+            </div>
         </form>
     )
 }
