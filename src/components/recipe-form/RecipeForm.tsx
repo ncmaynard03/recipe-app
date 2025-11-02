@@ -24,8 +24,8 @@ export function RecipeForm(){
                 {/* Code for user to upload image in form */}
             </div>
             <div class="recipe-title-section">
-                <label>Recipe Title</label>
                 <input type="text" id="recipe-title" name="title"/>
+                <label>(Recipe Title)</label>
             </div>
             <div class="time-fields">
                 <div class="prep-time">
