@@ -1,5 +1,5 @@
 import { Title } from "@solidjs/meta";
-import { RecipeForm } from "~/components/recipe-form/recipe-form";
+import { RecipeForm } from "~/components/recipe-form/RecipeForm";
 
 
 export default function CreateRecipe() {
