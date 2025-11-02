@@ -1,0 +1,10 @@
+.ingredients-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.def_ing{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
