@@ -27,18 +27,24 @@ export function NewIngredient( props: {
         <div class="new-ing-row">
             
             {/*Quantity*/}
-            <input type="text" value={ingredient.quantity} placeholder="Qty" onInput={(event) => onChange(index, "quantity", event.currentTarget.value)}/>
+            <div class="ing-qty">
+                <input type="text" value={ingredient.quantity} placeholder="Qty" onInput={(event) => onChange(index, "quantity", event.currentTarget.value)}/>
+            </div>
 
             {/* Units */}
-            <select value={ingredient.units} onInput={(event) => onChange(index, "units", event.currentTarget.value)}>
-                <option value="">Unit</option>
-                {usUnitsList.map((units) => (
-                    <option value={units.value}>{units.label}</option>
-                ))}
-            </select>
+            <div class="ing-units">
+                <select value={ingredient.units} onInput={(event) => onChange(index, "units", event.currentTarget.value)}>
+                    <option value="">Unit</option>
+                    {usUnitsList.map((units) => (
+                        <option value={units.value}>{units.label}</option>
+                    ))}
+                </select>       
+            </div>
 
             {/* Ingredient Name */}
-            <input type="text" value={ingredient.ingredientName} placeholder="Ingredient Name" onInput={(event) => onChange(index, "ingredientName", event.currentTarget.value)}/>
+            <div class="ing-name">
+                <input type="text" value={ingredient.ingredientName} placeholder="Ingredient Name" onInput={(event) => onChange(index, "ingredientName", event.currentTarget.value)}/>
+            </div>
         </div>
     );
     
