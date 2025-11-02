@@ -1,4 +1,6 @@
 import { IngredientsForm } from "./IngredientsForm"
+import { InstructionsForm } from "./InstructionsForm"
+
 import "../../styling/recipe-form/recipe-form.css"
 export function RecipeForm(){
 
@@ -31,6 +33,7 @@ export function RecipeForm(){
                 </div>
             </div>
             <IngredientsForm/>
+            <InstructionsForm />
         </form>
     )
 }
