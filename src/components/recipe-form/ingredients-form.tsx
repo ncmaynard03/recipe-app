@@ -1,13 +1,19 @@
-
+import { createSignal } from "solid-js";
+import "../../styling/recipe-form/ingredients-form.css";
 
 export function IngredientsForm(){
 
-    async function addNewIngredient(){
-
+    const [ingredients, setIngredients] = createSignal([{quantity: "", units: "", ingredientName: ""}]);
+    
+    function addNewIngredient(){
+        setIngredients([...ingredients(), {quantity: "", units: "", ingredientName: ""}]);
     }
+
     return (
         <div class="ingredients-form">
-            <label>Recipe Ingredients</label>
+            <div class="ing-lbl-cont">
+                <label>Recipe Ingredients</label>
+            </div>
             <div class="def_ing">
                 <input type="text" id="quantity"/>
                 <select name="units" id="units">
