@@ -1,21 +1,22 @@
 import { createSignal, For } from "solid-js";
+import { createStore } from "solid-js/store"
 import { NewIngredient } from "./newIngredient";
 import "../../styling/recipe-form/ingredients-form.css";
 
 export function IngredientsForm(){
 
-    const [ingredients, setIngredients] = createSignal([{quantity: "", units: "", ingredientName: ""}]);
+    // const [ingredients, setIngredients] = createSignal([{quantity: "", units: "", ingredientName: ""}]);
+    const [ingredients, setIngredients] = createStore([{quantity: "", units: "", ingredientName: ""}]);
+
     
     // Function adds new ingredient to array of ingredients already entered
     function addNewIngredient(){
-        setIngredients([...ingredients(), {quantity: "", units: "", ingredientName: ""}]);
+        setIngredients([...ingredients, {quantity: "", units: "", ingredientName: ""}]);
     }
 
     //Updates the values stored in array of ingredients if user changes value in text fields or dropdown
     function updateIngredient( index: number, field: "quantity" | "units" | "ingredientName", value: string){
-        const updatedIng = [...ingredients()];
-        updatedIng[index] = { ...updatedIng[index], [field]: value };
-        setIngredients(updatedIng);
+        setIngredients(index, field, value);
     }
 
     return (
@@ -26,7 +27,7 @@ export function IngredientsForm(){
             <div class="def_ing">
                 
                 {/* Creates initial and additional row for ingredients */}
-                <For each={ingredients()}>
+                <For each={ingredients}>
                     {(newIng, i) => (
                         <NewIngredient ingredient={newIng} index={i()} onChange={updateIngredient}/>
                     )}
