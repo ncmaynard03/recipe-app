@@ -1,4 +1,5 @@
 import { createSignal, For } from "solid-js";
+import "../../styling/recipe-form/instructions-form.css"
 
 export function InstructionsForm(){
 
@@ -19,6 +20,8 @@ export function InstructionsForm(){
             <div class="instructions-lbl-cont">
                 <label>Recipe Instructions</label>
             </div>
+
+            {/* Creates inital and addtional recipe instructions/steps */}
             <div class="def_ins">
                 <For each={instructions()}>
                     {(step, index) => (
