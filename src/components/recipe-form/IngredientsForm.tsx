@@ -6,10 +6,12 @@ export function IngredientsForm(){
 
     const [ingredients, setIngredients] = createSignal([{quantity: "", units: "", ingredientName: ""}]);
     
+    // Function adds new ingredient to array of ingredients already entered
     function addNewIngredient(){
         setIngredients([...ingredients(), {quantity: "", units: "", ingredientName: ""}]);
     }
 
+    //Updates the values stored in array of ingredients if user changes value in text fields or dropdown
     function updateIngredient( index: number, field: "quantity" | "units" | "ingredientName", value: string){
         const updatedIng = [...ingredients()];
         updatedIng[index] = { ...updatedIng[index], [field]: value };
@@ -22,6 +24,8 @@ export function IngredientsForm(){
                 <label>Recipe Ingredients</label>
             </div>
             <div class="def_ing">
+                
+                {/* Creates initial and additional row for ingredients */}
                 <For each={ingredients()}>
                     {(newIng, i) => (
                         <NewIngredient ingredient={newIng} index={i()} onChange={updateIngredient}/>
