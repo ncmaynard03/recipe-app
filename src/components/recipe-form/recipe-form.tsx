@@ -1,5 +1,5 @@
 import { IngredientsForm } from "./ingredients-form"
-
+import "../../styling/recipe-form/recipe-form.css"
 export function RecipeForm(){
 
     async function submitRecipe(e: Event){
@@ -8,14 +8,28 @@ export function RecipeForm(){
     
     return (
         <form onSubmit={submitRecipe}>
-            <label>Recipe Image</label>
-            {/* Code for user to upload image in form */}
-            <label>Recipe Title</label>
-            <input type="text" id="recipe-title" name="title"/>
-            <label>Prep Time</label>
-            <input type="text" id="prep-time" name="prep-time"/>
-            <label>Cook Time</label>
-            <input type="text" id="cook-time" name="cook-time"/>
+            <div id="form-title">
+                <p>Create New Recipe</p>
+            </div>
+            <div class="recipe-image">
+                <label id="image-label">Recipe Image</label>
+                <input type="file" accept="image/*"/>
+                {/* Code for user to upload image in form */}
+            </div>
+            <div class="recipe-title-section">
+                <label>Recipe Title</label>
+                <input type="text" id="recipe-title" name="title"/>
+            </div>
+            <div class="time-fields">
+                <div class="prep-time">
+                    <label>Prep Time:</label>
+                    <input type="text" id="prep-time" name="prep-time"/>
+                </div>
+                <div class="cook-time">
+                    <label>Cook Time:</label>
+                    <input type="text" id="cook-time" name="cook-time"/>
+                </div>
+            </div>
             <IngredientsForm/>
         </form>
     )
