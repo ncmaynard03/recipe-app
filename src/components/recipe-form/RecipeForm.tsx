@@ -2,6 +2,7 @@ import { IngredientsForm } from "./IngredientsForm"
 import { InstructionsForm } from "./InstructionsForm"
 
 import "../../styling/recipe-form/recipe-form.css"
+
 export function RecipeForm(){
 
     async function submitRecipe(e: Event){
@@ -26,10 +27,12 @@ export function RecipeForm(){
                 <div class="prep-time">
                     <label>Prep Time:</label>
                     <input type="text" id="prep-time" name="prep-time"/>
+                    <label>mins</label>
                 </div>
                 <div class="cook-time">
                     <label>Cook Time:</label>
                     <input type="text" id="cook-time" name="cook-time"/>
+                    <label>mins</label>
                 </div>
             </div>
             <IngredientsForm/>
