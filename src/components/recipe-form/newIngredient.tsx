@@ -49,7 +49,7 @@ export function NewIngredient( props: {
 
             {/* Delete button */}
             <div class="delete-btn">
-                <button onClick={() => onDelete(index)}>-</button>
+                <button type="button" onClick={() => onDelete(index)}>-</button>
             </div>
         </div>
     );
