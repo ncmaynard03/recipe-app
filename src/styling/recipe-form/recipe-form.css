@@ -1,0 +1,42 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+#form-title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recipe-title-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+}
+
+.recipe-image{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.time-fields{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    align-items: center;
+    justify-items: center;
+    gap: 2rem;
+}
+
+.prep-time, .cook-time{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
