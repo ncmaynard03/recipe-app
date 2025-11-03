@@ -1,8 +1,8 @@
 import { Title } from "@solidjs/meta";
 import { HttpStatusCode } from "@solidjs/start";
+import "~/styling/404/404.css";
 
 //Set of random 404 pages to serve
-//(Mostly this is practice for me to learn what Im doing)
 function RecipeLost404() {
   return (
     <>
@@ -82,10 +82,14 @@ export default function NotFound() {
   const Selected404 = variants[randomIndex];
 
   return (
-    <main class="min-h-screen flex flex-col justify-center items-center text-center bg-amber-50 p-6">
-      <Title>Not Found</Title>
-      <HttpStatusCode code={404} />
-      <Selected404 />
+    <main>
+      <div class="not-found-container">
+        <div class="not-found-content">
+          <Title>Not Found</Title>
+          <HttpStatusCode code={404} />
+          <Selected404 />
+          </div>
+      </div>
     </main>
   );
 }
