@@ -14,11 +14,9 @@
 .dashboard-main-region {
     display: grid;
     grid-template-columns: 26fr 1fr;
-    background-color: aqua;
 }
 
 .dashboard-side-region {
     display: grid;
     grid-template-rows: auto 1fr;
-    background-color: blueviolet;
 }

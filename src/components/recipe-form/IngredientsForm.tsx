@@ -50,7 +50,9 @@ export function IngredientsForm() {
                 </For>
 
             </div>
-            <button id="add-ing-btn" type="button" onClick={addNewIngredient}>+</button>
+            <div class="add-btn">
+                <button id="add-ing-btn" type="button" onClick={addNewIngredient}>+</button>
+            </div>
         </div>
     );
 
