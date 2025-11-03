@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 import { createEffect, createSignal, For } from "solid-js";
 import "../../styling/dashboard/dashboard-recipebrowser.css";
 import { loadAllRecipes, Recipe, recipes, setRecipes } from "~/stores/recipes";
@@ -15,13 +14,8 @@ export default function RecipeBrowser() {
             await loadAllRecipes();
         }
     })
-=======
-import "../../styling/dashboard/dashboard-recipebrowser.css";
-import RecipeBrowsingItem from "./dashboard-recipebrowsingitem";
->>>>>>> Stashed changes
 
     return (
-<<<<<<< Updated upstream
         <div class="recipe-browser">
             <h2>Recipe Browser</h2>
             <div class="recipe-list">
@@ -41,25 +35,6 @@ import RecipeBrowsingItem from "./dashboard-recipebrowsingitem";
                 </For>
             </div>
 
-=======
-        <div class="browsing-container">
-            <div class="browsing-container-content">
-                <RecipeBrowsingItem />
-                <RecipeBrowsingItem />
-                <RecipeBrowsingItem />
-                <RecipeBrowsingItem />
-                <RecipeBrowsingItem />
-                <RecipeBrowsingItem />
-                <RecipeBrowsingItem />
-                <RecipeBrowsingItem />
-                <RecipeBrowsingItem />
-                <RecipeBrowsingItem />
-                <RecipeBrowsingItem />
-                <RecipeBrowsingItem />
-                <RecipeBrowsingItem />
-                <RecipeBrowsingItem />
-            </div>
->>>>>>> Stashed changes
         </div>
     );
 }
