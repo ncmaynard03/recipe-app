@@ -1,4 +1,61 @@
-.recipe-browser {
-    background-color: saddlebrown;
-    min-height: 100px;
+/*I broke the overflow again so it only looks good in f11 mode when this is height 100vh; will fix later*/
+/*This also doesnt scroll yet*/
+.browsing-container {
+    height: 90vh;
+    padding: 0;
+    margin: 0;
+}
+
+.browsing-container-content {
+    overflow-y: scroll;
+    padding: 0;
+    margin: 0;
+}
+
+.browsing-item-container {
+    background-color: mintcream;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0.25rem 0;
+}
+
+.browsing-item-content {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    border-radius: 8px;
+    width: 100%;
+    padding: 1rem 0.5rem;
+    gap: 1rem;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+.browsing-item-content img {
+    width: 25%;
+    aspect-ratio: 1 / 1;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.browsing-item-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    flex-grow: 1;
+    text-align: left;
+}
+.browsing-item-text h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.34rem;
+    color: white;
+}
+.browsing-item-text p {
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+    color: #999;
 }
