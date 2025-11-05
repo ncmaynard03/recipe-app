@@ -1,40 +1,40 @@
-import { createEffect, createSignal, For } from "solid-js";
+import { createEffect, For } from "solid-js";
 import "../../styling/dashboard/dashboard-recipebrowser.css";
-import { loadAllRecipes, Recipe, recipes, setRecipes } from "~/stores/recipes";
-import { createStore } from "solid-js/store";
+import RecipeBrowsingItem from "./dashboard-recipebrowsingitem";
 import { supabase } from "~/supabase/supabase-client";
+import { loadAllRecipes, recipes } from "~/stores/recipes";
+
+import WHPhoto from "~/assets/dashboard/waffle-house-allstarspecial.jpg";
 
 export default function RecipeBrowser() {
-
     createEffect(async () => {
         console.log("Checking user auth status...");
         const { data: { user } } = await supabase.auth.getUser();
         if (user) {
             console.log("User is logged in, loading recipes...");
             await loadAllRecipes();
+        } else {
+            console.log("User does not exist! No recipes to load!");
         }
     })
 
     return (
-        <div class="recipe-browser">
-            <h2>Recipe Browser</h2>
-            <div class="recipe-list">
+        <div class="browsing-container">
+            <div class="browsing-container-content">
                 <For each={recipes}>{
                     (r, index) => {
                         console.log(r.recipe_title);
                         return (
-                            <div class="recipe-item" >
-                                <p>{r.recipe_title}</p>
-                                <p>prep: {r.prep_time} mins</p>
-                                <p>cook: {r.cook_time} mins</p>
-                                <br />
-                            </div>
+                            <RecipeBrowsingItem
+                                title={r.recipe_title}
+                                author={r.author_id}
+                                image_src={r.imageUrl || WHPhoto}
+                            />
                         )
                     }
                 }
                 </For>
             </div>
-
         </div>
     );
 }

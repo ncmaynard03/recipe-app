@@ -1,4 +1,3 @@
-import { createSignal } from "solid-js";
 import "../../styling/dashboard/dashboard-recipeviewer.css";
 
 export default function RecipeText() {
@@ -9,7 +8,10 @@ export default function RecipeText() {
                 <button>I</button>
                 <button>U</button>
             </div>
-            <textarea class="recipe-text-textarea" placeholder="Write your recipe here..."/>
+            <textarea
+                class="recipe-text-textarea"
+                placeholder="Write your recipe here..."
+            />
         </div>
     );
 }
