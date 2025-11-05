@@ -1,6 +1,12 @@
 import WHPhoto from "~/assets/dashboard/waffle-house-allstarspecial.jpg";
 
-export default function RecipeBrowsingItem() {
+type RecipeBrowsingItem = {
+    title:string;
+    author:string;
+    image_src:string;
+}
+
+export default function RecipeBrowsingItem({ title, author, image_src }: RecipeBrowsingItem) {
     return (
         <div class="browsing-item-container">
             <div class="browsing-item-content">

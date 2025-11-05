@@ -24,6 +24,7 @@ export default function TaskBar(){
         </div>
     );
 }
+
 //TODO on the side-bar where recipes are browsed this needs to be called on the + button at the bottom
 //Also there is currently no + button at the bottom
 //<button onClick={() => navigate("/add-recipe")}>new recipe</button>

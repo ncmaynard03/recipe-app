@@ -8,12 +8,24 @@ import TaskBar from "~/components/dashboard/dashboard-taskbar";
 import RecipeViewer from "~/components/dashboard/dashboard-recipeviewer";
 import RecipeSearchbar from "~/components/dashboard/dashboard-searchbar";
 import RecipeBrowser from "~/components/dashboard/dashboard-recipebrowser";
+import { setUserId, userId } from "~/stores/user";
 
 export default function Dashboard() {
+
+  console.log("User id: ", userId());
+
   const [username, setUsername] = createSignal("")
   onMount(async () => {
     const currUN = await supabaseFn.ensureUserExists();
     setUsername(currUN);
+
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (user) {
+      console.log(user.id)
+      setUserId(user.id);
+      console.log("User id: ", userId());
+    }
   });
 
   return (
