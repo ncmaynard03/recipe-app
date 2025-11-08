@@ -1,6 +1,6 @@
 import { createEffect, For } from "solid-js";
 import "../../styling/dashboard/dashboard-recipebrowser.css";
-import RecipeBrowsingItem from "./dashboard-recipebrowsingitem";
+// import RecipeBrowsingItem from "./dashboard-recipebrowsingitem";
 import { supabase } from "~/supabase/supabase-client";
 import { loadAllRecipes, recipes } from "~/stores/recipes";
 
@@ -25,11 +25,15 @@ export default function RecipeBrowser() {
                     (r, index) => {
                         console.log(r.recipe_title);
                         return (
-                            <RecipeBrowsingItem
-                                title={r.recipe_title}
-                                author={r.author_id}
-                                image_src={r.imageUrl || WHPhoto}
-                            />
+                            <div class="browsing-item-container">
+                                <div class="browsing-item-content">
+                                    <img src={WHPhoto} alt="Recipe preview" />
+                                    <div class="browsing-item-text">
+                                        <h3>{r.recipe_title}</h3>
+                                        <p>{r.author_id}</p>
+                                    </div>
+                                </div>
+                            </div>
                         )
                     }
                 }
@@ -37,4 +41,12 @@ export default function RecipeBrowser() {
             </div>
         </div>
     );
+}
+
+
+
+type RecipeBrowsingItem = {
+    title: string;
+    author: string;
+    image_src: string;
 }

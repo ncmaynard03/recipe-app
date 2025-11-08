@@ -21,7 +21,8 @@ export async function GET() {
         const rs = await rmgr.getAllRecipes();
         console.log(`Fetched ${rs.length} recipes.`);
         for (const r of rs) {
-            console.log(`Recipe: ${r.recipe_title}, Prep Time: ${r.prep_time}, Cook Time: ${r.cook_time}`);
+            // console.log(`Recipe: ${r.recipe_title}, Prep Time: ${r.prep_time}, Cook Time: ${r.cook_time}`);
+            console.log(r);
         }
         return json(rs || []);
     } catch (error: any) {

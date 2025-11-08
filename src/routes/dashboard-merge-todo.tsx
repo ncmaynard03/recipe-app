@@ -9,11 +9,11 @@ import { supabase } from "~/supabase/supabase-client";
 import * as supabaseFn from "~/supabase/supabase-queries";
 import "../styling/dashboard/dashboard.css";
 
-import TaskBar from "~/components/dashboard/dashboard-taskbar";
-import RecipeViewer from "~/components/dashboard/dashboard-recipeviewer";
+import RecipeEditor from "~/components/dashboard/recipeEditor";
 import RecipeSearchbar from "~/components/dashboard/dashboard-searchbar";
 import RecipeBrowser from "~/components/dashboard/dashboard-recipebrowser";
 import { RecipeForm } from "~/components/recipe-form/RecipeForm";
+import TaskBar from "~/components/dashboard/dashboard-taskbar";
 import { createStore } from "solid-js/store";
 import { setUserId, userId } from "~/stores/user";
 // import { loadAllRecipes } from "~/stores/recipes";
@@ -78,7 +78,7 @@ function MainArea() {
 
       <Switch>
         <Match when={activeView() === "view"}>
-          <RecipeViewer></RecipeViewer>
+          <RecipeEditor></RecipeEditor>
         </Match>
 
         <Match when={activeView() === "edit"}>

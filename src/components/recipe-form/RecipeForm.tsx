@@ -2,13 +2,11 @@ import { IngredientsForm } from "./IngredientsForm"
 import { InstructionsForm } from "./InstructionsForm"
 import EmptyPlate from "~/assets/empty-plate-2.jpg"
 
-import "../../styling/recipe-form/recipe-form.css"
 import { Recipe } from "~/stores/recipes";
-import { createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
-import "../../styling/recipe-form/ingredients-form.css";
-import { getCurrentUserID } from "~/supabase/supabase-queries";
 import { userId } from "~/stores/user";
+import { createSignal } from "solid-js";
+import { getCurrentUserID } from "~/supabase/supabase-queries";
 
 const usUnitsList = [
     { value: "pounds", label: "lb(s)" },
