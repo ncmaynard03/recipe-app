@@ -31,6 +31,10 @@
     gap: 1rem;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
 }
+
+.browsing-item-content:hover{
+    cursor: pointer;
+}
 .browsing-item-content img {
     width: 25%;
     aspect-ratio: 1 / 1;
