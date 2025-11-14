@@ -26,6 +26,18 @@ const usUnitsList = [
     { value: "packet", label: "packet" },
 ];
 
+const metricUnitsList = [
+    { value: "grams", label: "g" },
+    { value: "kilograms", label: "kg" },
+    { value: "milliliter", label: "mL" },
+    { value: "liters", label: "L" },
+    { value: "pinch", label: "pinch" },
+    { value: "box", label: "box" },
+    { value: "can", label: "can" },
+    { value: "packet", label: "packet" },
+];
+
+
 export default function RecipeEditor() {
 
     const [form, setForm] = createStore<Recipe>({
