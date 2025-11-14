@@ -20,6 +20,8 @@ export function IngredientsForm() {
         setIngredients([...ingredients, { quantity: "", units: "", ingredientName: "" }]);
     }
 
+
+    //Function deletes ingredient in create/edit form 
     function deleteNewIngredient(index: number) {
         if (ingredients.length > 1) {
             setIngredients(ingredients.filter((_, ingIndex) => ingIndex !== index));
