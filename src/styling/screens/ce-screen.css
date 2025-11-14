@@ -1,0 +1,6 @@
+.new-recipe-tile{
+    border-style: dashed;
+    border-color: blue;
+    display: flex;
+    flex-direction: column;
+}
