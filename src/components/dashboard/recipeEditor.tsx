@@ -2,10 +2,9 @@
 import { createStore } from "solid-js/store";
 import { createEffect } from "solid-js";
 import WHPhoto from "~/assets/dashboard/waffle-house-allstarspecial.jpg";
-import "../../styling/dashboard/dashboard-recipeviewer.css";
-import "../../styling/recipe-form/recipe-form.css";
-import "../../styling/recipe-form/ingredients-form.css";
-
+// import "~/styling/dashboard.css"
+// import "~/styling/recipe-browser.css"
+// import "~/styling/recipe-editor.css"
 const usUnitsList = [
     { value: "pounds", label: "lb(s)" },
     { value: "ounces", label: "oz" },

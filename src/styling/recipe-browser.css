@@ -1,0 +1,30 @@
+.browsing-container {
+  padding: 1rem;
+}
+
+.browsing-item-content {
+  background: var(--bg-panel);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: border 0.15s ease, background 0.15s ease;
+}
+
+.browsing-item-content:hover {
+  background: var(--bg-card);
+  border-color: var(--accent);
+}
+
+.browsing-item-content img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.browsing-item-text h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text);
+}

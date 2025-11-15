@@ -4,14 +4,17 @@ import { Title } from "@solidjs/meta";
 import { onMount, createSignal, Switch, Match, Show, createResource } from "solid-js";
 import { supabase } from "~/supabase/supabase-client";
 import * as supabaseFn from "~/supabase/supabase-queries";
-import "../styling/dashboard/dashboard.css";
+import "~/styling/dashboard.css";
+import "~/styling/recipe-browser.css"
+import "~/styling/recipe-editor.css";
+import "~/styling/taskbar.css"
+
 
 import TaskBar from "~/components/dashboard/taskbar";
 import RecipeEditor from "~/components/dashboard/recipeEditor";
 import RecipeSearchbar from "~/components/dashboard/searchbar";
 import RecipeBrowser from "~/components/dashboard/recipebrowser";
 import { setUserId, userId } from "~/stores/user";
-import { RecipeForm } from "~/components/recipe-form/tmp-RecipeForm";
 
 export default function Dashboard() {
   const [selectedRecipeId, setSelectedRecipeId] = createSignal<number | null>(null);
@@ -32,11 +35,11 @@ export default function Dashboard() {
   return (
     <main class="dashboard">
       <div class="dashboard-main-region">
+        <TaskBar />
         <MainArea
           selectedRecipeId={selectedRecipeId}
           setSelectedRecipeId={setSelectedRecipeId}
         />
-        <TaskBar />
       </div>
 
       <div class="dashboard-side-region">
@@ -62,28 +65,26 @@ function MainArea(props: {
 
   return (
     <div class="main-area">
-      <div class="nav-bar">
+      {/* <div class="nav-bar">
         <button onClick={() => setActiveView("add")}>Add Recipe</button>
         <button onClick={() => setActiveView("edit")}>Edit Recipe</button>
         <button onClick={() => setActiveView("view")}>View Recipe</button>
-      </div>
+      </div> */}
 
       <Switch>
         <Match when={activeView() === "view"}>
           <RecipeEditor recipe={fullRecipe()} />
         </Match>
 
-        <Match when={activeView() === "edit"}>
+        {/* <Match when={activeView() === "edit"}>
           <Show when={userId()}>
-            <RecipeForm />
           </Show>
         </Match>
 
         <Match when={activeView() === "add"}>
           <Show when={userId()}>
-            <RecipeForm />
           </Show>
-        </Match>
+        </Match> */}
       </Switch>
     </div>
   )

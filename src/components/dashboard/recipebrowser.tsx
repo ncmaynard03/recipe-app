@@ -1,8 +1,7 @@
 import { createResource, For, Show } from "solid-js";
-import "../../styling/dashboard/dashboard-recipebrowser.css";
 import WHPhoto from "~/assets/dashboard/waffle-house-allstarspecial.jpg";
 
-export default function RecipeBrowser(props: { onSelect: (id: string | null) => void, selected: number | null }) {
+export default function RecipeBrowser(props: { onSelect: (id: number | null) => void, selected: number | null }) {
 
     const [headers] = createResource(
         () => typeof window !== "undefined",
@@ -12,6 +11,8 @@ export default function RecipeBrowser(props: { onSelect: (id: string | null) => 
         }
     );
 
+    const selectedId = () =>
+        props.selected !== null ? Number(props.selected) : null;
 
     return (
         <div class="browsing-container">
@@ -23,13 +24,15 @@ export default function RecipeBrowser(props: { onSelect: (id: string | null) => 
                                 class="browsing-item-content"
                                 style={{
                                     border:
-                                        r.recipe_id === props.selected
+                                        selectedId() === Number(r.recipe_id)
                                             ? "2px solid #FF6F61"
                                             : "2px solid transparent",
                                 }}
                                 onClick={() =>
                                     props.onSelect(
-                                        r.recipe_id === props.selected ? null : r.recipe_id
+                                        selectedId() === Number(r.recipe_id)
+                                            ? null
+                                            : Number(r.recipe_id)
                                     )
                                 }
                             >

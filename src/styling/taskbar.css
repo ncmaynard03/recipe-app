@@ -1,0 +1,32 @@
+.task-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background: var(--bg-card);
+    border-top: 2px solid var(--border);
+}
+
+.task-bar-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.task-bar button {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    padding: 0.35rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.task-bar button:hover {
+    background: var(--accent3);
+    border-color: var(--accent);
+}
+
+.task-bar img {
+    width: 22px;
+    height: 22px;
+    filter: brightness(0) invert(1);
+}
