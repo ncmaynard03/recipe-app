@@ -27,6 +27,7 @@ const usUnitsList = [
 export function RecipeForm() {
 
     const [form, setForm] = createStore<Recipe>({
+        recipe_id: "",
         author_id: "",
         recipe_title: "",
         prep_time: 0,
@@ -147,9 +148,7 @@ export function RecipeForm() {
                                 onInput={(e) => updateIngredient(index, "ingredientName", e.target.value)}
                             />
                             <button class="delete-btn" onClick={(e) => deleteIngredient(index)}>-</button>
-
                         </div>
-
                     ))}
                     <button onClick={(e) => addNewIngredient()}>+</button>
                 </div>

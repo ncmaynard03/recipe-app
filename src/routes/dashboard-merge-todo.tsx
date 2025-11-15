@@ -10,10 +10,10 @@ import * as supabaseFn from "~/supabase/supabase-queries";
 import "../styling/dashboard/dashboard.css";
 
 import RecipeEditor from "~/components/dashboard/recipeEditor";
-import RecipeSearchbar from "~/components/dashboard/dashboard-searchbar";
-import RecipeBrowser from "~/components/dashboard/dashboard-recipebrowser";
-import { RecipeForm } from "~/components/recipe-form/RecipeForm";
-import TaskBar from "~/components/dashboard/dashboard-taskbar";
+import RecipeSearchbar from "~/components/dashboard/searchbar";
+import RecipeBrowser from "~/components/dashboard/recipebrowser";
+import { RecipeForm } from "~/components/recipe-form/tmp-RecipeForm";
+import TaskBar from "~/components/dashboard/taskbar";
 import { createStore } from "solid-js/store";
 import { setUserId, userId } from "~/stores/user";
 // import { loadAllRecipes } from "~/stores/recipes";
