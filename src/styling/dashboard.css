@@ -1,48 +1,47 @@
-* {
-  border-color: var(--border) !important;
-}
-
+/* ===========================
+   GLOBAL FONTS & VARIABLES
+   =========================== */
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caprasimo&display=swap');
 
 :root {
-  --bg: #2e3440;
-  --bg-panel: #3b4252;
-  --bg-card: #434c5e;
-  --border: #4c566a;
+  --bg: white;
+  --bg-panel: #f4f4f4;
+  --bg-card: white;
+  --border: black;
 
-  --text: #eceff4;
-  --text-muted: #d8dee9;
+  --text: black;
+  --text-muted: #555;
 
-  --accent: #88c0d0;
-  --accent2: #81a1c1;
-  --accent3: #5e81ac;
-  --surface0: var(--bg);
-  --surface1: var(--bg-panel);
-  --surface2: var(--bg-card);
-  --surface3: var(--border);
+  --accent: black;
+  --accent2: #444;
+  --accent3: #222;
+
+  --shadow: 2px 4px 12px rgba(0, 0, 0, 0.25);
 }
 
-/* ========= DASHBOARD LAYOUT ========= */
+/* Force consistent typography */
+* {
+  font-family: "Rowdies", serif;
+  color: var(--text);
+}
+
+/* ===========================
+   DASHBOARD LAYOUT
+   =========================== */
 
 .dashboard {
   display: grid;
   grid-template-columns: 1fr 350px;
   height: 100vh;
   overflow: hidden;
+  background: white;
 }
-
 
 .dashboard-main-region {
   height: 100%;
   overflow-y: auto;
 }
-
-.main-area {
-  /* padding: 1.25rem; */
-  height: auto;
-  overflow-y: auto;
-}
-
-
 
 .dashboard-side-region {
   width: 320px;
@@ -51,177 +50,35 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  box-shadow: var(--shadow);
 }
 
-/* ========= NAV BAR ========= */
+/* ===========================
+   NAV BAR
+   =========================== */
 
 .nav-bar {
   display: flex;
   gap: 0.5rem;
   padding: 0.75rem;
-  background: var(--bg-card);
-  border-bottom: 2px solid var(--border);
+  background: white;
+  border-bottom: 2px solid black;
 }
 
 .nav-bar button {
-  background: var(--accent3);
-  border: none;
+  background: white;
+  border: 2px solid black;
   padding: 0.5rem 1rem;
-  color: var(--text);
-  font-weight: 600;
-  border-radius: 6px;
+  color: black;
+  font-family: "Caprasimo", sans-serif;
+  letter-spacing: 3px;
+  font-size: 1rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.15s ease;
+  box-shadow: var(--shadow);
+  text-shadow: 2px 4px 2px lightgray;
 }
 
 .nav-bar button:hover {
-  background: var(--accent2);
-}
-
-/* ========= TASKBAR ========= */
-
-.task-bar {
-  display: flex;
-  justify-content: space-between;
-  padding: 0.75rem;
-  background: var(--bg-card);
-  border-top: 2px solid var(--border);
-}
-
-.task-bar button {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  padding: 0.5rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.task-bar button:hover {
-  background: var(--accent3);
-}
-
-.task-bar img {
-  width: 22px;
-  height: 22px;
-  filter: brightness(0) invert(1);
-}
-
-/* ========= RECIPE VIEWER ========= */
-
-.recipe-viewer {
-  display: flex;
-  justify-content: center;
-  padding: 2rem;
-  overflow-y: auto;
-}
-
-.recipe-content {
-  width: 650px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.75rem;
-}
-
-/* Image */
-.recipe-image {
-  background: var(--bg-card);
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  padding: 0.5rem;
-}
-
-.recipe-image img {
-  width: 100%;
-  border-radius: 6px;
-  object-fit: cover;
-}
-
-/* Card with time + ingredients */
-.recipe-card {
-  background: var(--bg-card);
-  padding: 1rem;
-  border-radius: 8px;
-  border: 2px solid var(--border);
-}
-
-.recipe-card input,
-.recipe-card select {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 0.35rem;
-  border-radius: 5px;
-}
-
-/* Recipe text area */
-.recipe-text-textarea {
-  width: 100%;
-  min-height: 200px;
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  padding: 0.75rem;
-  color: var(--text);
-  border-radius: 6px;
-  resize: vertical;
-}
-
-/* Save button */
-.recipe-content button {
-  background: var(--accent3);
-  border: none;
-  color: var(--text);
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.recipe-content button:hover {
-  background: var(--accent2);
-}
-
-
-/* Global button styling (prevents invisible buttons) */
-button {
-  background: var(--accent3);
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 0.45rem 0.75rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease;
-}
-
-button:hover {
-  background: var(--accent2);
-  border-color: var(--accent);
-}
-
-
-
-/* Chrome, Edge, Safari */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--surface0);
-  /* darker nord gray */
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--surface2);
-  border-radius: 8px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--surface3);
-}
-
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--surface2) var(--surface0);
+  background: #e5e5e5;
 }

@@ -1,9 +1,13 @@
+/* ===========================
+   RECIPE VIEWER
+   =========================== */
+
 .recipe-viewer {
   display: flex;
   justify-content: center;
   padding: 2rem;
   overflow-y: auto;
-  background: var(--bg-panel);
+  background: white;
 }
 
 .recipe-content {
@@ -11,44 +15,48 @@
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
-  color: var(--text);
+  color: black;
 }
 
-/* Title */
 #form-title {
-  width: 100%;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  color: var(--text);
+  background: white;
+  border: 2px solid black;
+  box-shadow: var(--shadow);
   padding: 0.75rem;
   border-radius: 6px;
   text-align: center;
   font-size: 1.6rem;
   font-weight: 600;
+  text-shadow: 2px 4px 2px lightgray;
+  letter-spacing: 4px;
+  font-family: "Caprasimo", sans-serif;
 }
 
-/* Image Container */
+/* Recipe Image */
 .recipe-image {
-  background: var(--bg-card);
-  border: 2px solid var(--border);
+  background: white;
+  border: 2px solid black;
   border-radius: 8px;
   padding: 0.5rem;
+  box-shadow: var(--shadow);
 }
 
 .recipe-image img {
   width: 100%;
-  object-fit: cover;
   border-radius: 6px;
+  object-fit: cover;
 }
 
-/* Card */
+/* Card w/ ingredients & time */
 .recipe-card {
-  background: var(--bg-card);
+  background: white;
   border-radius: 8px;
-  border: 2px solid var(--border);
+  border: 2px solid black;
   padding: 1rem;
+  box-shadow: var(--shadow);
 }
 
+/* Time Fields */
 .time-fields {
   display: flex;
   gap: 2rem;
@@ -58,13 +66,12 @@
 
 .time-fields label {
   font-size: 1.1rem;
-  color: var(--text);
 }
 
 .time-fields input {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  color: var(--text);
+  background: #f4f4f4;
+  border: 2px solid black;
+  color: black;
   padding: 0.4rem;
   width: 60px;
   text-align: center;
@@ -85,50 +92,55 @@
 
 .ingredient-row input,
 .ingredient-row select {
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
-  color: var(--text);
+  background: #f4f4f4;
+  border: 2px solid black;
+  color: black;
   padding: 0.35rem;
   border-radius: 6px;
 }
 
 .ingredient-row button.delete-btn {
-  background: #bf616a;
-  color: #eceff4;
-  border: none;
+  background: #ff4b4b;
+  border: 2px solid black;
+  color: black;
   padding: 0.3rem 0.5rem;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 6px;
+  font-family: "Rowdies";
 }
 
 .ingredient-row button.delete-btn:hover {
-  background: #d08770;
+  background: #ff7c7c;
 }
 
-/* Recipe text area */
+/* Recipe Text */
 .recipe-text-textarea {
   width: 100%;
   min-height: 200px;
-  background: var(--bg-panel);
-  border: 1px solid var(--border);
+  background: #f4f4f4;
+  border: 2px solid black;
   padding: 0.75rem;
-  color: var(--text);
   border-radius: 6px;
   resize: vertical;
+  color: black;
 }
 
-/* Save button */
+/* Save Button */
 .recipe-content button {
-  background: var(--accent3);
-  border: none;
+  background: white;
+  border: 2px solid black;
   padding: 0.9rem;
   font-size: 1.1rem;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  color: var(--text);
-  transition: background 0.15s ease;
+  color: black;
+  transition: background 0.15s ease, transform 0.1s ease;
+  font-family: "Caprasimo";
+  letter-spacing: 3px;
+  text-shadow: 2px 4px 2px lightgray;
+  box-shadow: var(--shadow);
 }
 
 .recipe-content button:hover {
-  background: var(--accent2);
+  background: #e5e5e5;
+  transform: translateY(-1px);
 }

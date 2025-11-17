@@ -3,18 +3,19 @@
 }
 
 .browsing-item-content {
-  background: var(--bg-panel);
-  border: 2px solid transparent;
+  background: white;
+  border: 2px solid black;
   border-radius: 8px;
   padding: 0.75rem;
   margin-bottom: 1rem;
   cursor: pointer;
-  transition: border 0.15s ease, background 0.15s ease;
+  transition: transform 0.15s ease, background 0.15s ease;
+  box-shadow: var(--shadow);
 }
 
 .browsing-item-content:hover {
-  background: var(--bg-card);
-  border-color: var(--accent);
+  background: #f4f4f4;
+  transform: translateY(-2px);
 }
 
 .browsing-item-content img {
@@ -25,6 +26,6 @@
 
 .browsing-item-text h3 {
   margin: 0;
-  font-size: 1.1rem;
-  color: var(--text);
+  font-size: 1.2rem;
+  text-shadow: 1px 2px 2px lightgray;
 }
