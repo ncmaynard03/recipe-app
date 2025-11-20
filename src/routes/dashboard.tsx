@@ -23,7 +23,7 @@ function displayDelay(ms: number){
 
 export default function Dashboard() {
   const [selectedRecipeId, setSelectedRecipeId] = createSignal<number | null>(null);
-  const [activeView, setActiveView] = createSignal<ActiveView>("view");
+  const [activeView, setActiveView] = createSignal<ActiveView>("add");
   const [username, setUsername] = createSignal("")
 
   onMount(async () => {
