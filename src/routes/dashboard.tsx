@@ -17,6 +17,10 @@ import RecipeSearchbar from "~/components/dashboard/searchbar";
 import RecipeBrowser from "~/components/dashboard/recipebrowser";
 import { setUserId, userId } from "~/stores/user";
 
+function displayDelay(ms: number){
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default function Dashboard() {
   const [selectedRecipeId, setSelectedRecipeId] = createSignal<number | null>(null);
   const [activeView, setActiveView] = createSignal<ActiveView>("view");
@@ -39,6 +43,7 @@ export default function Dashboard() {
       setActiveView("view");
     }
   }
+  
   return (
     <main class="dashboard">
       <div class="dashboard-main-region">
@@ -66,11 +71,18 @@ function MainArea(props: {
   setSelectedRecipeId: (v: number | null) => void,
   activeView: () => ActiveView
 }) {
-  const [activeView, setActiveView] = createSignal<ActiveView>("view");
 
-  const [fullRecipe] = createResource(props.selectedRecipeId, (id) =>
-    id ? fetch(`/api/recipes/${id}`).then(r => r.json()) : null
-  );
+  const [fullRecipe] = createResource(props.selectedRecipeId, async (id) => {
+    if (!id){
+      return null;
+    }
+
+    const data = await fetch(`/api/recipes/${id}`).then(r => r.json());
+
+    await displayDelay(550); //creates a delay to allow app to load selected recipe, avoiding old recipe selection showing first
+
+    return data;
+  });
 
   return (
     <div class="main-area">
@@ -86,7 +98,15 @@ function MainArea(props: {
         </Match>
 
         <Match when={props.activeView() === "view"}>
-          <RecipeEditor recipe={fullRecipe()} />
+          <Show when={!fullRecipe.loading && fullRecipe()} 
+            fallback={
+            <div class="load-recipe-screen">
+              <p>Loading Recipe...</p>
+              <div class='loading-circle'/>
+            </div>
+          }>
+            {(recipe) => <RecipeEditor recipe={recipe()} />}
+          </Show>
         </Match>
 
         {/* <Match when={activeView() === "edit"}>
