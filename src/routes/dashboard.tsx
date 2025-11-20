@@ -1,19 +1,23 @@
+//src/routes/dashboard.tsx
+
 import { Title } from "@solidjs/meta";
-import { onMount, createSignal, Switch, Match, Show } from "solid-js";
+import { onMount, createSignal, Switch, Match, Show, createResource } from "solid-js";
 import { supabase } from "~/supabase/supabase-client";
 import * as supabaseFn from "~/supabase/supabase-queries";
-import "../styling/dashboard/dashboard.css";
+import "~/styling/dashboard.css";
+import "~/styling/recipe-browser.css"
+import "~/styling/recipe-editor.css";
+import "~/styling/taskbar.css"
 
-import TaskBar from "~/components/dashboard/dashboard-taskbar";
+
+import TaskBar from "~/components/dashboard/taskbar";
 import RecipeEditor from "~/components/dashboard/recipeEditor";
-import RecipeSearchbar from "~/components/dashboard/dashboard-searchbar";
-import RecipeBrowser from "~/components/dashboard/dashboard-recipebrowser";
+import RecipeSearchbar from "~/components/dashboard/searchbar";
+import RecipeBrowser from "~/components/dashboard/recipebrowser";
 import { setUserId, userId } from "~/stores/user";
-import { RecipeForm } from "~/components/recipe-form/RecipeForm";
 
 export default function Dashboard() {
-
-  console.log("User id: ", userId());
+  const [selectedRecipeId, setSelectedRecipeId] = createSignal<number | null>(null);
 
   const [username, setUsername] = createSignal("")
 
@@ -24,62 +28,63 @@ export default function Dashboard() {
     const { data: { user } } = await supabase.auth.getUser();
 
     if (user) {
-      console.log(user.id)
       setUserId(user.id);
-      console.log("User id: ", userId());
     }
   });
 
   return (
     <main class="dashboard">
       <div class="dashboard-main-region">
-        <MainArea />
         <TaskBar />
+        <MainArea
+          selectedRecipeId={selectedRecipeId}
+          setSelectedRecipeId={setSelectedRecipeId}
+        />
       </div>
 
-
       <div class="dashboard-side-region">
-        {/* <RecipeSearchbar /> */}
-        <RecipeBrowser />
+        <RecipeBrowser
+          onSelect={setSelectedRecipeId}
+          selected={selectedRecipeId()}
+        />
+
       </div>
     </main>
   );
 }
 
-
-function MainArea() {
+function MainArea(props: {
+  selectedRecipeId: () => number | null,
+  setSelectedRecipeId: (v: number | null) => void
+}) {
   const [activeView, setActiveView] = createSignal<"view" | "edit" | "add">("view");
-  const [selectedRecipeId, setSelectedRecipeId] = createSignal<string | null>(null);
 
-  function openRecipe(recipeId: string) {
-    setSelectedRecipeId(recipeId);
-    setActiveView("view");
-  }
+  const [fullRecipe] = createResource(props.selectedRecipeId, (id) =>
+    id ? fetch(`/api/recipes/${id}`).then(r => r.json()) : null
+  );
 
   return (
     <div class="main-area">
-      <div class="nav-bar">
+      {/* <div class="nav-bar">
         <button onClick={() => setActiveView("add")}>Add Recipe</button>
         <button onClick={() => setActiveView("edit")}>Edit Recipe</button>
         <button onClick={() => setActiveView("view")}>View Recipe</button>
-      </div>
+      </div> */}
 
       <Switch>
         <Match when={activeView() === "view"}>
-          <RecipeEditor></RecipeEditor>
+          <RecipeEditor recipe={fullRecipe()} />
         </Match>
 
-        <Match when={activeView() === "edit"}>
-          <Show when={userId}>
-            <RecipeForm></RecipeForm>
+        {/* <Match when={activeView() === "edit"}>
+          <Show when={userId()}>
           </Show>
         </Match>
 
         <Match when={activeView() === "add"}>
-          <Show when={userId}>
-            <RecipeForm></RecipeForm>
+          <Show when={userId()}>
           </Show>
-        </Match>
+        </Match> */}
       </Switch>
     </div>
   )

@@ -1,0 +1,146 @@
+/* ===========================
+   RECIPE VIEWER
+   =========================== */
+
+.recipe-viewer {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+  overflow-y: auto;
+  background: white;
+}
+
+.recipe-content {
+  width: 650px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  color: black;
+}
+
+#form-title {
+  background: white;
+  border: 2px solid black;
+  box-shadow: var(--shadow);
+  padding: 0.75rem;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-shadow: 2px 4px 2px lightgray;
+  letter-spacing: 4px;
+  font-family: "Caprasimo", sans-serif;
+}
+
+/* Recipe Image */
+.recipe-image {
+  background: white;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: var(--shadow);
+}
+
+.recipe-image img {
+  width: 100%;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+/* Card w/ ingredients & time */
+.recipe-card {
+  background: white;
+  border-radius: 8px;
+  border: 2px solid black;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+
+/* Time Fields */
+.time-fields {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+
+.time-fields label {
+  font-size: 1.1rem;
+}
+
+.time-fields input {
+  background: #f4f4f4;
+  border: 2px solid black;
+  color: black;
+  padding: 0.4rem;
+  width: 60px;
+  text-align: center;
+  border-radius: 6px;
+}
+
+/* Ingredients */
+.ingredients-section {
+  margin-top: 1rem;
+}
+
+.ingredient-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  align-items: center;
+}
+
+.ingredient-row input,
+.ingredient-row select {
+  background: #f4f4f4;
+  border: 2px solid black;
+  color: black;
+  padding: 0.35rem;
+  border-radius: 6px;
+}
+
+.ingredient-row button.delete-btn {
+  background: #ff4b4b;
+  border: 2px solid black;
+  color: black;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  font-family: "Rowdies";
+}
+
+.ingredient-row button.delete-btn:hover {
+  background: #ff7c7c;
+}
+
+/* Recipe Text */
+.recipe-text-textarea {
+  width: 100%;
+  min-height: 200px;
+  background: #f4f4f4;
+  border: 2px solid black;
+  padding: 0.75rem;
+  border-radius: 6px;
+  resize: vertical;
+  color: black;
+}
+
+/* Save Button */
+.recipe-content button {
+  background: white;
+  border: 2px solid black;
+  padding: 0.9rem;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  color: black;
+  transition: background 0.15s ease, transform 0.1s ease;
+  font-family: "Caprasimo";
+  letter-spacing: 3px;
+  text-shadow: 2px 4px 2px lightgray;
+  box-shadow: var(--shadow);
+}
+
+.recipe-content button:hover {
+  background: #e5e5e5;
+  transform: translateY(-1px);
+}
