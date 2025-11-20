@@ -4,6 +4,7 @@ import { Title } from "@solidjs/meta";
 import { onMount, createSignal, Switch, Match, Show, createResource } from "solid-js";
 import { supabase } from "~/supabase/supabase-client";
 import * as supabaseFn from "~/supabase/supabase-queries";
+import type { ActiveView } from "~/types";
 import "~/styling/dashboard.css";
 import "~/styling/recipe-browser.css"
 import "~/styling/recipe-editor.css";
@@ -18,7 +19,7 @@ import { setUserId, userId } from "~/stores/user";
 
 export default function Dashboard() {
   const [selectedRecipeId, setSelectedRecipeId] = createSignal<number | null>(null);
-
+  const [activeView, setActiveView] = createSignal<ActiveView>("view");
   const [username, setUsername] = createSignal("")
 
   onMount(async () => {
@@ -32,19 +33,26 @@ export default function Dashboard() {
     }
   });
 
+  const handleSelectRecipe = (id: number | null) => {
+    setSelectedRecipeId(id);
+    if (id !== null){
+      setActiveView("view");
+    }
+  }
   return (
     <main class="dashboard">
       <div class="dashboard-main-region">
-        <TaskBar />
+        <TaskBar changeScreenTo={setActiveView}/>
         <MainArea
           selectedRecipeId={selectedRecipeId}
           setSelectedRecipeId={setSelectedRecipeId}
+          activeView={activeView}
         />
       </div>
 
       <div class="dashboard-side-region">
         <RecipeBrowser
-          onSelect={setSelectedRecipeId}
+          onSelect={handleSelectRecipe}
           selected={selectedRecipeId()}
         />
 
@@ -55,9 +63,10 @@ export default function Dashboard() {
 
 function MainArea(props: {
   selectedRecipeId: () => number | null,
-  setSelectedRecipeId: (v: number | null) => void
+  setSelectedRecipeId: (v: number | null) => void,
+  activeView: () => ActiveView
 }) {
-  const [activeView, setActiveView] = createSignal<"view" | "edit" | "add">("view");
+  const [activeView, setActiveView] = createSignal<ActiveView>("view");
 
   const [fullRecipe] = createResource(props.selectedRecipeId, (id) =>
     id ? fetch(`/api/recipes/${id}`).then(r => r.json()) : null
@@ -72,7 +81,11 @@ function MainArea(props: {
       </div> */}
 
       <Switch>
-        <Match when={activeView() === "view"}>
+        <Match when={props.activeView() === "add"}>
+          <RecipeEditor />
+        </Match>
+
+        <Match when={props.activeView() === "view"}>
           <RecipeEditor recipe={fullRecipe()} />
         </Match>
 
@@ -81,10 +94,10 @@ function MainArea(props: {
           </Show>
         </Match>
 
-        <Match when={activeView() === "add"}>
-          <Show when={userId()}>
-          </Show>
-        </Match> */}
+        // <Match when={activeView() === "add"}>
+        //   <Show when={userId()}>
+        //   </Show>
+        // </Match> */}
       </Switch>
     </div>
   )
