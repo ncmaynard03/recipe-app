@@ -5,20 +5,25 @@ import tag from "~/assets/dashboard/tag.png";
 import markdown from "~/assets/dashboard/markdown.png";
 import output from "~/assets/dashboard/output.png";/*export is a reserved word*/
 import bin from "~/assets/dashboard/trash-can.png";
+import type { ActiveView } from "~/types";
 
-export default function TaskBar() {
+type TBScreens = {
+    changeScreenTo: (screen: ActiveView) => void;
+};
+
+export default function TaskBar(props: TBScreens ) {
     return (
         <div class="task-bar">
             <div class="task-bar-buttons">
-                <button><img src={pencil} /></button>
+                <button onClick={() => props.changeScreenTo("add")}><img src={pencil} /></button>
                 <button><img src={tag} /></button>
-                <button><img src={markdown} /></button>
-                <button><img src={globe} /></button>
+                <button onClick={() => props.changeScreenTo("markdown")}><img src={markdown} /></button>
+                <button onClick={() => props.changeScreenTo("public")}><img src={globe} /></button>
             </div>
 
             <div class="task-bar-buttons">
-                <button><img src={output} /></button>
-                <button><img src={bin} /></button>
+                <button onClick={() => props.changeScreenTo("pdf-export")}><img src={output} /></button>
+                <button onClick={() => props.changeScreenTo("delete")}><img src={bin} /></button>
             </div>
         </div>
     );
