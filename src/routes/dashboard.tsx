@@ -79,7 +79,7 @@ function MainArea(props: {
 
     const data = await fetch(`/api/recipes/${id}`).then(r => r.json());
 
-    await displayDelay(500); //creates a delay to allow app to load selected recipe, avoiding old recipe selection showing first
+    await displayDelay(400); //creates a delay to allow app to load selected recipe, avoiding old recipe selection showing first
 
     return data;
   });
