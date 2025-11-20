@@ -4,7 +4,7 @@ import { createEffect, createSignal } from "solid-js";
 import WHPhoto from "~/assets/dashboard/waffle-house-allstarspecial.jpg";
 // import "~/styling/dashboard.css"
 // import "~/styling/recipe-browser.css"
-// import "~/styling/recipe-editor.css"
+import "~/styling/recipe-editor.css"
 
 const [unitsList, setUnitsList] = createSignal<"us" | "metric">("us");
 
