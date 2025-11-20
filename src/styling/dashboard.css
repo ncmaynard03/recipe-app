@@ -82,3 +82,10 @@
 .nav-bar button:hover {
   background: #e5e5e5;
 }
+
+.load-recipe-screen{
+  font-size: 1.5rem;
+  text-align: center;
+  align-self: center;
+  letter-spacing: 4px;
+}
