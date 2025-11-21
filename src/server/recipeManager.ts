@@ -21,7 +21,7 @@ export class RecipeManager {
     #recipes = new Map<number, FullRecipe>();
 
     async create(data: FullRecipe) {
-        console.log(`RMGR: Creating recipe \"${data.recipe_title}\"`);
+        console.log(`\n\nRMGR: Creating recipe \"${data.recipe_title}\"`);
         const { error } = await supabase.from('recipes').insert({
             author_id: data.author_id,
             recipe_title: data.recipe_title,
@@ -38,10 +38,7 @@ export class RecipeManager {
     };
 
     async update(id: number, data: FullRecipe) {
-        console.log(`RMGR: updating recipe ${id}`);
-        console.log("RMGR UPDATE CALLED");
-        console.log("Passed ID:", id, "typeof:", typeof id);
-        console.log("Numeric ID:", Number(id));
+        console.log(`\n\nRMGR: updating recipe ${id}`);
         console.log("Incoming update payload:", data);
 
         const updateData = {
@@ -59,13 +56,9 @@ export class RecipeManager {
             .eq("recipe_id", Number(id))
             .select();
 
-        console.log("UPDATED ROW:", updated);
+        // console.log("UPDATED ROW:", updated);
         if (error) throw error;
     }
-
-
-
-
 
     // -- HEADER INFO ONLY -- basic data to display within browser
     async getAllLocalRecipeHeaders(force = false): Promise<RecipeHeader[]> {
@@ -87,13 +80,13 @@ export class RecipeManager {
     // -- FULL RECIPE -- full recipe for editing/viewing 
     async getRecipeById(id: number, force = false): Promise<FullRecipe | null> {
         if (!force && this.#recipes.has(id)) {
-            console.log(`RMGR: Found cached recipe ${id}`);
+            console.log(`\n\nRMGR: Found cached recipe ${id}`);
             return this.#recipes.get(id)!;
         }
         if (force) {
-            console.log(`RMGR: Forcing reload of recipe ${id}`);
+            console.log(`\n\nRMGR: Forcing reload of recipe ${id}`);
         } else {
-            console.log(`RMGR: Loading recipe ${id} from database`);
+            console.log(`\n\nRMGR: Loading recipe ${id} from database`);
         }
 
         const { data, error } = await supabase
@@ -114,6 +107,26 @@ export class RecipeManager {
 
         if (error) { throw error; }
         return data || [];
+    }
+
+    async uploadThumbnail(file: File): Promise<string> {
+        const filePath = `${crypto.randomUUID()}-${file.name}`;
+
+        const { error } = await supabase.storage
+            .from("recipe_thumbnails")
+            .upload(filePath, file, {
+                cacheControl: '3600',
+                upsert: false
+            });
+
+        if (error) {
+            throw error;
+        }
+        return filePath;
+    }
+
+    getPublicUrl(path: string) {
+        return supabase.storage.from("recipe_thumbnails").getPublicUrl(path);
     }
 
 }
