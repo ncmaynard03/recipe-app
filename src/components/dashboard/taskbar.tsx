@@ -1,7 +1,7 @@
 import { createSignal } from "solid-js";
 import pencil from "~/assets/dashboard/pencil.png";
 import globe from "~/assets/dashboard/globe.png";
-import tag from "~/assets/dashboard/tag.png";
+import search from "~/assets/dashboard/magnifying-glass.png";
 import markdown from "~/assets/dashboard/markdown.png";
 import output from "~/assets/dashboard/output.png";/*export is a reserved word*/
 import bin from "~/assets/dashboard/trash-can.png";
@@ -16,7 +16,7 @@ export default function TaskBar(props: TBScreens ) {
         <div class="task-bar">
             <div class="task-bar-buttons">
                 <button onClick={() => props.changeScreenTo("add")}><img src={pencil} /></button>
-                <button><img src={tag} /></button>
+                <button onClick={() => props.changeScreenTo("search")}><img src={search} /></button>
                 <button onClick={() => props.changeScreenTo("markdown")}><img src={markdown} /></button>
                 <button onClick={() => props.changeScreenTo("public")}><img src={globe} /></button>
             </div>
