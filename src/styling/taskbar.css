@@ -26,6 +26,11 @@
     box-shadow: 2px 3px 4px lightgray;
 }
 
+.task-bar button:focus {
+    background: #D0F0C0;
+    scale: 99%;
+}
+
 .task-bar button:hover {
     background: #e5e5e5;
     transform: translateY(-1px);
