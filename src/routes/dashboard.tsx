@@ -10,7 +10,7 @@ import "~/styling/recipe-browser.css"
 import "~/styling/recipe-editor.css";
 import "~/styling/taskbar.css"
 
-
+import DeleteRecipe from "~/components/screens/DeleteRecipe";
 import TaskBar from "~/components/dashboard/taskbar";
 import RecipeEditor from "~/components/dashboard/recipeEditor";
 import RecipeSearchbar from "~/components/dashboard/searchbar";
@@ -107,6 +107,10 @@ function MainArea(props: {
           }>
             {(recipe) => <RecipeEditor recipe={recipe()} />}
           </Show>
+        </Match>
+
+        <Match when={props.activeView() === "delete"}>
+          <DeleteRecipe />
         </Match>
 
         {/* <Match when={activeView() === "edit"}>
