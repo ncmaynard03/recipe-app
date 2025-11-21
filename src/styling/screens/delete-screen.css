@@ -1,0 +1,13 @@
+.delete-screen-cont{
+    display: flex;
+    flex-direction: column;
+}
+
+.delete-lbl{
+    align-self: center;
+}
+
+.delete-lbl p{
+    font-size: 2rem;
+    letter-spacing: 4px;
+}
