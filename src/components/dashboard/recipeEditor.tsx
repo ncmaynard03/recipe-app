@@ -1,6 +1,50 @@
 import { createStore } from "solid-js/store";
 import { createEffect, createSignal } from "solid-js";
 import { supabase } from "~/supabase/supabase-client";
+import WHPhoto from "~/assets/dashboard/waffle-house-allstarspecial.jpg";
+// import "~/styling/dashboard.css"
+// import "~/styling/recipe-browser.css"
+import "~/styling/recipe-editor.css"
+
+const [unitsList, setUnitsList] = createSignal<"us" | "metric">("us");
+
+const usUnitsList = [
+    { value: "pounds", label: "lb(s)" },
+    { value: "ounces", label: "oz" },
+    { value: "gallons", label: "gal(s)" },
+    { value: "quarts", label: "qt(s)" },
+    { value: "pints", label: "pt(s)" },
+    { value: "cups", label: "cup(s)" },
+    { value: "fluid-ounces", label: "fl. oz" },
+    { value: "tablespoons", label: "tbsp(s)" },
+    { value: "teaspoons", label: "tsp(s)" },
+    { value: "pinch", label: "pinch" },
+    { value: "box", label: "box" },
+    { value: "can", label: "can" },
+    { value: "packet", label: "packet" }
+];
+
+const metricUnitsList = [
+    { value: "grams", label: "g" },
+    { value: "kilograms", label: "kg" },
+    { value: "milliliters", label: "ml" },
+    { value: "liters", label: "L" },
+    { value: "pinch", label: "pinch" },
+    { value: "box", label: "box" },
+    { value: "can", label: "can" },
+    { value: "packet", label: "packet" }
+];
+
+function selectUnits() {
+    switch (unitsList()) {
+        case "us":
+            return usUnitsList;
+        case "metric":
+            return metricUnitsList;
+        default:
+            return usUnitsList;
+    }
+}
 
 export default function RecipeEditor(props: { recipe?: any }) {
     const [form, setForm] = createStore({
@@ -167,6 +211,11 @@ export default function RecipeEditor(props: { recipe?: any }) {
                             </div>
                         </div>
 
+                        <div class="unit-sys-toggle">
+                            <label><input type="radio" checked={unitsList() == "us"} onChange={() => setUnitsList("us")} />US Customary</label>
+                            <label><input type="radio" checked={unitsList() == "metric"} onChange={() => setUnitsList("metric")} />Metric</label>
+                        </div>
+
                         <div class="ingredients-section">
                             <div class="ing-lbl-cont">
                                 <label>Recipe Ingredients</label>
@@ -187,21 +236,7 @@ export default function RecipeEditor(props: { recipe?: any }) {
                                             onInput={(e) => updateIngredient(index, "unit", e.currentTarget.value)}
                                         >
                                             <option value="">Unit</option>
-                                            {[
-                                                { value: "pounds", label: "lb(s)" },
-                                                { value: "ounces", label: "oz" },
-                                                { value: "gallons", label: "gal(s)" },
-                                                { value: "quarts", label: "qt(s)" },
-                                                { value: "pints", label: "pt(s)" },
-                                                { value: "cups", label: "cup(s)" },
-                                                { value: "fluid-ounces", label: "fl. oz" },
-                                                { value: "tablespoons", label: "tbsp(s)" },
-                                                { value: "teaspoons", label: "tsp(s)" },
-                                                { value: "pinch", label: "pinch" },
-                                                { value: "box", label: "box" },
-                                                { value: "can", label: "can" },
-                                                { value: "packet", label: "packet" }
-                                            ].map((unit) => (
+                                            {selectUnits().map((unit) => (
                                                 <option value={unit.value}>{unit.label}</option>
                                             ))}
                                         </select>

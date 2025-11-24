@@ -1,0 +1,94 @@
+.delete-screen-cont{
+    display: flex;
+    flex-direction: column;
+}
+
+.delete-lbl{
+    align-self: center;
+}
+
+.delete-lbl p{
+    font-size: 2rem;
+    letter-spacing: 4px;
+    font-weight: 300;
+    text-shadow: 2px 2.5px 1px silver;
+}
+
+.loading-user-recipe{
+    align-self: center;    
+}
+
+.loading-user-recipe p{
+    font-size: 2rem;
+    letter-spacing: 4px;
+    font-weight: 100;
+}
+
+.user-recipe{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.recipe-tile{
+    border: 0.5px solid silver;
+    width: 17%;
+    background-color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 0.8rem;
+    box-shadow: 1px 1.5px 5px 0.1px;
+}
+
+.recipe-tile img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.recipe-tile h3{
+    text-align: center;
+    letter-spacing: 2px;
+    font-weight: 300;
+}
+
+.selected-lbl{
+    margin-top: 0.8rem;
+}
+
+.selected-lbl p{
+    text-align: center;
+    font-weight: 200;
+    color: #120A8F;
+    letter-spacing: 1.5px;
+}
+
+.recipe-tile.selected{
+    border: 2px solid red ;
+}
+
+.btn-cont{
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    gap: 2rem;
+}
+
+.btn-cont button{
+    border-radius: 100px;
+    font-size: 1rem;
+    padding: 1rem;
+    cursor: pointer;
+    color: white;
+    background-color: black;
+}
+
+.clear-select-btn button:hover{
+    background-color: #4ECDC4;
+    transform: translateY(-2px);
+}
+
+.delete-recipe-btn button:hover{
+    background-color: #ED2100;
+    transform: translateY(-2px);
+}

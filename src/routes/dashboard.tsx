@@ -4,21 +4,26 @@ import { Title } from "@solidjs/meta";
 import { onMount, createSignal, Switch, Match, Show, createResource } from "solid-js";
 import { supabase } from "~/supabase/supabase-client";
 import * as supabaseFn from "~/supabase/supabase-queries";
+import type { ActiveView } from "~/types";
 import "~/styling/dashboard.css";
 import "~/styling/recipe-browser.css"
 import "~/styling/recipe-editor.css";
 import "~/styling/taskbar.css"
 
-
+import DeleteRecipe from "~/components/screens/DeleteRecipe";
 import TaskBar from "~/components/dashboard/taskbar";
 import RecipeEditor from "~/components/dashboard/recipeEditor";
 import RecipeSearchbar from "~/components/dashboard/searchbar";
 import RecipeBrowser from "~/components/dashboard/recipebrowser";
 import { setUserId, userId } from "~/stores/user";
 
+function displayDelay(ms: number){
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export default function Dashboard() {
   const [selectedRecipeId, setSelectedRecipeId] = createSignal<number | null>(null);
-
+  const [activeView, setActiveView] = createSignal<ActiveView>("add");
   const [username, setUsername] = createSignal("")
 
   onMount(async () => {
@@ -32,19 +37,27 @@ export default function Dashboard() {
     }
   });
 
+  const handleSelectRecipe = (id: number | null) => {
+    setSelectedRecipeId(id);
+    if (id !== null){
+      setActiveView("view");
+    }
+  }
+  
   return (
     <main class="dashboard">
       <div class="dashboard-main-region">
-        <TaskBar />
+        <TaskBar changeScreenTo={setActiveView}/>
         <MainArea
           selectedRecipeId={selectedRecipeId}
           setSelectedRecipeId={setSelectedRecipeId}
+          activeView={activeView}
         />
       </div>
 
       <div class="dashboard-side-region">
         <RecipeBrowser
-          onSelect={setSelectedRecipeId}
+          onSelect={handleSelectRecipe}
           selected={selectedRecipeId()}
         />
 
@@ -55,13 +68,21 @@ export default function Dashboard() {
 
 function MainArea(props: {
   selectedRecipeId: () => number | null,
-  setSelectedRecipeId: (v: number | null) => void
+  setSelectedRecipeId: (v: number | null) => void,
+  activeView: () => ActiveView
 }) {
-  const [activeView, setActiveView] = createSignal<"view" | "edit" | "add">("view");
 
-  const [fullRecipe] = createResource(props.selectedRecipeId, (id) =>
-    id ? fetch(`/api/recipes/${id}`).then(r => r.json()) : null
-  );
+  const [fullRecipe] = createResource(props.selectedRecipeId, async (id) => {
+    if (!id){
+      return null;
+    }
+
+    const data = await fetch(`/api/recipes/${id}`).then(r => r.json());
+
+    await displayDelay(400); //creates a delay to allow app to load selected recipe, avoiding old recipe selection showing first
+
+    return data;
+  });
 
   return (
     <div class="main-area">
@@ -72,8 +93,24 @@ function MainArea(props: {
       </div> */}
 
       <Switch>
-        <Match when={activeView() === "view"}>
-          <RecipeEditor recipe={fullRecipe()} />
+        <Match when={props.activeView() === "add"}>
+          <RecipeEditor />
+        </Match>
+
+        <Match when={props.activeView() === "view"}>
+          <Show when={!fullRecipe.loading && fullRecipe()} 
+            fallback={
+            <div class="load-recipe-screen">
+              <p>Loading Recipe...</p>
+              <div class='loading-circle'/>
+            </div>
+          }>
+            {(recipe) => <RecipeEditor recipe={recipe()} />}
+          </Show>
+        </Match>
+
+        <Match when={props.activeView() === "delete"}>
+          <DeleteRecipe />
         </Match>
 
         {/* <Match when={activeView() === "edit"}>
@@ -81,10 +118,10 @@ function MainArea(props: {
           </Show>
         </Match>
 
-        <Match when={activeView() === "add"}>
-          <Show when={userId()}>
-          </Show>
-        </Match> */}
+        // <Match when={activeView() === "add"}>
+        //   <Show when={userId()}>
+        //   </Show>
+        // </Match> */}
       </Switch>
     </div>
   )

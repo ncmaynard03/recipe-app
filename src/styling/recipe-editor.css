@@ -58,6 +58,9 @@
 
 /* Card w/ ingredients & time */
 .recipe-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: white;
   border-radius: 8px;
   border: 2px solid black;
@@ -70,7 +73,6 @@
   display: flex;
   gap: 2rem;
   justify-content: center;
-  padding-bottom: 1rem;
 }
 
 .time-fields label {
@@ -85,6 +87,15 @@
   width: 60px;
   text-align: center;
   border-radius: 6px;
+}
+
+/*Units Toggle*/
+.unit-sys-toggle{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 /* Ingredients */
