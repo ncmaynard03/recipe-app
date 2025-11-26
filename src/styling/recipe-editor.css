@@ -50,6 +50,12 @@
   box-shadow: var(--shadow);
 }
 
+.image-upload{
+  justify-self: center;
+  margin-left: 19%;
+  margin-top: 1rem;
+}
+
 .recipe-image img {
   width: 100%;
   border-radius: 6px;
