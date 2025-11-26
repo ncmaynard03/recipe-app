@@ -70,7 +70,7 @@ export default function DeleteRecipe() {
             </div>
 
             <div class="selected-lbl">
-                <p>Recipes Selected: {selectedIds().length}</p>
+                <p>{selectedIds().length} Recipe(s) Selected</p>
             </div>
 
             <div class="btn-cont">
