@@ -3,6 +3,7 @@
     flex-direction: column;
     background-color: azure;
     padding-bottom: 1rem;
+    min-height: 100vh;
 }
 
 .delete-lbl{
@@ -18,7 +19,7 @@
     font-size: 2rem;
     letter-spacing: 4px;
     font-weight: 300;
-    /* text-shadow: 2px 2.5px 1px blue; */
+    text-shadow: 2.5px 2.5px 0px #555555;
     margin: 0;
     color: white;
 }
@@ -46,18 +47,21 @@
     border-radius: 8px;
     cursor: pointer;
     padding: 0.8rem;
-    box-shadow: 1px 1.5px 5px 0.1px;
 }
 
 .recipe-tile img {
   width: 100%;
   border-radius: 8px;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
 }
 
 .recipe-tile h3{
     text-align: center;
     letter-spacing: 2px;
     font-weight: 300;
+    margin: 0;
 }
 
 .selected-lbl{
