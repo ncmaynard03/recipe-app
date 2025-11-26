@@ -16,6 +16,7 @@ import RecipeEditor from "~/components/dashboard/recipeEditor";
 import RecipeSearchbar from "~/components/dashboard/searchbar";
 import RecipeBrowser from "~/components/dashboard/recipebrowser";
 import { setUserId, userId } from "~/stores/user";
+import SearchRecipe from "~/components/screens/SearchRecipe";
 
 function displayDelay(ms: number){
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -86,11 +87,6 @@ function MainArea(props: {
 
   return (
     <div class="main-area">
-      {/* <div class="nav-bar">
-        <button onClick={() => setActiveView("add")}>Add Recipe</button>
-        <button onClick={() => setActiveView("edit")}>Edit Recipe</button>
-        <button onClick={() => setActiveView("view")}>View Recipe</button>
-      </div> */}
 
       <Switch>
         <Match when={props.activeView() === "add"}>
@@ -111,6 +107,10 @@ function MainArea(props: {
 
         <Match when={props.activeView() === "delete"}>
           <DeleteRecipe />
+        </Match>
+
+        <Match when={props.activeView() === "search"}>
+          <SearchRecipe />
         </Match>
 
         {/* <Match when={activeView() === "edit"}>
