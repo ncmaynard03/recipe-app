@@ -1,17 +1,26 @@
 .delete-screen-cont{
     display: flex;
     flex-direction: column;
+    background-color: white;
+    padding-bottom: 1rem;
 }
 
 .delete-lbl{
+    width: 100%;
     align-self: center;
+    background-color: black;
+    justify-items: center;
+    margin-bottom: 2rem;
+    padding: 0.5rem;
 }
 
 .delete-lbl p{
     font-size: 2rem;
     letter-spacing: 4px;
     font-weight: 300;
-    text-shadow: 2px 2.5px 1px silver;
+    /* text-shadow: 2px 2.5px 1px blue; */
+    margin: 0;
+    color: white;
 }
 
 .loading-user-recipe{
@@ -32,7 +41,6 @@
 }
 
 .recipe-tile{
-    border: 0.5px solid silver;
     width: 17%;
     background-color: white;
     border-radius: 8px;
@@ -63,9 +71,6 @@
     letter-spacing: 1.5px;
 }
 
-.recipe-tile.selected{
-    border: 2px solid red ;
-}
 
 .btn-cont{
     display: flex;
