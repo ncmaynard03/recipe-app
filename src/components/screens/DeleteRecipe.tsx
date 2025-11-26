@@ -56,8 +56,9 @@ export default function DeleteRecipe() {
                 <For each={headers() || []}>
                     {(r) => {
                         const recipeID = Number(r.recipe_id);
+
                         return (
-                            <div class="recipe-tile" onClick={() => selectRecipes(recipeID)}>
+                            <div class="recipe-tile" style={{border: selectedIds().includes(recipeID) ? "4px solid red" : "4px solid transparent" }} onClick={() => selectRecipes(recipeID)}>
                                 <img src={WHPhoto} alt="Recipe preview" />
                                 <h3>{r.recipe_title}</h3>
                             </div>
