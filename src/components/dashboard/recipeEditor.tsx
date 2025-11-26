@@ -157,13 +157,6 @@ export default function RecipeEditor(props: { recipe?: any }) {
                 />
 
                 <div>
-                    <input
-                        ref={fileInputRef}
-                        type="file"
-                        accept="image/*"
-                        onChange={handleFileSelect}
-                    />
-
                     {previewUrl() ? (
                         <img
                             src={previewUrl()!}
@@ -177,6 +170,15 @@ export default function RecipeEditor(props: { recipe?: any }) {
                             style="margin-top: 1rem;"
                         />
                     ) : null}
+
+                    <div class="image-upload">
+                        <input
+                            ref={fileInputRef}
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileSelect}
+                        />
+                    </div>
                 </div>
 
                 <div class="recipe-card">
