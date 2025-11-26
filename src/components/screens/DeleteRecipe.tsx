@@ -58,8 +58,9 @@ export default function DeleteRecipe() {
                         const recipeID = Number(r.recipe_id);
 
                         return (
-                            <div class="recipe-tile" style={{border: selectedIds().includes(recipeID) ? "4px solid red" : "4px solid transparent" }} onClick={() => selectRecipes(recipeID)}>
-                                <img src={WHPhoto} alt="Recipe preview" />
+                            <div class="recipe-tile" style={{border: selectedIds().includes(recipeID) ? "5px solid red" : "5px solid transparent",
+                                                             "box-shadow": selectedIds().includes(recipeID) ? "" : "1px 1.5px 5px 1.5px"}} onClick={() => selectRecipes(recipeID)}>
+                                <img src={r.image_url ? `/api/public-thumbnail?path=${encodeURIComponent(r.image_url)}`: WHPhoto} alt="Recipe preview" />
                                 <h3>{r.recipe_title}</h3>
                             </div>
                         )
