@@ -5,33 +5,33 @@ import { generateRandomUsername } from "~/utils/genRandomUN";
 export async function ensureUserExists() {
     const userID = await getCurrentUserID()
 
-    if(!userID){
+    if (!userID) {
         return null;
     }
-    
+
     //Retrieve single instance of user in public users table
     const { data: existingUser, error: retrievalErr } = await supabase
-    .from("users")
-    .select("username")
-    .eq("user_id", userID)
-    .maybeSingle();
+        .from("users")
+        .select("username")
+        .eq("user_id", userID)
+        .maybeSingle();
 
-    if (retrievalErr){
+    if (retrievalErr) {
         console.log("There was an error contacting Supabase:", retrievalErr.message);
     }
 
     //Returns existing user's username
-    if (existingUser){
+    if (existingUser) {
         return existingUser.username;
     }
 
     //Generates random username for new user, inserts the username and userID, and returns username.
     const newUserUN = generateRandomUsername();
     const { error: userInsertError } = await supabase
-    .from("users")
-    .insert({"username": newUserUN, "user_id": userID});
+        .from("users")
+        .insert({ "username": newUserUN, "user_id": userID });
 
-    if (userInsertError){
+    if (userInsertError) {
         console.log("The following error occurred:", userInsertError);
     }
     return newUserUN;
@@ -39,28 +39,28 @@ export async function ensureUserExists() {
 
 
 //Retrieves username for the current user
-export async function getUserName(){
+export async function getUserName() {
     const userID = await getCurrentUserID();
-    const { data: userName} = await supabase
-    .from("users")
-    .select("username")
-    .eq("user_id", userID);
+    const { data: userName } = await supabase
+        .from("users")
+        .select("username")
+        .eq("user_id", userID);
 
     return userName;
 }
 
 
 //Gets the user ID for the current user
-export async function getCurrentUserID(){
+export async function getCurrentUserID() {
     const { data: userData, error } = await supabase.auth.getUser()
-    if (error){
+    if (error) {
         console.log("An error has occurred:", error.message);
         return;
     }
 
     const userID = userData.user.id;
 
-    if(userData){
+    if (userData) {
         console.log("User found");
     }
     return userID;
@@ -68,13 +68,13 @@ export async function getCurrentUserID(){
 
 
 //Retrieves the id, image path, title, and author of all public recipes
-export async function getPublicRecipes(){
-    const {data: recipeInfo, error} = await supabase
-    .from("recipes")
-    .select("recipe_id, recipe_image_path, recipe_title, author_id")
-    .eq("is_public", true);
+export async function getPublicRecipes() {
+    const { data: recipeInfo, error } = await supabase
+        .from("recipes")
+        .select("recipe_id, recipe_image_path, recipe_title, author_id")
+        .eq("is_public", true);
 
-    if (error){
+    if (error) {
         console.log("There was an error retrieving recipe info.");
         return null;
     }
@@ -83,13 +83,13 @@ export async function getPublicRecipes(){
 }
 
 //Retrieves the id, image path, title, and author of all user recipes
-export async function getUserRecipes(user_id: string){
-    const {data: recipeInfo, error} = await supabase
-    .from("recipes")
-    .select("recipe_id, recipe_image_path, recipe_title, author_id")
-    .eq("author_id", user_id)
+export async function getUserRecipes(user_id: string) {
+    const { data: recipeInfo, error } = await supabase
+        .from("recipes")
+        .select("recipe_id, recipe_image_path, recipe_title, author_id")
+        .eq("author_id", user_id)
 
-    if (error){
+    if (error) {
         console.log("There was an error retrieving recipe info.");
         return null;
     }
@@ -103,38 +103,38 @@ UPDATES
 */
 
 //Checks if username is not already existing in the databasse
-export async function checkUniqueUsername(username: string){
-    const {data, error } = await supabase
-    .from("users")
-    .select("username")
-    .eq("username", username)
-    .maybeSingle();
+export async function checkUniqueUsername(username: string) {
+    const { data, error } = await supabase
+        .from("users")
+        .select("username")
+        .eq("username", username)
+        .maybeSingle();
 
-    if (error){
+    if (error) {
         console.log("There was an error retrieving information");
     }
 
-    if(data){
+    if (data) {
         return false;
     }
 
     return true;
 }
 
-export async function updateUsername(newUsername: string){
+export async function updateUsername(newUsername: string) {
     const userID = await getCurrentUserID();
 
-    if (userID){
+    if (userID) {
 
         const uniqueName = await checkUniqueUsername(newUsername);
 
-        if (uniqueName){
-            const {error} = await supabase
-            .from("users")
-            .update({"username": newUsername})
-            .eq('user_id', userID)
+        if (uniqueName) {
+            const { error } = await supabase
+                .from("users")
+                .update({ "username": newUsername })
+                .eq('user_id', userID)
 
-            if (error){
+            if (error) {
                 console.log("There was an error updating the database");
                 return;
             }

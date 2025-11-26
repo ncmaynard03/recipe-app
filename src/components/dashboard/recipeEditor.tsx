@@ -1,6 +1,6 @@
-//src/components/dashboard/recipeEditor.tsx
 import { createStore } from "solid-js/store";
 import { createEffect, createSignal } from "solid-js";
+import { supabase } from "~/supabase/supabase-client";
 import WHPhoto from "~/assets/dashboard/waffle-house-allstarspecial.jpg";
 // import "~/styling/dashboard.css"
 // import "~/styling/recipe-browser.css"
@@ -36,7 +36,7 @@ const metricUnitsList = [
 ];
 
 function selectUnits() {
-    switch (unitsList()){
+    switch (unitsList()) {
         case "us":
             return usUnitsList;
         case "metric":
@@ -58,6 +58,11 @@ export default function RecipeEditor(props: { recipe?: any }) {
         image_url: ""
     });
 
+    const [pendingImage, setPendingImage] = createSignal<File | null>(null);
+    const [previewUrl, setPreviewUrl] = createSignal<string | null>(null);
+
+    let fileInputRef: HTMLInputElement | undefined;
+
     createEffect(() => {
         if (props.recipe) {
             setForm({
@@ -68,6 +73,9 @@ export default function RecipeEditor(props: { recipe?: any }) {
                         : [{ quantity: "", unit: "", ingredientName: "" }]
             });
         }
+        if (fileInputRef) fileInputRef.value = "";
+        setPendingImage(null);
+        setPreviewUrl(null);
     });
 
     function addNewIngredient() {
@@ -86,6 +94,22 @@ export default function RecipeEditor(props: { recipe?: any }) {
 
     async function submitRecipe(e: Event) {
         e.preventDefault();
+
+        let finalImagePath = form.image_url;
+
+        if (pendingImage()) {
+            const file = pendingImage()!;
+            const filePath = `uploads/${crypto.randomUUID()}-${file.name}`;
+
+            const { error } = await supabase.storage
+                .from("recipe_thumbnails")
+                .upload(filePath, file, { upsert: false });
+
+            if (!error) {
+                finalImagePath = filePath;
+            }
+        }
+
         const send = {
             recipe_id: form.recipe_id,
             recipe_title: form.recipe_title,
@@ -93,7 +117,7 @@ export default function RecipeEditor(props: { recipe?: any }) {
             cook_time: form.cook_time,
             ingredients: form.ingredients,
             contents: form.contents,
-            image_url: form.image_url
+            image_url: finalImagePath
         };
 
         await fetch("/api/recipes", {
@@ -101,6 +125,23 @@ export default function RecipeEditor(props: { recipe?: any }) {
             body: JSON.stringify(send),
             headers: { "Content-Type": "application/json" }
         });
+
+        setPendingImage(null);
+        setPreviewUrl(null);
+    }
+
+    function publicUrl(path: string | null) {
+        if (!path) return null;
+        return supabase.storage.from("recipe_thumbnails").getPublicUrl(path).data.publicUrl;
+    }
+
+    function handleFileSelect(e: Event) {
+        const input = e.target as HTMLInputElement;
+        const f = input.files?.[0];
+        if (!f) return;
+
+        setPendingImage(f);
+        setPreviewUrl(URL.createObjectURL(f));
     }
 
     return (
@@ -115,8 +156,27 @@ export default function RecipeEditor(props: { recipe?: any }) {
                     placeholder="Recipe Title"
                 />
 
-                <div class="recipe-image">
-                    <img src={WHPhoto} alt="Preview" />
+                <div>
+                    <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileSelect}
+                    />
+
+                    {previewUrl() ? (
+                        <img
+                            src={previewUrl()!}
+                            class="recipe-thumbnail"
+                            style="margin-top: 1rem;"
+                        />
+                    ) : form.image_url ? (
+                        <img
+                            src={publicUrl(form.image_url) || ""}
+                            class="recipe-thumbnail"
+                            style="margin-top: 1rem;"
+                        />
+                    ) : null}
                 </div>
 
                 <div class="recipe-card">
@@ -134,8 +194,6 @@ export default function RecipeEditor(props: { recipe?: any }) {
                                     />
                                     {" mins"}
                                 </label>
-                                {/* <label id="mins">mins</label>
-                                    </label> */}
                             </div>
 
                             <div class="cook-time">
@@ -152,10 +210,10 @@ export default function RecipeEditor(props: { recipe?: any }) {
                                 </label>
                             </div>
                         </div>
-                        
+
                         <div class="unit-sys-toggle">
-                            <label><input type="radio" checked={unitsList() == "us"} onChange={() => setUnitsList("us")}/>US Customary</label>
-                            <label><input type="radio" checked={unitsList() == "metric"} onChange={() => setUnitsList("metric")}/>Metric</label>
+                            <label><input type="radio" checked={unitsList() == "us"} onChange={() => setUnitsList("us")} />US Customary</label>
+                            <label><input type="radio" checked={unitsList() == "metric"} onChange={() => setUnitsList("metric")} />Metric</label>
                         </div>
 
                         <div class="ingredients-section">
