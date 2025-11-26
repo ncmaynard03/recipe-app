@@ -77,3 +77,25 @@
 .submit button{
     background-color: black;
 }
+
+.filters{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 90%;
+    margin-top: 1rem;
+}
+
+.filters label{
+    font-weight: 100;
+}
+
+.filters input{
+    width: 100%;
+    font-size: 1rem;
+    height: 40px;
+}
+
+.filter-option{
+    margin-bottom: 8%;
+}
