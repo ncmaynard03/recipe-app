@@ -1,0 +1,4 @@
+.search-bar-row{
+    display: flex;
+    flex-direction: row;
+}
