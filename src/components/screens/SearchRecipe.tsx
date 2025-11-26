@@ -19,6 +19,23 @@ export default function SearchRecipe(){
                         <input type="text" placeholder="Search All Recipes..."/>
                     </div>
                 </div>
+                
+                <div class="filters">
+                    <div class="filter-option">
+                        <label>Include ingredients</label>
+                        <input type="text"/>
+                    </div>
+
+                    <div class="filter-option">
+                        <label>Exclude ingredients</label>
+                        <input type="text"/>
+                    </div>
+
+                    <div class="filter-option">
+                        <label>Tags</label>
+                        <input type="text"/>
+                    </div>
+                </div>
             </div>
         </div>
     );
