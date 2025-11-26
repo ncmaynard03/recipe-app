@@ -1,7 +1,7 @@
 .delete-screen-cont{
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: azure;
     padding-bottom: 1rem;
 }
 
