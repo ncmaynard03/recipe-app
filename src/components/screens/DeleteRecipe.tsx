@@ -1,7 +1,7 @@
 import { createSignal, For, Show, createResource, Suspense } from "solid-js";
 import "~/styling/screens/delete-screen.css"
 import RecipeBrowser from "../dashboard/recipebrowser";
-import WHPhoto from "~/assets/waffle-house-allstarspecial.jpg"
+import Plate from "~/assets/food-plate.jpg";
 
 export default function DeleteRecipe() {
     const [selectedIds, setSelectedIds] = createSignal<number[]>([]);
@@ -56,9 +56,11 @@ export default function DeleteRecipe() {
                 <For each={headers() || []}>
                     {(r) => {
                         const recipeID = Number(r.recipe_id);
+
                         return (
-                            <div class="recipe-tile" onClick={() => selectRecipes(recipeID)}>
-                                <img src={WHPhoto} alt="Recipe preview" />
+                            <div class="recipe-tile" style={{border: selectedIds().includes(recipeID) ? "5px solid red" : "5px solid transparent",
+                                                             "box-shadow": selectedIds().includes(recipeID) ? "" : "1px 1.5px 5px 1.5px"}} onClick={() => selectRecipes(recipeID)}>
+                                <img src={r.image_url ? `/api/public-thumbnail?path=${encodeURIComponent(r.image_url)}`: Plate} alt="Recipe preview" />
                                 <h3>{r.recipe_title}</h3>
                             </div>
                         )
@@ -68,7 +70,7 @@ export default function DeleteRecipe() {
             </div>
 
             <div class="selected-lbl">
-                <p>Recipes Selected: {selectedIds().length}</p>
+                <p>{selectedIds().length} Recipe(s) Selected</p>
             </div>
 
             <div class="btn-cont">

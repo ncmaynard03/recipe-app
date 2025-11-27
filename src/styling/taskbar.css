@@ -9,6 +9,8 @@
     background: var(--bg-card);
     border-top: 2px solid black;
     box-shadow: var(--shadow);
+    position: relative;
+    z-index: 2;
 }
 
 .task-bar-buttons {

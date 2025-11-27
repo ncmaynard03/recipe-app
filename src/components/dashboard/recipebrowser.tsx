@@ -1,5 +1,5 @@
 import { createResource, For, Show } from "solid-js";
-import WHPhoto from "~/assets/dashboard/waffle-house-allstarspecial.jpg";
+import Plate from "~/assets/food-plate.jpg";
 
 export default function RecipeBrowser(props: { onSelect: (id: number | null) => void, selected: number | null }) {
 
@@ -36,7 +36,7 @@ export default function RecipeBrowser(props: { onSelect: (id: number | null) => 
                                     )
                                 }
                             >
-                                <img src={WHPhoto} alt="Recipe preview" />
+                                <img src={r.image_url ? `/api/public-thumbnail?path=${encodeURIComponent(r.image_url)}`: Plate} alt="Recipe preview" />
                                 <div class="browsing-item-text">
                                     <h3>{r.recipe_title}</h3>
                                     <p>{r.author_id}</p>

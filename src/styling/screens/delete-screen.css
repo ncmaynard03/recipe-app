@@ -1,17 +1,27 @@
 .delete-screen-cont{
     display: flex;
     flex-direction: column;
+    background-color: azure;
+    padding-bottom: 1rem;
+    min-height: 100vh;
 }
 
 .delete-lbl{
+    width: 100%;
     align-self: center;
+    background-color: black;
+    justify-items: center;
+    margin-bottom: 2rem;
+    padding: 0.5rem;
 }
 
 .delete-lbl p{
     font-size: 2rem;
     letter-spacing: 4px;
     font-weight: 300;
-    text-shadow: 2px 2.5px 1px silver;
+    text-shadow: 2.5px 2.5px 0px #555555;
+    margin: 0;
+    color: white;
 }
 
 .loading-user-recipe{
@@ -32,24 +42,27 @@
 }
 
 .recipe-tile{
-    border: 0.5px solid silver;
     width: 17%;
     background-color: white;
     border-radius: 8px;
     cursor: pointer;
     padding: 0.8rem;
-    box-shadow: 1px 1.5px 5px 0.1px;
 }
 
 .recipe-tile img {
   width: 100%;
   border-radius: 8px;
+  height: 200px;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
 }
 
 .recipe-tile h3{
     text-align: center;
     letter-spacing: 2px;
     font-weight: 300;
+    margin: 0;
+    text-transform: capitalize;
 }
 
 .selected-lbl{
@@ -63,9 +76,6 @@
     letter-spacing: 1.5px;
 }
 
-.recipe-tile.selected{
-    border: 2px solid red ;
-}
 
 .btn-cont{
     display: flex;
