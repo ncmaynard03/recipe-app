@@ -200,30 +200,9 @@ export default function RecipeEditor(props: { recipe?: any }) {
                     placeholder="Recipe Title"
                 />
 
-                <div>
-                    {previewUrl() ? (
-                        <img
-                            src={previewUrl()!}
-                            class="recipe-thumbnail"
-                            style="margin-top: 1rem;"
-                        />
-                    ) : form.image_url ? (
-                        <img
-                            src={publicUrl(form.image_url) || ""}
-                            class="recipe-thumbnail"
-                            style="margin-top: 1rem;"
-                        />
-                    ) : null}
+                <ThumbnailSection />
 
-                    <div class="image-upload">
-                        <input
-                            ref={fileInputRef}
-                            type="file"
-                            accept="image/*"
-                            onChange={handleFileSelect}
-                        />
-                    </div>
-                </div>
+
 
                 <div class="recipe-card">
                     <div class="recipe-card-contents">
@@ -391,4 +370,33 @@ export default function RecipeEditor(props: { recipe?: any }) {
             </div>
         </div>
     );
+
+    function ThumbnailSection() {
+        return (
+            <div>
+                {previewUrl() ? (
+                    <img
+                        src={previewUrl()!}
+                        class="recipe-thumbnail"
+                        style="margin-top: 1rem;"
+                    />
+                ) : form.image_url ? (
+                    <img
+                        src={publicUrl(form.image_url) || ""}
+                        class="recipe-thumbnail"
+                        style="margin-top: 1rem;"
+                    />
+                ) : null}
+
+                <div class="image-upload">
+                    <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileSelect}
+                    />
+                </div>
+            </div>
+        );
+    }
 }
