@@ -201,170 +201,9 @@ export default function RecipeEditor(props: { recipe?: any }) {
                 />
 
                 <ThumbnailSection />
+                <RecipeCardSection />
+                <MarkdownEditorSection />
 
-
-
-                <div class="recipe-card">
-                    <div class="recipe-card-contents">
-                        <div class="time-fields">
-                            <div class="prep-time">
-                                <label for="prep_time">
-                                    {"Prep Time: "}
-                                    <input
-                                        id="prep_time"
-                                        name="prep_time"
-                                        type="text"
-                                        value={form.prep_time}
-                                        classList={{ "dirty-input": isDirty(["prep_time"]) }}
-                                        onInput={(e) =>
-                                            setForm(
-                                                "prep_time",
-                                                Number.isNaN(parseInt(e.currentTarget.value))
-                                                    ? 0
-                                                    : parseInt(e.currentTarget.value)
-                                            )
-                                        }
-                                    />
-                                    {" mins"}
-                                </label>
-                            </div>
-
-                            <div class="cook-time">
-                                <label for="cook_time">
-                                    {"Cook Time: "}
-                                    <input
-                                        id="cook_time"
-                                        name="cook_time"
-                                        type="text"
-                                        value={form.cook_time}
-                                        classList={{ "dirty-input": isDirty(["cook_time"]) }}
-                                        onInput={(e) =>
-                                            setForm(
-                                                "cook_time",
-                                                Number.isNaN(parseInt(e.currentTarget.value))
-                                                    ? 0
-                                                    : parseInt(e.currentTarget.value)
-                                            )
-                                        }
-                                    />
-                                    {" mins"}
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="unit-sys-toggle">
-                            <label><input type="radio" checked={unitsList() == "us"} onChange={() => setUnitsList("us")} />US Customary</label>
-                            <label><input type="radio" checked={unitsList() == "metric"} onChange={() => setUnitsList("metric")} />Metric</label>
-                        </div>
-
-                        <div class="ingredients-section">
-                            <div class="ing-lbl-cont">
-                                <label>Recipe Ingredients</label>
-                                {form.ingredients.map((ing, index) => (
-                                    <div class="ingredient-row">
-                                        <input
-                                            id={`qty_${index}`}
-                                            name={`qty_${index}`}
-                                            type="text"
-                                            value={ing.quantity}
-                                            placeholder="Qty"
-                                            classList={{ "dirty-input": isDirty(["ingredients", index, "quantity"]) }}
-                                            onInput={(e) => updateIngredient(index, "quantity", e.target.value)}
-                                        />
-                                        <select
-                                            id={`unit_${index}`}
-                                            name={`unit_${index}`}
-                                            value={ing.unit}
-                                            classList={{ "dirty-input": isDirty(["ingredients", index, "unit"]) }}
-                                            onInput={(e) => updateIngredient(index, "unit", e.currentTarget.value)}
-                                        >
-                                            <option value="">Unit</option>
-                                            {selectUnits().map((unit) => (
-                                                <option value={unit.value}>{unit.label}</option>
-                                            ))}
-                                        </select>
-                                        <input
-                                            id={`name_${index}`}
-                                            name={`name_${index}`}
-                                            type="text"
-                                            value={ing.ingredientName}
-                                            placeholder="Ingredient Name"
-                                            classList={{ "dirty-input": isDirty(["ingredients", index, "ingredientName"]) }}
-                                            onInput={(e) => updateIngredient(index, "ingredientName", e.target.value)}
-                                        />
-                                        <button class="delete-btn" onClick={() => deleteIngredient(index)}>
-                                            -
-                                        </button>
-                                    </div>
-                                ))}
-                                <button onClick={addNewIngredient}>+</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="recipe-text">
-                    <div class="md-header-row">
-                        <p>Markdown Editor</p>
-                        <div class="md-controls">
-                            <div class="md-mode-toggle">
-                                <button
-                                    type="button"
-                                    classList={{ active: viewMode() === "edit" }}
-                                    onClick={() => setViewMode("edit")}
-                                >
-                                    Edit
-                                </button>
-                                <button
-                                    type="button"
-                                    classList={{ active: viewMode() === "preview" }}
-                                    onClick={() => setViewMode("preview")}
-                                >
-                                    Preview
-                                </button>
-                                <button
-                                    type="button"
-                                    classList={{ active: viewMode() === "split" }}
-                                    onClick={() => setViewMode("split")}
-                                >
-                                    Split
-                                </button>
-                            </div>
-                            <button
-                                type="button"
-                                class="md-toggle-btn"
-                                onClick={() => setEditorExpanded((v) => !v)}
-                            >
-                                {editorExpanded() ? "Normal width" : "Full width"}
-                            </button>
-                        </div>
-                    </div>
-                    <div
-                        class="md-editor"
-                        classList={{
-                            expanded: editorExpanded(),
-                            "mode-edit": viewMode() === "edit",
-                            "mode-preview": viewMode() === "preview"
-                        }}
-                    >
-                        <Show when={viewMode() !== "preview"}>
-                            <div class="md-input">
-                                <textarea
-                                    id="contents"
-                                    name="contents"
-                                    class="recipe-text-textarea"
-                                    classList={{ "dirty-input": isDirty(["contents"]) }}
-                                    value={form.contents}
-                                    onInput={(e) => setForm("contents", e.currentTarget.value)}
-                                    placeholder="Write your recipe here using markdown..."
-                                />
-                            </div>
-                        </Show>
-                        <Show when={viewMode() !== "edit"}>
-                            <div class="md-preview" innerHTML={previewHtml()} />
-                        </Show>
-                    </div>
-                </div>
 
                 <button onClick={submitRecipe}>Save Recipe</button>
             </div>
@@ -395,6 +234,176 @@ export default function RecipeEditor(props: { recipe?: any }) {
                         accept="image/*"
                         onChange={handleFileSelect}
                     />
+                </div>
+            </div>
+        );
+    }
+
+    function RecipeCardSection() {
+        return (
+            <div class="recipe-card">
+                <div class="recipe-card-contents">
+                    <div class="time-fields">
+                        <div class="prep-time">
+                            <label for="prep_time">
+                                {"Prep Time: "}
+                                <input
+                                    id="prep_time"
+                                    name="prep_time"
+                                    type="text"
+                                    value={form.prep_time}
+                                    classList={{ "dirty-input": isDirty(["prep_time"]) }}
+                                    onInput={(e) =>
+                                        setForm(
+                                            "prep_time",
+                                            Number.isNaN(parseInt(e.currentTarget.value))
+                                                ? 0
+                                                : parseInt(e.currentTarget.value)
+                                        )
+                                    }
+                                />
+                                {" mins"}
+                            </label>
+                        </div>
+
+                        <div class="cook-time">
+                            <label for="cook_time">
+                                {"Cook Time: "}
+                                <input
+                                    id="cook_time"
+                                    name="cook_time"
+                                    type="text"
+                                    value={form.cook_time}
+                                    classList={{ "dirty-input": isDirty(["cook_time"]) }}
+                                    onInput={(e) =>
+                                        setForm(
+                                            "cook_time",
+                                            Number.isNaN(parseInt(e.currentTarget.value))
+                                                ? 0
+                                                : parseInt(e.currentTarget.value)
+                                        )
+                                    }
+                                />
+                                {" mins"}
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="unit-sys-toggle">
+                        <label><input type="radio" checked={unitsList() == "us"} onChange={() => setUnitsList("us")} />US Customary</label>
+                        <label><input type="radio" checked={unitsList() == "metric"} onChange={() => setUnitsList("metric")} />Metric</label>
+                    </div>
+
+                    <div class="ingredients-section">
+                        <div class="ing-lbl-cont">
+                            <label>Recipe Ingredients</label>
+                            {form.ingredients.map((ing, index) => (
+                                <div class="ingredient-row">
+                                    <input
+                                        id={`qty_${index}`}
+                                        name={`qty_${index}`}
+                                        type="text"
+                                        value={ing.quantity}
+                                        placeholder="Qty"
+                                        classList={{ "dirty-input": isDirty(["ingredients", index, "quantity"]) }}
+                                        onInput={(e) => updateIngredient(index, "quantity", e.target.value)}
+                                    />
+                                    <select
+                                        id={`unit_${index}`}
+                                        name={`unit_${index}`}
+                                        value={ing.unit}
+                                        classList={{ "dirty-input": isDirty(["ingredients", index, "unit"]) }}
+                                        onInput={(e) => updateIngredient(index, "unit", e.currentTarget.value)}
+                                    >
+                                        <option value="">Unit</option>
+                                        {selectUnits().map((unit) => (
+                                            <option value={unit.value}>{unit.label}</option>
+                                        ))}
+                                    </select>
+                                    <input
+                                        id={`name_${index}`}
+                                        name={`name_${index}`}
+                                        type="text"
+                                        value={ing.ingredientName}
+                                        placeholder="Ingredient Name"
+                                        classList={{ "dirty-input": isDirty(["ingredients", index, "ingredientName"]) }}
+                                        onInput={(e) => updateIngredient(index, "ingredientName", e.target.value)}
+                                    />
+                                    <button class="delete-btn" onClick={() => deleteIngredient(index)}>
+                                        -
+                                    </button>
+                                </div>
+                            ))}
+                            <button onClick={addNewIngredient}>+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    function MarkdownEditorSection() {
+        return (
+            <div class="recipe-text">
+                <div class="md-header-row">
+                    <p>Markdown Editor</p>
+                    <div class="md-controls">
+                        <div class="md-mode-toggle">
+                            <button
+                                type="button"
+                                classList={{ active: viewMode() === "edit" }}
+                                onClick={() => setViewMode("edit")}
+                            >
+                                Edit
+                            </button>
+                            <button
+                                type="button"
+                                classList={{ active: viewMode() === "preview" }}
+                                onClick={() => setViewMode("preview")}
+                            >
+                                Preview
+                            </button>
+                            <button
+                                type="button"
+                                classList={{ active: viewMode() === "split" }}
+                                onClick={() => setViewMode("split")}
+                            >
+                                Split
+                            </button>
+                        </div>
+                        <button
+                            type="button"
+                            class="md-toggle-btn"
+                            onClick={() => setEditorExpanded((v) => !v)}
+                        >
+                            {editorExpanded() ? "Normal width" : "Full width"}
+                        </button>
+                    </div>
+                </div>
+                <div
+                    class="md-editor"
+                    classList={{
+                        expanded: editorExpanded(),
+                        "mode-edit": viewMode() === "edit",
+                        "mode-preview": viewMode() === "preview"
+                    }}
+                >
+                    <Show when={viewMode() !== "preview"}>
+                        <div class="md-input">
+                            <textarea
+                                id="contents"
+                                name="contents"
+                                class="recipe-text-textarea"
+                                classList={{ "dirty-input": isDirty(["contents"]) }}
+                                value={form.contents}
+                                onInput={(e) => setForm("contents", e.currentTarget.value)}
+                                placeholder="Write your recipe here using markdown..."
+                            />
+                        </div>
+                    </Show>
+                    <Show when={viewMode() !== "edit"}>
+                        <div class="md-preview" innerHTML={previewHtml()} />
+                    </Show>
                 </div>
             </div>
         );
