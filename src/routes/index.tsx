@@ -2,10 +2,6 @@ import { Title } from "@solidjs/meta";
 import SignInComp from "~/components/auth/SignInComp";
 import MainImg from "~/assets/cropped-main.jpg"
 import "../styling/login-page/index.css";
-import { createEffect } from "solid-js";
-import { supabase } from "~/supabase/supabase-client";
-// import { loadAllRecipes } from "~/stores/recipes";
-
 
 export default function MainPage() {
 

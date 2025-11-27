@@ -1,12 +1,15 @@
 import { createStore } from "solid-js/store";
-import { createEffect, createSignal } from "solid-js";
+import { createEffect, createMemo, createSignal, Show } from "solid-js";
 import { supabase } from "~/supabase/supabase-client";
-import WHPhoto from "~/assets/dashboard/waffle-house-allstarspecial.jpg";
-// import "~/styling/dashboard.css"
-// import "~/styling/recipe-browser.css"
-import "~/styling/recipe-editor.css"
+import MarkdownIt from "markdown-it";
+import "~/styling/recipe-editor.css";
 
 const [unitsList, setUnitsList] = createSignal<"us" | "metric">("us");
+const md = new MarkdownIt({
+    html: false,
+    breaks: true,
+    linkify: true
+});
 
 const usUnitsList = [
     { value: "pounds", label: "lb(s)" },
@@ -35,6 +38,7 @@ const metricUnitsList = [
     { value: "packet", label: "packet" }
 ];
 
+
 function selectUnits() {
     switch (unitsList()) {
         case "us":
@@ -47,8 +51,8 @@ function selectUnits() {
 }
 
 export default function RecipeEditor(props: { recipe?: any }) {
-    const [form, setForm] = createStore({
-        recipe_id: -1,
+    const emptyForm = {
+        recipe_id: NaN,
         author_id: "",
         recipe_title: "",
         prep_time: 0,
@@ -56,23 +60,59 @@ export default function RecipeEditor(props: { recipe?: any }) {
         ingredients: [{ quantity: "", unit: "", ingredientName: "" }],
         contents: "",
         image_url: ""
-    });
+    };
+
+    const [form, setForm] = createStore(structuredClone(emptyForm));
+    const [initialForm, setInitialForm] = createStore(structuredClone(emptyForm));
 
     const [pendingImage, setPendingImage] = createSignal<File | null>(null);
     const [previewUrl, setPreviewUrl] = createSignal<string | null>(null);
+    const [editorExpanded, setEditorExpanded] = createSignal(false);
+    const [viewMode, setViewMode] = createSignal<"edit" | "preview" | "split">("split");
 
     let fileInputRef: HTMLInputElement | undefined;
 
-    createEffect(() => {
-        if (props.recipe) {
-            setForm({
-                ...props.recipe,
+    function cloneRecipeState(recipe?: any) {
+        const normalized = recipe
+            ? {
+                recipe_id: Number.isFinite(recipe.recipe_id) ? recipe.recipe_id : -1,
+                author_id: recipe.author_id ?? "",
+                recipe_title: recipe.recipe_title ?? "",
+                prep_time: Number.isFinite(recipe.prep_time) ? recipe.prep_time : 0,
+                cook_time: Number.isFinite(recipe.cook_time) ? recipe.cook_time : 0,
                 ingredients:
-                    props.recipe.ingredients?.length > 0
-                        ? props.recipe.ingredients
-                        : [{ quantity: "", unit: "", ingredientName: "" }]
-            });
-        }
+                    recipe.ingredients?.length > 0
+                        ? recipe.ingredients.map((ing: any) => ({
+                            quantity: ing.quantity ?? "",
+                            unit: ing.unit ?? "",
+                            ingredientName: ing.ingredientName ?? ""
+                        }))
+                        : structuredClone(emptyForm.ingredients),
+                contents: recipe.contents ?? "",
+                image_url: recipe.image_url ?? ""
+            }
+            : structuredClone(emptyForm);
+
+        return structuredClone(normalized);
+    }
+
+    function markSavedState(snapshot: typeof form) {
+        setInitialForm(snapshot);
+    }
+
+    function isDirty(path: (string | number)[]) {
+        const getValue = (obj: any, p: (string | number)[]) =>
+            p.reduce((acc, key) => (acc === undefined ? acc : acc[key]), obj);
+
+        const current = getValue(form, path);
+        const initial = getValue(initialForm, path);
+        return current !== initial;
+    }
+
+    createEffect(() => {
+        const next = cloneRecipeState(props.recipe);
+        setForm(next);
+        markSavedState(next);
         if (fileInputRef) fileInputRef.value = "";
         setPendingImage(null);
         setPreviewUrl(null);
@@ -113,8 +153,8 @@ export default function RecipeEditor(props: { recipe?: any }) {
         const send = {
             recipe_id: form.recipe_id,
             recipe_title: form.recipe_title,
-            prep_time: form.prep_time,
-            cook_time: form.cook_time,
+            prep_time: Number.isFinite(form.prep_time) ? form.prep_time : 0,
+            cook_time: Number.isFinite(form.cook_time) ? form.cook_time : 0,
             ingredients: form.ingredients,
             contents: form.contents,
             image_url: finalImagePath
@@ -128,6 +168,7 @@ export default function RecipeEditor(props: { recipe?: any }) {
 
         setPendingImage(null);
         setPreviewUrl(null);
+        markSavedState(cloneRecipeState({ ...form, image_url: finalImagePath }));
     }
 
     function publicUrl(path: string | null) {
@@ -144,14 +185,17 @@ export default function RecipeEditor(props: { recipe?: any }) {
         setPreviewUrl(URL.createObjectURL(f));
     }
 
+    const previewHtml = createMemo(() => md.render(form.contents || ""));
+
     return (
-        <div class="recipe-viewer">
+        <div class="recipe-viewer" classList={{ expanded: editorExpanded() }}>
             <div class="recipe-content">
                 <input
                     id="form-title"
                     name="recipe_title"
                     type="text"
                     value={form.recipe_title}
+                    classList={{ "dirty-input": isDirty(["recipe_title"]) }}
                     onInput={(e) => setForm("recipe_title", e.currentTarget.value)}
                     placeholder="Recipe Title"
                 />
@@ -190,7 +234,15 @@ export default function RecipeEditor(props: { recipe?: any }) {
                                         name="prep_time"
                                         type="text"
                                         value={form.prep_time}
-                                        onInput={(e) => setForm("prep_time", parseInt(e.currentTarget.value))}
+                                        classList={{ "dirty-input": isDirty(["prep_time"]) }}
+                                        onInput={(e) =>
+                                            setForm(
+                                                "prep_time",
+                                                Number.isNaN(parseInt(e.currentTarget.value))
+                                                    ? 0
+                                                    : parseInt(e.currentTarget.value)
+                                            )
+                                        }
                                     />
                                     {" mins"}
                                 </label>
@@ -204,7 +256,15 @@ export default function RecipeEditor(props: { recipe?: any }) {
                                         name="cook_time"
                                         type="text"
                                         value={form.cook_time}
-                                        onInput={(e) => setForm("cook_time", parseInt(e.currentTarget.value))}
+                                        classList={{ "dirty-input": isDirty(["cook_time"]) }}
+                                        onInput={(e) =>
+                                            setForm(
+                                                "cook_time",
+                                                Number.isNaN(parseInt(e.currentTarget.value))
+                                                    ? 0
+                                                    : parseInt(e.currentTarget.value)
+                                            )
+                                        }
                                     />
                                     {" mins"}
                                 </label>
@@ -227,12 +287,14 @@ export default function RecipeEditor(props: { recipe?: any }) {
                                             type="text"
                                             value={ing.quantity}
                                             placeholder="Qty"
+                                            classList={{ "dirty-input": isDirty(["ingredients", index, "quantity"]) }}
                                             onInput={(e) => updateIngredient(index, "quantity", e.target.value)}
                                         />
                                         <select
                                             id={`unit_${index}`}
                                             name={`unit_${index}`}
                                             value={ing.unit}
+                                            classList={{ "dirty-input": isDirty(["ingredients", index, "unit"]) }}
                                             onInput={(e) => updateIngredient(index, "unit", e.currentTarget.value)}
                                         >
                                             <option value="">Unit</option>
@@ -246,6 +308,7 @@ export default function RecipeEditor(props: { recipe?: any }) {
                                             type="text"
                                             value={ing.ingredientName}
                                             placeholder="Ingredient Name"
+                                            classList={{ "dirty-input": isDirty(["ingredients", index, "ingredientName"]) }}
                                             onInput={(e) => updateIngredient(index, "ingredientName", e.target.value)}
                                         />
                                         <button class="delete-btn" onClick={() => deleteIngredient(index)}>
@@ -260,14 +323,66 @@ export default function RecipeEditor(props: { recipe?: any }) {
                 </div>
 
                 <div class="recipe-text">
-                    <textarea
-                        id="contents"
-                        name="contents"
-                        class="recipe-text-textarea"
-                        value={form.contents}
-                        onInput={(e) => setForm("contents", e.currentTarget.value)}
-                        placeholder="Write your recipe here..."
-                    />
+                    <div class="md-header-row">
+                        <p>Markdown Editor</p>
+                        <div class="md-controls">
+                            <div class="md-mode-toggle">
+                                <button
+                                    type="button"
+                                    classList={{ active: viewMode() === "edit" }}
+                                    onClick={() => setViewMode("edit")}
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    type="button"
+                                    classList={{ active: viewMode() === "preview" }}
+                                    onClick={() => setViewMode("preview")}
+                                >
+                                    Preview
+                                </button>
+                                <button
+                                    type="button"
+                                    classList={{ active: viewMode() === "split" }}
+                                    onClick={() => setViewMode("split")}
+                                >
+                                    Split
+                                </button>
+                            </div>
+                            <button
+                                type="button"
+                                class="md-toggle-btn"
+                                onClick={() => setEditorExpanded((v) => !v)}
+                            >
+                                {editorExpanded() ? "Normal width" : "Full width"}
+                            </button>
+                        </div>
+                    </div>
+                    <div
+                        class="md-editor"
+                        classList={{
+                            expanded: editorExpanded(),
+                            "mode-edit": viewMode() === "edit",
+                            "mode-preview": viewMode() === "preview"
+                        }}
+                    >
+                        <Show when={viewMode() !== "preview"}>
+                            <div class="md-input">
+                                <textarea
+                                    id="contents"
+                                    name="contents"
+                                    class="recipe-text-textarea"
+                                    classList={{ "dirty-input": isDirty(["contents"]) }}
+                                    value={form.contents}
+                                    onInput={(e) => setForm("contents", e.currentTarget.value)}
+                                    placeholder="Write your recipe here using markdown..."
+                                />
+                            </div>
+                        </Show>
+                        <Show when={viewMode() !== "edit"}>
+                            <div class="md-preview" innerHTML={previewHtml()} />
+                        </Show>
+                    </div>
                 </div>
 
                 <button onClick={submitRecipe}>Save Recipe</button>

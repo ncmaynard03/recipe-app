@@ -10,12 +10,22 @@
   background: white;
 }
 
+.recipe-viewer.expanded {
+  justify-content: flex-start;
+  padding: 2rem 3rem;
+}
+
 .recipe-content {
   width: 650px;
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
   color: black;
+}
+
+.recipe-viewer.expanded .recipe-content {
+  width: 100%;
+  max-width: none;
 }
 
 #form-title {
@@ -163,4 +173,107 @@
 .recipe-content button:hover {
   background: #e5e5e5;
   transform: translateY(-1px);
+}
+
+/* Dirty state */
+.dirty-input {
+  border-color: #e53935 !important;
+  box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.15);
+}
+
+/* Markdown editor layout */
+.md-editor {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.md-editor.mode-edit,
+.md-editor.mode-preview {
+  grid-template-columns: 1fr;
+}
+
+.md-input,
+.md-preview {
+  background: white;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.md-input {
+  padding: 0;
+  border: none;
+}
+
+.md-input textarea {
+  border: 2px solid black;
+  box-shadow: none;
+  min-height: 240px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  overflow: auto;
+  outline-offset: -2px;
+}
+
+.md-preview {
+  padding: 0.75rem;
+  min-height: 240px;
+  overflow: auto;
+  font-family: "Caprasimo", sans-serif;
+}
+
+.md-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.md-header-row p {
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: 2px;
+}
+
+.md-toggle-btn {
+  background: white;
+  border: 2px solid black;
+  padding: 0.35rem 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  box-shadow: var(--shadow);
+  font-family: "Caprasimo", sans-serif;
+}
+
+.md-toggle-btn:hover {
+  background: #e5e5e5;
+}
+
+.md-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.md-mode-toggle {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.md-mode-toggle button {
+  background: white;
+  border: 2px solid black;
+  padding: 0.35rem 0.7rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "Caprasimo", sans-serif;
+  box-shadow: var(--shadow);
+}
+
+.md-mode-toggle button.active {
+  background: #d0f0c0;
 }

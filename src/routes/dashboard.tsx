@@ -1,6 +1,5 @@
 //src/routes/dashboard.tsx
 
-import { Title } from "@solidjs/meta";
 import { onMount, createSignal, Switch, Match, Show, createResource } from "solid-js";
 import { supabase } from "~/supabase/supabase-client";
 import * as supabaseFn from "~/supabase/supabase-queries";
@@ -17,7 +16,7 @@ import RecipeSearchbar from "~/components/dashboard/searchbar";
 import RecipeBrowser from "~/components/dashboard/recipebrowser";
 import { setUserId, userId } from "~/stores/user";
 
-function displayDelay(ms: number){
+function displayDelay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
@@ -39,15 +38,15 @@ export default function Dashboard() {
 
   const handleSelectRecipe = (id: number | null) => {
     setSelectedRecipeId(id);
-    if (id !== null){
+    if (id !== null) {
       setActiveView("view");
     }
   }
-  
+
   return (
     <main class="dashboard">
       <div class="dashboard-main-region">
-        <TaskBar changeScreenTo={setActiveView}/>
+        <TaskBar changeScreenTo={setActiveView} />
         <MainArea
           selectedRecipeId={selectedRecipeId}
           setSelectedRecipeId={setSelectedRecipeId}
@@ -73,7 +72,7 @@ function MainArea(props: {
 }) {
 
   const [fullRecipe] = createResource(props.selectedRecipeId, async (id) => {
-    if (!id){
+    if (!id) {
       return null;
     }
 
@@ -98,13 +97,13 @@ function MainArea(props: {
         </Match>
 
         <Match when={props.activeView() === "view"}>
-          <Show when={!fullRecipe.loading && fullRecipe()} 
+          <Show when={!fullRecipe.loading && fullRecipe()}
             fallback={
-            <div class="load-recipe-screen">
-              <p>Loading Recipe...</p>
-              <div class='loading-circle'/>
-            </div>
-          }>
+              <div class="load-recipe-screen">
+                <p>Loading Recipe...</p>
+                <div class='loading-circle' />
+              </div>
+            }>
             {(recipe) => <RecipeEditor recipe={recipe()} />}
           </Show>
         </Match>
