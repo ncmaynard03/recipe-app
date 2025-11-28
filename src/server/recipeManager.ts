@@ -5,6 +5,7 @@ interface RecipeHeader {
     author_id: string;
     recipe_title: string;
     image_url?: string;
+    author_username?: string;
 }
 
 interface FullRecipe extends RecipeHeader {
@@ -67,8 +68,8 @@ export class RecipeManager {
         }
 
         const { data, error } = await supabase
-            .from("recipes")
-            .select("recipe_id, author_id, recipe_title, image_url");
+            .from("recipes_with_username")
+            .select("recipe_id, author_id, recipe_title, image_url, author_username");
 
         if (error) throw error;
         if (!data) return [];
@@ -103,7 +104,7 @@ export class RecipeManager {
     }
 
     async getAllRecipes() {
-        const { data, error } = await supabase.from('recipes').select('*');
+        const { data, error } = await supabase.from('recipes_with_username').select('*');
 
         if (error) { throw error; }
         return data || [];
