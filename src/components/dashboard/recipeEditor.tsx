@@ -243,6 +243,20 @@ export default function RecipeEditor(props: { recipe?: any }) {
         return (
             <div class="recipe-card">
                 <div class="recipe-card-contents">
+
+                    <label class="toggle-cont">
+                        <input type="checkbox"/>
+                        <span class="toggle">
+                            <span class="toggle-text private">Private</span>
+                            <span class="toggle-text public">Public</span>
+                        </span>
+                    </label>
+
+                    <div class="serving-size">
+                        <label>Servings: </label>
+                        <input id="serving-size" type='text'/>
+                    </div>
+
                     <div class="time-fields">
                         <div class="prep-time">
                             <label for="prep_time">
