@@ -244,6 +244,7 @@ export default function RecipeEditor(props: { recipe?: any }) {
             <div class="recipe-card">
                 <div class="recipe-card-contents">
 
+                    {/*Publicity Toggle*/}
                     <label class="toggle-cont">
                         <input type="checkbox"/>
                         <span class="toggle">
