@@ -1,4 +1,5 @@
 import { createSignal, Show } from "solid-js";
+import { Collapsible } from "@kobalte/core/collapsible";
 import Arrow from "~/assets/arrow.png";
 import Hat from "~/assets/chef_hat.png"
 import MGlass from "~/assets/dashboard/magnifying-glass.png"
@@ -17,11 +18,13 @@ export default function SearchRecipe(){
                         <p>Results Will Display Here</p>
                     </div>}
                 >
-                    <div class="search-results">
-                        <p>Found recipes</p>
+                    <div class="search-results-view">
+                        <p>[Empty Page Where Results Will Actually Show]</p>
                     </div>
                 </Show>
             </div>
+
+
             <div class="search-options-pane">
                 <div class="search-bar-row">
                     <div class="search-field">
@@ -32,23 +35,73 @@ export default function SearchRecipe(){
                         </Show>
                     </div>
                 </div>
+                <Collapsible class="collapsible">
+                    <Collapsible.Trigger class="sort">
+                        <span>Sort By</span>
+                    </Collapsible.Trigger>
+                    <Collapsible.Content class="sort-options">
+                        <div class="sort-option">
+                            <input type="radio" id="recipe-title-asc"/>
+                            <label for="recipe-title">Title A-Z</label>
+                        </div>
+
+                        <div class="sort-option">
+                            <input type="radio" id="recipe-title-desc"/>
+                            <label for="recipe-title">Title Z-A</label>
+                        </div>
+
+                        <div class="sort-option">
+                            <input type="radio" id="author-asc"/>
+                            <label for="recipe-title">Author A-Z</label>
+                        </div>
+
+                        <div class="sort-option">
+                            <input type="radio" id="author-desc"/>
+                            <label for="recipe-title">Author Z-A</label>
+                        </div>
+
+                        <div class="sort-option">
+                            <input type="radio" id="recipe-title"/>
+                            <label for="recipe-title">Oldest</label>
+                        </div>
+
+                        <div class="sort-option">
+                            <input type="radio" id="recipe-title"/>
+                            <label for="recipe-title">Newest</label>
+                        </div>
+                    </Collapsible.Content>
+                </Collapsible>
+
+                <Collapsible class="collapsible">
+                    <Collapsible.Trigger class="filter">
+                        <span>Filters</span>
+                    </Collapsible.Trigger>
+                    <Collapsible.Content class="search-filters">
+                        <div class="filters">
+                            <div class="filter-option">
+                                <label>Author</label>
+                                <input type="text"/>
+                            </div>
+
+                            <div class="filter-option">
+                                <label>Include ingredients</label>
+                                <input type="text"/>
+                            </div>
+
+                            <div class="filter-option">
+                                <label>Exclude ingredients</label>
+                                <input type="text"/>
+                            </div>
+
+                            <div class="filter-option">
+                                <label>Tags</label>
+                                <input type="text"/>
+                            </div>
+                        </div>
+                    </Collapsible.Content>
+                </Collapsible>
                 
-                <div class="filters">
-                    <div class="filter-option">
-                        <label>Include ingredients</label>
-                        <input type="text"/>
-                    </div>
-
-                    <div class="filter-option">
-                        <label>Exclude ingredients</label>
-                        <input type="text"/>
-                    </div>
-
-                    <div class="filter-option">
-                        <label>Tags</label>
-                        <input type="text"/>
-                    </div>
-                </div>
+                
             </div>
         </div>
     );

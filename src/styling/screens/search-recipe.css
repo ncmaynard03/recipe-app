@@ -75,10 +75,6 @@
     pointer-events: none;
 }
 
-.submit button{
-    background-color: black;
-}
-
 .clear-btn {
     position: absolute;
     top: 15px;
@@ -95,6 +91,41 @@
 
 .clear-btn:hover{
     opacity: 0.8;
+}
+
+.collapsible{
+    width: 100%;
+    display: block;
+}
+
+.collapsible .sort, .collapsible .filter{
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+    height: 2rem;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    font-weight: 300;
+}
+
+.collapsible .sort-options, .collapsible .search-filters{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.collapsible .sort-options{
+    padding: 1.3rem;
+}
+
+.sort-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    letter-spacing: 1.25px;
+    font-size: 1rem;
+    font-weight: 200;
 }
 
 .filters{
