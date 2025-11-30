@@ -40,6 +40,8 @@
     flex-direction: column;
     border-left: 2px solid black;
     overflow-y: auto;
+    background-color: white;
+    flex: 0 0 25%;
 }
 
 .search-bar-row{
@@ -100,12 +102,21 @@
 
 .collapsible .sort, .collapsible .filter{
     width: 100%;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     box-sizing: border-box;
     height: 2rem;
     font-size: 1.2rem;
     letter-spacing: 3px;
     font-weight: 300;
+    background-color: white;
+    border: 0.5px solid black;
+    padding: 1.2rem 1rem;
+}
+
+.collapsible .sort:hover, .collapsible .filter:hover{
+    cursor: pointer;
 }
 
 .collapsible .sort-options, .collapsible .search-filters{
@@ -117,6 +128,7 @@
 
 .collapsible .sort-options{
     padding: 1.3rem;
+
 }
 
 .sort-options {
@@ -138,6 +150,7 @@
 
 .filters label{
     font-weight: 100;
+    letter-spacing: 2px;
 }
 
 .filters input{
