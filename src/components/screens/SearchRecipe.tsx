@@ -1,6 +1,6 @@
 import { createSignal, Show } from "solid-js";
 import { Collapsible } from "@kobalte/core/collapsible";
-import Arrow from "~/assets/arrow.png";
+import Arrow from "~/assets/arrow-down.png";
 import Hat from "~/assets/chef_hat.png"
 import MGlass from "~/assets/dashboard/magnifying-glass.png"
 import "~/styling/screens/search-recipe.css"
@@ -38,6 +38,7 @@ export default function SearchRecipe(){
                 <Collapsible class="collapsible">
                     <Collapsible.Trigger class="sort">
                         <span>Sort By</span>
+                        <img src={Arrow}/>
                     </Collapsible.Trigger>
                     <Collapsible.Content class="sort-options">
                         <div class="sort-option">
@@ -75,6 +76,7 @@ export default function SearchRecipe(){
                 <Collapsible class="collapsible">
                     <Collapsible.Trigger class="filter">
                         <span>Filters</span>
+                        <img src={Arrow}/>
                     </Collapsible.Trigger>
                     <Collapsible.Content class="search-filters">
                         <div class="filters">
