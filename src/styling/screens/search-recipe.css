@@ -56,6 +56,7 @@
     width: 100%;
     height: 50px;
     padding-left: 40px;
+    padding-right: 40px;
     font-size: 1.4rem;
     letter-spacing: 3px;
     text-align: center;
@@ -76,6 +77,24 @@
 
 .submit button{
     background-color: black;
+}
+
+.clear-btn {
+    position: absolute;
+    top: 15px;
+    right: 5px;
+    background: none;
+    border: none;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 15px;
+    cursor: pointer;
+    opacity: 0.3;
+    object-fit: contain;
+    transition: opacity 0.2s ease;
+}
+
+.clear-btn:hover{
+    opacity: 0.8;
 }
 
 .filters{
