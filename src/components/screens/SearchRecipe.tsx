@@ -41,32 +41,32 @@ export default function SearchRecipe(){
                     </Collapsible.Trigger>
                     <Collapsible.Content class="sort-options">
                         <div class="sort-option">
-                            <input type="radio" id="recipe-title-asc"/>
+                            <input type="radio" id="recipe-title-asc" name="sort-option"/>
                             <label for="recipe-title">Title A-Z</label>
                         </div>
 
                         <div class="sort-option">
-                            <input type="radio" id="recipe-title-desc"/>
+                            <input type="radio" id="recipe-title-desc" name="sort-option"/>
                             <label for="recipe-title">Title Z-A</label>
                         </div>
 
                         <div class="sort-option">
-                            <input type="radio" id="author-asc"/>
+                            <input type="radio" id="author-asc" name="sort-option"/>
                             <label for="recipe-title">Author A-Z</label>
                         </div>
 
                         <div class="sort-option">
-                            <input type="radio" id="author-desc"/>
+                            <input type="radio" id="author-desc" name="sort-option"/>
                             <label for="recipe-title">Author Z-A</label>
                         </div>
 
                         <div class="sort-option">
-                            <input type="radio" id="recipe-title"/>
+                            <input type="radio" id="recipe-title" name="sort-option"/>
                             <label for="recipe-title">Oldest</label>
                         </div>
 
                         <div class="sort-option">
-                            <input type="radio" id="recipe-title"/>
+                            <input type="radio" id="recipe-title" name="sort-option"/>
                             <label for="recipe-title">Newest</label>
                         </div>
                     </Collapsible.Content>
