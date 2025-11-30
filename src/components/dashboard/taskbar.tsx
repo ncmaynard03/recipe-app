@@ -18,7 +18,7 @@ export default function TaskBar(props: TBScreens ) {
             <div class="task-bar-buttons">
                 <button onClick={() => props.changeScreenTo("add")}><img src={pencil} /></button>
                 <button onClick={() => props.changeScreenTo("search")}><img src={search} /></button>
-                <button onClick={() => props.changeScreenTo("markdown")}><img src={markdown} /></button>
+                {/* <button onClick={() => props.changeScreenTo("markdown")}><img src={markdown} /></button> */}
                 <button onClick={() => props.changeScreenTo("public")}><img src={globe} /></button>
             </div>
 
