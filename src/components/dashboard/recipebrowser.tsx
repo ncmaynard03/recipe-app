@@ -36,7 +36,7 @@ export default function RecipeBrowser(props: { onSelect: (id: number | null) => 
                                     )
                                 }
                             >
-                                <img src={r.image_url ? `/api/public-thumbnail?path=${encodeURIComponent(r.image_url)}`: Plate} alt="Recipe preview" />
+                                <img src={r.image_url ? `/api/public-thumbnail?path=${encodeURIComponent(r.image_url)}` : Plate} alt="Recipe preview" />
                                 <div class="browsing-item-text">
                                     <h3>{r.recipe_title}</h3>
                                     {r.author_username && <p>{`Author: ${r.author_username}`}</p>}
