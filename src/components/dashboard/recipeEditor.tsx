@@ -68,7 +68,7 @@ export default function RecipeEditor(props: { recipe?: any }) {
     const [pendingImage, setPendingImage] = createSignal<File | null>(null);
     const [previewUrl, setPreviewUrl] = createSignal<string | null>(null);
     const [editorExpanded, setEditorExpanded] = createSignal(false);
-    const [viewMode, setViewMode] = createSignal<"edit" | "preview" | "split">("split");
+    const [viewMode, setViewMode] = createSignal<"plain" | "preview" | "split">("split");
 
     let fileInputRef: HTMLInputElement | undefined;
 
@@ -132,6 +132,8 @@ export default function RecipeEditor(props: { recipe?: any }) {
         }
     }
 
+    const previewHtml = createMemo(() => md.render(form.contents || ""));
+
     async function submitRecipe(e: Event) {
         e.preventDefault();
 
@@ -171,35 +173,12 @@ export default function RecipeEditor(props: { recipe?: any }) {
         markSavedState(cloneRecipeState({ ...form, image_url: finalImagePath }));
     }
 
-    function publicUrl(path: string | null) {
-        if (!path) return null;
-        return supabase.storage.from("recipe_thumbnails").getPublicUrl(path).data.publicUrl;
-    }
 
-    function handleFileSelect(e: Event) {
-        const input = e.target as HTMLInputElement;
-        const f = input.files?.[0];
-        if (!f) return;
-
-        setPendingImage(f);
-        setPreviewUrl(URL.createObjectURL(f));
-    }
-
-    const previewHtml = createMemo(() => md.render(form.contents || ""));
 
     return (
         <div class="recipe-viewer" classList={{ expanded: editorExpanded() }}>
             <div class="recipe-content">
-                <input
-                    id="form-title"
-                    name="recipe_title"
-                    type="text"
-                    value={form.recipe_title}
-                    classList={{ "dirty-input": isDirty(["recipe_title"]) }}
-                    onInput={(e) => setForm("recipe_title", e.currentTarget.value)}
-                    placeholder="Recipe Title"
-                />
-
+                <TitleSection />
                 <ThumbnailSection />
                 <RecipeCardSection />
                 <MarkdownEditorSection />
@@ -210,7 +189,36 @@ export default function RecipeEditor(props: { recipe?: any }) {
         </div>
     );
 
+    function TitleSection() {
+        return (
+            <input
+                id="form-title"
+                name="recipe_title"
+                type="text"
+                value={form.recipe_title}
+                classList={{ "dirty-input": isDirty(["recipe_title"]) }}
+                onInput={(e) => setForm("recipe_title", e.currentTarget.value)}
+                placeholder="Recipe Title"
+            />
+        );
+    }
+
     function ThumbnailSection() {
+
+        function publicUrl(path: string | null) {
+            if (!path) return null;
+            return supabase.storage.from("recipe_thumbnails").getPublicUrl(path).data.publicUrl;
+        }
+
+        function handleFileSelect(e: Event) {
+            const input = e.target as HTMLInputElement;
+            const f = input.files?.[0];
+            if (!f) return;
+
+            setPendingImage(f);
+            setPreviewUrl(URL.createObjectURL(f));
+        }
+
         return (
             <div>
                 {previewUrl() ? (
@@ -351,10 +359,10 @@ export default function RecipeEditor(props: { recipe?: any }) {
                         <div class="md-mode-toggle">
                             <button
                                 type="button"
-                                classList={{ active: viewMode() === "edit" }}
-                                onClick={() => setViewMode("edit")}
+                                classList={{ active: viewMode() === "plain" }}
+                                onClick={() => setViewMode("plain")}
                             >
-                                Edit
+                                Plain
                             </button>
                             <button
                                 type="button"
@@ -368,7 +376,7 @@ export default function RecipeEditor(props: { recipe?: any }) {
                                 classList={{ active: viewMode() === "split" }}
                                 onClick={() => setViewMode("split")}
                             >
-                                Split
+                                Both
                             </button>
                         </div>
                         <button
@@ -384,7 +392,7 @@ export default function RecipeEditor(props: { recipe?: any }) {
                     class="md-editor"
                     classList={{
                         expanded: editorExpanded(),
-                        "mode-edit": viewMode() === "edit",
+                        "mode-plain": viewMode() === "plain",
                         "mode-preview": viewMode() === "preview"
                     }}
                 >
@@ -401,7 +409,7 @@ export default function RecipeEditor(props: { recipe?: any }) {
                             />
                         </div>
                     </Show>
-                    <Show when={viewMode() !== "edit"}>
+                    <Show when={viewMode() !== "plain"}>
                         <div class="md-preview" innerHTML={previewHtml()} />
                     </Show>
                 </div>

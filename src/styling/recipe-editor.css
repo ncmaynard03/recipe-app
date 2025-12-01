@@ -195,7 +195,7 @@
   align-items: stretch;
 }
 
-.md-editor.mode-edit,
+.md-editor.mode-plain,
 .md-editor.mode-preview {
   grid-template-columns: 1fr;
 }
