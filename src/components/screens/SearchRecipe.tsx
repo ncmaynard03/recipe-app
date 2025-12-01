@@ -12,16 +12,11 @@ export default function SearchRecipe(){
     return(
         <div class="search-page-cont">
             <div class="search-results-section">
-                <Show when={searchText() !== ""} fallback = {
+
                     <div class="default-search-view">
                         <img src={Hat}/>
                         <p>Results Will Display Here</p>
-                    </div>}
-                >
-                    <div class="search-results-view">
-                        <p>[Empty Page Where Results Will Actually Show]</p>
                     </div>
-                </Show>
             </div>
 
 
