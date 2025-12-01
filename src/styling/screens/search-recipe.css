@@ -128,6 +128,14 @@
     box-sizing: border-box;
 }
 
+.sort .arrow, .filter .arrow{
+    transition: transform 0.25s ease;
+}
+
+.sort[data-expanded] .arrow, .filter[data-expanded] .arrow{
+    transform: rotate(180deg);
+}
+
 .collapsible .sort-options{
     padding: 1.3rem;
 
