@@ -5,6 +5,7 @@ import search from "~/assets/dashboard/magnifying-glass.png";
 import markdown from "~/assets/dashboard/markdown.png";
 import output from "~/assets/dashboard/output.png";/*export is a reserved word*/
 import bin from "~/assets/dashboard/trash-can.png";
+import settings from "~/assets/dashboard/settings.png"
 import type { ActiveView } from "~/types";
 
 type TBScreens = {
@@ -17,13 +18,14 @@ export default function TaskBar(props: TBScreens ) {
             <div class="task-bar-buttons">
                 <button onClick={() => props.changeScreenTo("add")}><img src={pencil} /></button>
                 <button onClick={() => props.changeScreenTo("search")}><img src={search} /></button>
-                <button onClick={() => props.changeScreenTo("markdown")}><img src={markdown} /></button>
+                {/* <button onClick={() => props.changeScreenTo("markdown")}><img src={markdown} /></button> */}
                 <button onClick={() => props.changeScreenTo("public")}><img src={globe} /></button>
             </div>
 
             <div class="task-bar-buttons">
                 <button onClick={() => props.changeScreenTo("pdf-export")}><img src={output} /></button>
                 <button onClick={() => props.changeScreenTo("delete")}><img src={bin} /></button>
+                <button onClick={() => props.changeScreenTo("settings")}><img src={settings}/></button>
             </div>
         </div>
     );

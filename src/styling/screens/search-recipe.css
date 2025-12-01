@@ -38,8 +38,11 @@
 .search-options-pane{
     display: flex;
     flex-direction: column;
-    border-left: 2px solid black;
+    border-left: 0.25px solid lightgrey;
     overflow-y: auto;
+    background-color: white;
+    flex: 0 0 25%;
+    box-shadow: -6px 0 20px rgba(0, 0, 0, 0.25);
 }
 
 .search-bar-row{
@@ -56,6 +59,7 @@
     width: 100%;
     height: 50px;
     padding-left: 40px;
+    padding-right: 40px;
     font-size: 1.4rem;
     letter-spacing: 3px;
     text-align: center;
@@ -74,6 +78,89 @@
     pointer-events: none;
 }
 
-.submit button{
-    background-color: black;
+.clear-btn {
+    position: absolute;
+    top: 15px;
+    right: 5px;
+    background: none;
+    border: none;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 15px;
+    cursor: pointer;
+    opacity: 0.3;
+    object-fit: contain;
+    transition: opacity 0.2s ease;
+}
+
+.clear-btn:hover{
+    opacity: 0.8;
+}
+
+.collapsible{
+    width: 100%;
+    display: block;
+}
+
+.collapsible .sort, .collapsible .filter{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    height: 2rem;
+    font-size: 1.2rem;
+    letter-spacing: 4.5px;
+    font-weight: 300;
+    background-color: white;
+    border: 0.5px solid black;
+    padding: 1.2rem 1rem;
+    border-left: 0.2px solid black;
+}
+
+.collapsible .sort:hover, .collapsible .filter:hover{
+    cursor: pointer;
+}
+
+.collapsible .sort-options, .collapsible .search-filters{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.collapsible .sort-options{
+    padding: 1.3rem;
+
+}
+
+.sort-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    letter-spacing: 1.25px;
+    font-size: 1rem;
+    font-weight: 200;
+}
+
+.filters{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 90%;
+    margin-top: 1rem;
+}
+
+.filters label{
+    font-weight: 100;
+    letter-spacing: 2px;
+}
+
+.filters input{
+    width: 100%;
+    font-size: 1rem;
+    height: 40px;
+}
+
+.filter-option{
+    margin-bottom: 8%;
 }
