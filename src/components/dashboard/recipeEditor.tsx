@@ -50,16 +50,18 @@ function selectUnits() {
     }
 }
 
-export default function RecipeEditor(props: { recipe?: any }) {
+export default function RecipeEditor(props: { recipe?: any, onSaveSuccess?: () => void }) {
     const emptyForm = {
         recipe_id: NaN,
         author_id: "",
         recipe_title: "",
         prep_time: 0,
         cook_time: 0,
+        servings: 0,
         ingredients: [{ quantity: "", unit: "", ingredientName: "" }],
         contents: "",
-        image_url: ""
+        image_url: "",
+        is_public: false
     };
 
     const [form, setForm] = createStore(structuredClone(emptyForm));
@@ -80,6 +82,7 @@ export default function RecipeEditor(props: { recipe?: any }) {
                 recipe_title: recipe.recipe_title ?? "",
                 prep_time: Number.isFinite(recipe.prep_time) ? recipe.prep_time : 0,
                 cook_time: Number.isFinite(recipe.cook_time) ? recipe.cook_time : 0,
+                servings: Number.isFinite(recipe.servings) ? recipe.servings : 0,
                 ingredients:
                     recipe.ingredients?.length > 0
                         ? recipe.ingredients.map((ing: any) => ({
@@ -89,7 +92,8 @@ export default function RecipeEditor(props: { recipe?: any }) {
                         }))
                         : structuredClone(emptyForm.ingredients),
                 contents: recipe.contents ?? "",
-                image_url: recipe.image_url ?? ""
+                image_url: recipe.image_url ?? "",
+                is_public: Boolean(recipe.is_public)
             }
             : structuredClone(emptyForm);
 
@@ -157,9 +161,11 @@ export default function RecipeEditor(props: { recipe?: any }) {
             recipe_title: form.recipe_title,
             prep_time: Number.isFinite(form.prep_time) ? form.prep_time : 0,
             cook_time: Number.isFinite(form.cook_time) ? form.cook_time : 0,
+            servings: Number.isFinite(form.servings) ? form.servings : 0,
             ingredients: form.ingredients,
             contents: form.contents,
-            image_url: finalImagePath
+            image_url: finalImagePath,
+            is_public: Boolean(form.is_public)
         };
 
         await fetch("/api/recipes", {
@@ -171,6 +177,7 @@ export default function RecipeEditor(props: { recipe?: any }) {
         setPendingImage(null);
         setPreviewUrl(null);
         markSavedState(cloneRecipeState({ ...form, image_url: finalImagePath }));
+        props.onSaveSuccess?.();
     }
 
 
@@ -182,8 +189,6 @@ export default function RecipeEditor(props: { recipe?: any }) {
                 <ThumbnailSection />
                 <RecipeCardSection />
                 <MarkdownEditorSection />
-
-
                 <button onClick={submitRecipe}>Save Recipe</button>
             </div>
         </div>
@@ -254,7 +259,12 @@ export default function RecipeEditor(props: { recipe?: any }) {
 
                     {/*Publicity Toggle*/}
                     <label class="toggle-cont">
-                        <input type="checkbox"/>
+                        <input
+                            type="checkbox"
+                            checked={form.is_public}
+                            classList={{ "dirty-input": isDirty(["is_public"]) }}
+                            onChange={(e) => setForm("is_public", e.currentTarget.checked)}
+                        />
                         <span class="toggle">
                             <span class="toggle-text private">Private</span>
                             <span class="toggle-text public">Public</span>
@@ -263,7 +273,20 @@ export default function RecipeEditor(props: { recipe?: any }) {
 
                     <div class="serving-size">
                         <label>Servings: </label>
-                        <input id="serving-size" type='text'/>
+                        <input
+                            id="serving-size"
+                            type='text'
+                            value={form.servings}
+                            classList={{ "dirty-input": isDirty(["servings"]) }}
+                            onInput={(e) =>
+                                setForm(
+                                    "servings",
+                                    Number.isNaN(parseInt(e.currentTarget.value))
+                                        ? 0
+                                        : parseInt(e.currentTarget.value)
+                                )
+                            }
+                        />
                     </div>
 
                     <div class="time-fields">

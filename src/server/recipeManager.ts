@@ -6,11 +6,14 @@ interface RecipeHeader {
     recipe_title: string;
     image_url?: string;
     author_username?: string;
+    is_public?: boolean;
+    servings?: number;
 }
 
 interface FullRecipe extends RecipeHeader {
     prep_time: number;
     cook_time: number;
+    servings: number;
     ingredients: { quantity: string, unit: string, ingredientName: string }[];
     contents?: string;
 }
@@ -28,8 +31,10 @@ export class RecipeManager {
             recipe_title: data.recipe_title,
             prep_time: data.prep_time,
             cook_time: data.cook_time,
+            servings: data.servings,
             ingredients: data.ingredients,
             image_url: data.image_url,
+            is_public: Boolean(data.is_public),
             // instructions: data.instructions,
             // notes: data.notes,
         });
@@ -46,9 +51,11 @@ export class RecipeManager {
             recipe_title: data.recipe_title,
             prep_time: data.prep_time,
             cook_time: data.cook_time,
+            servings: data.servings,
             ingredients: data.ingredients,
             contents: data.contents,
             image_url: data.image_url,
+            is_public: Boolean(data.is_public),
         };
 
         const { data: updated, error } = await supabase
@@ -69,7 +76,7 @@ export class RecipeManager {
 
         const { data, error } = await supabase
             .from("recipes_with_username")
-            .select("recipe_id, author_id, recipe_title, image_url, author_username");
+            .select("recipe_id, author_id, recipe_title, image_url, author_username, is_public, servings");
 
         if (error) throw error;
         if (!data) return [];

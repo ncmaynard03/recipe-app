@@ -394,4 +394,56 @@ input:checked + .toggle .public {
   background: #d0f0c0;
 }
 
+/* Browsing sections */
+.browse-section{
+  margin-bottom: 1.5rem;
+}
 
+.browse-section h4{
+  margin: 0 0 0.5rem 0;
+  padding-left: 0.35rem;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  color: #444;
+}
+
+/* Recipe Viewer utility */
+.viewer-pill{
+  display: inline-block;
+  padding: 0.25rem 0.65rem;
+  border: 2px solid black;
+  border-radius: 999px;
+  background: #f4f4f4;
+  min-width: 60px;
+  text-align: center;
+}
+
+.viewer-ingredient-list{
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.viewer-ingredient-list li{
+  background: #f4f4f4;
+  border: 2px solid black;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+}
+
+.viewer-ingredient-list .ing-qty,
+.viewer-ingredient-list .ing-unit{
+  font-weight: 700;
+}
+
+.viewer-ingredient-list .ing-name{
+  font-weight: 400;
+}
+
+.muted{
+  color: #888;
+  margin: 0.5rem 0 0 0;
+}
