@@ -232,7 +232,7 @@ export default function SearchRecipe() {
                 <Collapsible class="collapsible">
                     <Collapsible.Trigger class="sort">
                         <span>Sort By</span>
-                        <img src={Arrow} />
+                        <img class="arrow" src={Arrow} />
                     </Collapsible.Trigger>
                     <Collapsible.Content class="sort-options">
                         <div class="sort-option">
@@ -306,8 +306,8 @@ export default function SearchRecipe() {
                 <Collapsible class="collapsible">
                     <Collapsible.Trigger class="filter">
                         <span>Filters</span>
-                        <img src={Arrow} />
-                    </Collapsible.Trigger>
+                        <img class="arrow" src={Arrow} />
+                    </Collapsible.Trigger >
                     <Collapsible.Content class="search-filters">
                         <div class="filters">
                             <div class="filter-option">
@@ -351,9 +351,9 @@ export default function SearchRecipe() {
                             </div>
                         </div>
                     </Collapsible.Content>
-                </Collapsible>
-            </div>
-        </div>
+                </Collapsible >
+            </div >
+        </div >
     );
 }
 
