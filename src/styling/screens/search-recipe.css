@@ -64,7 +64,7 @@
     padding-left: 40px;
     padding-right: 40px;
     font-size: 1.4rem;
-    letter-spacing: 3px;
+    letter-spacing: 1.6px;
     text-align: center;
     font-weight: 300;
     box-sizing: border-box;
@@ -129,6 +129,14 @@
     flex-direction: column;
     width: 100%;
     box-sizing: border-box;
+}
+
+.sort .arrow, .filter .arrow{
+    transition: transform 0.25s ease;
+}
+
+.sort[data-expanded] .arrow, .filter[data-expanded] .arrow{
+    transform: rotate(180deg);
 }
 
 .collapsible .sort-options{
