@@ -17,6 +17,7 @@ import RecipeSearchbar from "~/components/dashboard/searchbar";
 import RecipeBrowser from "~/components/dashboard/recipebrowser";
 import { setUserId, userId } from "~/stores/user";
 import SearchRecipe from "~/components/screens/SearchRecipe";
+import ExportPDF from "~/components/screens/ExportPDF";
 
 function displayDelay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -182,6 +183,10 @@ function MainArea(props: {
               )}
             </Show>
           </Show>
+        </Match>
+
+        <Match when={props.activeView() === "pdf-export"}>
+          <ExportPDF />
         </Match>
 
         <Match when={props.activeView() === "delete"}>
