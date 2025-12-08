@@ -9,6 +9,7 @@ import "~/styling/recipe-browser.css"
 import "~/styling/recipe-editor.css";
 import "~/styling/taskbar.css"
 
+import Settings from "~/components/screens/Settings";
 import DeleteRecipe from "~/components/screens/DeleteRecipe";
 import TaskBar from "~/components/dashboard/taskbar";
 import RecipeEditor from "~/components/dashboard/recipeEditor";
@@ -195,6 +196,10 @@ function MainArea(props: {
 
         <Match when={props.activeView() === "search"}>
           <SearchRecipe />
+        </Match>
+
+        <Match when={props.activeView() === "settings"}>
+          <Settings />
         </Match>
 
         {/* <Match when={activeView() === "edit"}>
