@@ -10,18 +10,19 @@
     display: flex;
     flex-direction: column;
     border: 2px solid lightgrey;
-    height: 50%; /* adjust as needed */
-    width: 30%; /* optional: fix the width of the pane */
+    height: 50%;
+    width: 30%;
     align-items: center;
-    justify-content: flex-start; /* top-align content */
+    justify-content: flex-start;
     box-sizing: border-box;
-    box-shadow: 2px 8px 20px rgba(0, 0, 0, 0.5); /* soft 3D shadow */
-    border-radius: 12px; /* slightly rounded corners */
-    background-color: white; /* makes shadow visible */
+    box-shadow: 2px 8px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    background-color:	white;
 }
 
 .settings-pane h2 {
-    font-weight: 400;
+    font-size: 2rem;
+    font-weight: 300;
     letter-spacing: 3px;
     margin-bottom: 1rem;
     text-align: center;
@@ -51,12 +52,11 @@
     color: white;
     cursor: pointer;
     padding: 0.5rem 1rem;
-    margin-top: 0.5rem;
     transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .pane-content-cont{
-    margin-top: 6%;
+    margin-top: 15%;
     text-align: center;
 }
 
@@ -64,6 +64,7 @@
     font-size: 1.3rem;
     letter-spacing: 2px;
     font-weight: 400;
+    margin-bottom: 4%;
 }
 
 .save-btn button:hover{
@@ -86,7 +87,7 @@
 }
 
 .save-btn{
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 }
 
 .pane-title-cont{
