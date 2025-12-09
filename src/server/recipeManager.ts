@@ -110,8 +110,14 @@ export class RecipeManager {
         return data;
     }
 
-    async getAllRecipes() {
-        const { data, error } = await supabase.from('recipes_with_username').select('*');
+    async getAllRecipes(authorId?: string) {
+        let query = supabase.from('recipes_with_username').select('*');
+
+        if (authorId) {
+            query = query.eq('author_id', authorId);
+        }
+
+        const { data, error } = await query;
 
         if (error) { throw error; }
         return data || [];

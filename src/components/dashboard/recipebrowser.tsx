@@ -4,9 +4,11 @@ import Plate from "~/assets/food-plate.jpg";
 export default function RecipeBrowser(props: { onSelect: (id: number | null) => void, selected: number | null, userId?: string, savedRecipes?: any[] }) {
 
     const [headers] = createResource(
-        () => typeof window !== "undefined",
-        async () => {
-            const res = await fetch("/api/recipes");
+        () => props.userId,
+        async (uid) => {
+            if (!uid) return [];
+
+            const res = await fetch(`/api/recipes?author_id=${encodeURIComponent(uid)}`);
             return res.json();
         }
     );

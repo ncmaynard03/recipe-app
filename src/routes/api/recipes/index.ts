@@ -2,11 +2,13 @@
 import { json } from "@solidjs/router";
 import { RecipeManager } from "~/server/recipeManager";
 
-export async function GET() {
+export async function GET({ request }: { request: Request }) {
     const rmgr = new RecipeManager();
+    const url = new URL(request.url);
+    const authorId = url.searchParams.get("author_id") || undefined;
 
     try {
-        const recipes = await rmgr.getAllRecipes();
+        const recipes = await rmgr.getAllRecipes(authorId);
         return json(recipes ?? []);
     } catch (err: any) {
         console.error("\n\nAPI: Error fetching recipes:", err);
