@@ -1,0 +1,95 @@
+.settings-page-cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #FAF9F6;
+}
+
+.settings-pane {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid lightgrey;
+    height: 50%;
+    width: 30%;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    box-shadow: 2px 8px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    background-color:	white;
+}
+
+.settings-pane h2 {
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 3px;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: aliceblue;
+}
+
+.settings-pane p {
+    margin: 0.5rem 0 0.2rem 0;
+}
+
+.settings-pane input {
+    text-align: center;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    padding: 0.3rem 0.5rem;
+    width: 80%;
+    box-sizing: border-box;
+    font-weight: 300;
+}
+
+.settings-pane button {
+    border-radius: 40px;
+    font-size: 1.2rem;
+    font-weight: 300;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.pane-content-cont{
+    text-align: center;
+}
+
+.pane-content-cont p{
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    font-weight: 400;
+    margin-bottom: 4%;
+}
+
+.save-btn button:hover{
+    background-color: greenyellow;
+    color: black;
+}
+
+.button-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.delete-acct-btn {
+    margin-top: 20%;
+}
+
+.delete-acct-btn button{
+    background-color: red;
+}
+
+.save-btn{
+    margin-top: 0.5rem;
+}
+
+.pane-title-cont{
+    background-color: black;
+    width: 100%;
+}
