@@ -122,23 +122,20 @@ export async function checkUniqueUsername(username: string) {
 }
 
 export async function updateUsername(newUsername: string) {
-    const userID = await getCurrentUserID();
 
-    if (userID) {
+  const { data: { user }, error: userErr } = await supabase.auth.getUser();
+  if (userErr || !user) throw new Error("User not logged in");
 
-        const uniqueName = await checkUniqueUsername(newUsername);
+  const uid = user.id;
 
-        if (uniqueName) {
-            const { error } = await supabase
-                .from("users")
-                .update({ "username": newUsername })
-                .eq('user_id', userID)
+  const { data, error } = await supabase
+    .from("users")
+    .update({ username: newUsername })
+    .eq("user_id", uid);
 
-            if (error) {
-                console.log("There was an error updating the database");
-                return;
-            }
-        }
-    }
+  if (error) throw error;
+
+  return data;
 }
+
 

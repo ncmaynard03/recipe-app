@@ -23,7 +23,23 @@ export default function Settings() {
                         onInput={(e) => setUsername(e.currentTarget.value)} 
                     />
                     <div class="save-btn">
-                        <button>Save Username</button>
+                        <button
+  onClick={async () => {
+    try {
+      await supabaseFn.updateUsername(username());
+      alert("Username updated!");
+    } catch (err) {
+  if (err instanceof Error) {
+    alert("Failed to update username: " + err.message);
+  } else {
+    alert("Unknown error");
+  }
+}
+  }}
+>
+  Save Username
+</button>
+
                     </div>
                     <div class="delete-acct-btn">
                         <button>Delete Account</button>
