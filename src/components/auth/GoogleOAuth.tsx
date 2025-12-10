@@ -5,12 +5,14 @@ import GoogleBtn from "~/assets/web_dark_sq_ctn@2x.png"
 export function GoogleOAuth() {
 
     const continueWithGoogle = async () => {
-        const { data, error } = await supabase.auth.signInWithOAuth({ provider: 'google' });
+        await supabase.auth.signInWithOAuth({
+            provider: "google"
+        });
+
+
     };
 
     return (
         <img src={GoogleBtn} onClick={continueWithGoogle} />
     );
 }
-
-
