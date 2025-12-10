@@ -1,8 +1,7 @@
 import pencil from "~/assets/dashboard/pencil.png";
 import globe from "~/assets/dashboard/globe.png";
 import search from "~/assets/dashboard/magnifying-glass.png";
-import markdown from "~/assets/dashboard/markdown.png";
-import output from "~/assets/dashboard/output.png";/*export is a reserved word*/
+import output from "~/assets/dashboard/output.png";
 import bin from "~/assets/dashboard/trash-can.png";
 import settings from "~/assets/dashboard/settings.png"
 import type { ActiveView } from "~/types";
@@ -40,7 +39,7 @@ export default function TaskBar(props: TBScreens ) {
                 )}
                 <button onClick={() => props.changeScreenTo("search")}><img src={search} /></button>
                 {/* <button onClick={() => props.changeScreenTo("markdown")}><img src={markdown} /></button> */}
-                <button onClick={() => props.changeScreenTo("public")}><img src={globe} /></button>
+                {/* <button onClick={() => props.changeScreenTo("public")}><img src={globe} /></button> */}
             </div>
 
             <div class="task-bar-buttons">
