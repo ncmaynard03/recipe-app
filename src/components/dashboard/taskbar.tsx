@@ -15,9 +15,11 @@ type TBScreens = {
     currentRecipe: any;
     userId: string;
     savedRecipes: any[];
+    onToggleBrowser: () => void;
+    browserOpen: boolean;
 };
 
-export default function TaskBar(props: TBScreens ) {
+export default function TaskBar(props: TBScreens) {
     const canEdit = props.currentRecipe && props.userId && props.currentRecipe.author_id === props.userId;
     const recipeId = props.currentRecipe?.recipe_id;
     const isSaved = recipeId ? props.savedRecipes.some((r: any) => Number(r.recipe_id) === Number(recipeId)) : false;
@@ -27,6 +29,7 @@ export default function TaskBar(props: TBScreens ) {
     return (
         <div class="task-bar">
             <div class="task-bar-buttons">
+
                 <button onClick={props.onNewRecipe}>NEW</button>
                 {showStar ? (
                     <button
@@ -46,7 +49,14 @@ export default function TaskBar(props: TBScreens ) {
             <div class="task-bar-buttons">
                 <button onClick={() => props.changeScreenTo("pdf-export")}><img src={output} /></button>
                 <button onClick={() => props.changeScreenTo("delete")}><img src={bin} /></button>
-                <button onClick={() => props.changeScreenTo("settings")}><img src={settings}/></button>
+                <button onClick={() => props.changeScreenTo("settings")}><img src={settings} /></button>
+                <button
+                    class="browser-toggle"
+                    onClick={props.onToggleBrowser}
+                    aria-pressed={props.browserOpen}
+                >
+                    Ξ
+                </button>
             </div>
         </div>
     );

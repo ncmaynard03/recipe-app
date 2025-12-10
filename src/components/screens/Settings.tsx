@@ -28,6 +28,8 @@ export default function Settings() {
     try {
       await supabaseFn.updateUsername(username());
       alert("Username updated!");
+      // Refresh so settings are reflected everywhere.
+      window.location.reload();
     } catch (err) {
   if (err instanceof Error) {
     alert("Failed to update username: " + err.message);

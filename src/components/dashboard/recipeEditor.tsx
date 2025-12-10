@@ -179,6 +179,8 @@ export default function RecipeEditor(props: { recipe?: any, onSaveSuccess?: () =
         setPreviewUrl(null);
         markSavedState(cloneRecipeState(saved ?? { ...form, image_url: finalImagePath, recipe_id: form.recipe_id }));
         props.onSaveSuccess?.();
+        // Reload to reflect newly saved or created recipe across the app.
+        window.location.reload();
     }
 
 
@@ -433,6 +435,10 @@ export default function RecipeEditor(props: { recipe?: any, onSaveSuccess?: () =
             return pos >= range.start && pos <= range.end;
         }
 
+        function escapeRegExp(str: string) {
+            return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        }
+
         function findActiveTagRanges(text: string, selection: TextRange): TextRange[] {
             const pairs = findTagPairs(text);
             let best: TagMatch | null = null;
@@ -590,6 +596,47 @@ export default function RecipeEditor(props: { recipe?: any, onSaveSuccess?: () =
             });
         }
 
+        function toggleLinePrefix(prefix: string) {
+            const el = contentsInputRef;
+            if (!el) return;
+
+            const value = el.value;
+            const selectionStart = el.selectionStart ?? 0;
+            const selectionEnd = el.selectionEnd ?? selectionStart;
+
+            const lineStart = value.lastIndexOf("\n", Math.max(0, selectionStart - 1)) + 1;
+            const lineEndIndex = value.indexOf("\n", selectionEnd);
+            const lineEnd = lineEndIndex === -1 ? value.length : lineEndIndex;
+
+            const block = value.slice(lineStart, lineEnd);
+            const lines = block.split("\n");
+            const prefixPattern = new RegExp(`^(\\s*)${escapeRegExp(prefix)}`);
+            const allHavePrefix = lines.every((line) => prefixPattern.test(line));
+
+            const nextLines = lines.map((line) => {
+                if (allHavePrefix) {
+                    return line.replace(prefixPattern, "$1");
+                }
+                const trimmed = line.trimStart();
+                const leadingSpaces = line.slice(0, line.length - trimmed.length);
+                return `${leadingSpaces}${prefix}${trimmed}`;
+            });
+
+            const nextBlock = nextLines.join("\n");
+            const nextValue = value.slice(0, lineStart) + nextBlock + value.slice(lineEnd);
+
+            const newSelectionStart = lineStart;
+            const newSelectionEnd = lineStart + nextBlock.length;
+
+            setForm("contents", nextValue);
+
+            queueMicrotask(() => {
+                el.focus();
+                el.setSelectionRange(newSelectionStart, newSelectionEnd);
+                recomputeTagHighlights();
+            });
+        }
+
         createEffect(() => {
             form.contents;
             queueMicrotask(recomputeTagHighlights);
@@ -683,16 +730,22 @@ export default function RecipeEditor(props: { recipe?: any, onSaveSuccess?: () =
                                         placeholder="Write your recipe here using markdown..."
                                     />
                                 </div>
-                                <Show when={viewMode() === "split"}>
+                                <Show when={viewMode() !== "preview"}>
                                     <div class="md-toolbar">
+                                        <button type="button" onClick={() => toggleLinePrefix("# ")}>
+                                            Title
+                                        </button>
+                                        <button type="button" onClick={() => toggleLinePrefix("## ")}>
+                                            Subtitle
+                                        </button>
+                                        <button type="button" onClick={() => toggleLinePrefix("- ")}>
+                                            List Item
+                                        </button>
                                         <button type="button" onClick={() => toggleWrap("**", "**", { trimEdges: true })}>
                                             Bold
                                         </button>
                                         <button type="button" onClick={() => toggleWrap("_", "_", { trimEdges: true })}>
                                             Italic
-                                        </button>
-                                        <button type="button" onClick={() => toggleWrap("- ", "")}>
-                                            Bullet
                                         </button>
                                         <button type="button" onClick={() => toggleWrap("[", "](url)")}>
                                             Link

@@ -21,7 +21,7 @@
 .task-bar button {
     background: white;
     border: 2px solid black;
-    padding: 0.45rem;
+    padding: 0.45rem 0.65rem;
     border-radius: 8px;
     cursor: pointer;
     transition: background 0.15s ease, transform 0.1s ease;
@@ -42,4 +42,28 @@
     width: 22px;
     height: 22px;
     filter: brightness(0);
+}
+
+.browser-toggle {
+    font-family: "Caprasimo", sans-serif;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 900px) {
+    .task-bar {
+        flex-direction: column;
+        gap: 0.5rem;
+        position: sticky;
+        top: 0;
+    }
+
+    .task-bar-buttons {
+        flex-wrap: wrap;
+    }
+
+    .browser-toggle {
+        flex: 1;
+        width: 100%;
+        text-align: center;
+    }
 }

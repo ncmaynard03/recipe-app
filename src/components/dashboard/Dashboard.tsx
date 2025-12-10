@@ -1,4 +1,4 @@
-import { onMount, createSignal, Switch, Match, Show, createResource, createEffect } from "solid-js";
+import { onMount, createSignal, Switch, Match, Show, createResource, createEffect, onCleanup } from "solid-js";
 import { supabase } from "~/supabase/supabase-client";
 import * as supabaseFn from "~/supabase/supabase-queries";
 import type { ActiveView } from "~/types";
@@ -27,8 +27,31 @@ export default function Dashboard() {
   const [currentRecipe, setCurrentRecipe] = createSignal<any>(null);
   const [savedRecipes, setSavedRecipes] = createSignal<any[]>([]);
   const [activeView, setActiveView] = createSignal<ActiveView>("add");
+  const initialIsMobile = typeof window !== "undefined" ? window.innerWidth <= 900 : false;
+  const [isBrowserOpen, setIsBrowserOpen] = createSignal(!initialIsMobile);
+  const [isMobile, setIsMobile] = createSignal(initialIsMobile);
+
+  let viewportInitialized = false;
+
+  const syncViewportState = () => {
+    const mobile = window.innerWidth <= 900;
+    setIsMobile(mobile);
+
+    if (!viewportInitialized) {
+      setIsBrowserOpen(!mobile);
+      viewportInitialized = true;
+      return;
+    }
+
+    if (!mobile) {
+      setIsBrowserOpen(true);
+    }
+  };
 
   onMount(async () => {
+    syncViewportState();
+    window.addEventListener("resize", syncViewportState);
+
     await supabaseFn.ensureUserExists();
 
     const { data: { user } } = await supabase.auth.getUser();
@@ -37,6 +60,10 @@ export default function Dashboard() {
       setUserId(user.id);
       await loadSavedRecipes(user.id);
     }
+  });
+
+  onCleanup(() => {
+    window.removeEventListener("resize", syncViewportState);
   });
 
   const handleSelectRecipe = (id: number | null) => {
@@ -79,8 +106,16 @@ export default function Dashboard() {
     }
   };
 
+  const toggleBrowser = () => setIsBrowserOpen((open) => !open);
+
+  const dashboardClasses = () => [
+    "dashboard",
+    isBrowserOpen() ? "browser-open" : "browser-closed",
+    isMobile() ? "is-mobile" : "",
+  ].join(" ");
+
   return (
-    <main class="dashboard">
+    <main class={dashboardClasses()}>
       <div class="dashboard-main-region">
         <TaskBar
           changeScreenTo={setActiveView}
@@ -90,6 +125,8 @@ export default function Dashboard() {
           userId={userId()}
           onToggleSave={handleToggleSave}
           savedRecipes={savedRecipes()}
+          onToggleBrowser={toggleBrowser}
+          browserOpen={isBrowserOpen()}
         />
         <MainArea
           selectedRecipeId={selectedRecipeId}
@@ -109,6 +146,10 @@ export default function Dashboard() {
         />
 
       </div>
+
+      <Show when={isMobile() && isBrowserOpen()}>
+        <div class="dashboard-overlay" onClick={toggleBrowser} />
+      </Show>
     </main>
   );
 }
