@@ -10,22 +10,18 @@
   background: white;
 }
 
-.recipe-viewer.expanded {
-  justify-content: flex-start;
-  padding: 2rem 3rem;
-}
-
 .recipe-content {
-  width: 650px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1.75rem;
   color: black;
 }
 
-.recipe-viewer.expanded .recipe-content {
-  width: 100%;
-  max-width: none;
+/* Keep most sections at the original width */
+.recipe-content > :not(.recipe-text) {
+  width: min(650px, 100%);
+  margin: 0 auto;
 }
 
 #form-title {
@@ -260,14 +256,21 @@ input:checked + .toggle .public {
 
 /* Recipe Text */
 .recipe-text-textarea {
+  --md-editor-pad: 0.75rem;
   width: 100%;
   min-height: 200px;
-  background: #f4f4f4;
+  background: transparent;
   border: 2px solid black;
-  padding: 0.75rem;
+  padding: var(--md-editor-pad);
   border-radius: 6px;
   resize: vertical;
   color: black;
+  position: relative;
+  z-index: 2;
+  font: inherit;
+  line-height: 1.5;
+  letter-spacing: inherit;
+  tab-size: 4;
 }
 
 /* Save Button */
@@ -332,6 +335,53 @@ input:checked + .toggle .public {
   resize: vertical;
   overflow: auto;
   outline-offset: -2px;
+  background: transparent;
+}
+
+.md-textarea-stack {
+  position: relative;
+  width: 100%;
+  background: #f4f4f4;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.md-highlights {
+  position: absolute;
+  inset: 0;
+  padding: var(--md-editor-pad, 0.75rem);
+  pointer-events: none;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font: inherit;
+  line-height: 1.5;
+  letter-spacing: inherit;
+  tab-size: 4;
+  overflow: hidden;
+  border-radius: 6px;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.md-highlights,
+.md-highlights mark,
+.md-highlights * {
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+  text-shadow: none !important;
+}
+
+.md-highlights-content {
+  min-height: 100%;
+  will-change: transform;
+}
+
+.md-tag-highlight {
+  background: rgba(255, 215, 64, 0.35);
+  border-radius: 3px;
+  padding: 0 1px;
 }
 
 .md-preview {
@@ -339,6 +389,40 @@ input:checked + .toggle .public {
   min-height: 240px;
   overflow: auto;
   font-family: "Caprasimo", sans-serif;
+}
+
+.md-input-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.md-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  background: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 0.6rem;
+  box-shadow: var(--shadow);
+  justify-content: center;
+}
+
+.md-toolbar button {
+  background: white;
+  border: 2px solid black;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "Caprasimo", sans-serif;
+  letter-spacing: 1px;
+  box-shadow: var(--shadow);
+}
+
+.md-toolbar button:hover {
+  background: #e5e5e5;
 }
 
 .md-header-row {
@@ -352,21 +436,6 @@ input:checked + .toggle .public {
   margin: 0;
   font-size: 1rem;
   letter-spacing: 2px;
-}
-
-.md-toggle-btn {
-  background: white;
-  border: 2px solid black;
-  padding: 0.35rem 0.85rem;
-  border-radius: 8px;
-  cursor: pointer;
-  letter-spacing: 1px;
-  box-shadow: var(--shadow);
-  font-family: "Caprasimo", sans-serif;
-}
-
-.md-toggle-btn:hover {
-  background: #e5e5e5;
 }
 
 .md-controls {
@@ -392,6 +461,16 @@ input:checked + .toggle .public {
 
 .md-mode-toggle button.active {
   background: #d0f0c0;
+}
+
+/* Markdown width handling */
+.recipe-text {
+  width: min(650px, 100%);
+  margin: 0 auto;
+}
+
+.recipe-text.md-wide {
+  width: min(1100px, calc(100vw - 4rem));
 }
 
 /* Browsing sections */

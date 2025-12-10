@@ -1,5 +1,5 @@
 import { createStore } from "solid-js/store";
-import { createEffect, createMemo, createSignal, Show } from "solid-js";
+import { createEffect, createMemo, createSignal, For, Show } from "solid-js";
 import { supabase } from "~/supabase/supabase-client";
 import MarkdownIt from "markdown-it";
 import "~/styling/recipe-editor.css";
@@ -69,7 +69,6 @@ export default function RecipeEditor(props: { recipe?: any, onSaveSuccess?: () =
 
     const [pendingImage, setPendingImage] = createSignal<File | null>(null);
     const [previewUrl, setPreviewUrl] = createSignal<string | null>(null);
-    const [editorExpanded, setEditorExpanded] = createSignal(false);
     const [viewMode, setViewMode] = createSignal<"plain" | "preview" | "split">("split");
 
     let fileInputRef: HTMLInputElement | undefined;
@@ -136,8 +135,6 @@ export default function RecipeEditor(props: { recipe?: any, onSaveSuccess?: () =
         }
     }
 
-    const previewHtml = createMemo(() => md.render(form.contents || ""));
-
     async function submitRecipe(e: Event) {
         e.preventDefault();
 
@@ -181,18 +178,6 @@ export default function RecipeEditor(props: { recipe?: any, onSaveSuccess?: () =
     }
 
 
-
-    return (
-        <div class="recipe-viewer" classList={{ expanded: editorExpanded() }}>
-            <div class="recipe-content">
-                <TitleSection />
-                <ThumbnailSection />
-                <RecipeCardSection />
-                <MarkdownEditorSection />
-                <button onClick={submitRecipe}>Save Recipe</button>
-            </div>
-        </div>
-    );
 
     function TitleSection() {
         return (
@@ -389,8 +374,228 @@ export default function RecipeEditor(props: { recipe?: any, onSaveSuccess?: () =
     }
 
     function MarkdownEditorSection() {
+        const [tagHighlights, setTagHighlights] = createSignal<{ start: number; end: number }[]>([]);
+        const [highlightScroll, setHighlightScroll] = createSignal({ top: 0, left: 0 });
+        const previewHtml = createMemo(() => md.render(form.contents || ""));
+
+        type TextRange = { start: number; end: number };
+        type TagMatch = { startTag: TextRange; endTag: TextRange; body: TextRange };
+
+        let contentsInputRef: HTMLTextAreaElement | undefined;
+
+        function clampSelectionRange(text: string, start?: number | null, end?: number | null): TextRange {
+            const len = text.length;
+            const safeStart = Math.max(0, Math.min(start ?? 0, len));
+            const safeEnd = Math.max(0, Math.min(end ?? safeStart, len));
+            return safeStart <= safeEnd
+                ? { start: safeStart, end: safeEnd }
+                : { start: safeEnd, end: safeStart };
+        }
+
+        function findTagPairs(text: string): TagMatch[] {
+            const matches: TagMatch[] = [];
+            for (const m of text.matchAll(/\*\*([\s\S]*?)\*\*/g)) {
+                const start = m.index ?? 0;
+                const fullLen = m[0].length;
+                const openEnd = start + 2;
+                const closeStart = start + fullLen - 2;
+                matches.push({
+                    startTag: { start, end: openEnd },
+                    endTag: { start: closeStart, end: closeStart + 2 },
+                    body: { start: openEnd, end: closeStart }
+                });
+            }
+
+            for (const m of text.matchAll(/(?<![\w])_([\s\S]*?)_(?![\w])/g)) {
+                const start = m.index ?? 0;
+                const fullLen = m[0].length;
+                const openEnd = start + 1;
+                const closeStart = start + fullLen - 1;
+                matches.push({
+                    startTag: { start, end: openEnd },
+                    endTag: { start: closeStart, end: closeStart + 1 },
+                    body: { start: openEnd, end: closeStart }
+                });
+            }
+
+            return matches;
+        }
+
+        function rangesOverlap(a: TextRange, b: TextRange) {
+            return a.start < b.end && a.end > b.start;
+        }
+
+        function containsInclusive(range: TextRange, pos: number) {
+            return pos >= range.start && pos <= range.end;
+        }
+
+        function findActiveTagRanges(text: string, selection: TextRange): TextRange[] {
+            const pairs = findTagPairs(text);
+            let best: TagMatch | null = null;
+
+            for (const pair of pairs) {
+                const touchesTags = rangesOverlap(selection, pair.startTag) || rangesOverlap(selection, pair.endTag);
+                const selectionInsideBody =
+                    selection.start !== selection.end && rangesOverlap(selection, pair.body);
+                const cursorInsideBody =
+                    selection.start === selection.end && containsInclusive(pair.body, selection.start);
+                const cursorNextToTag =
+                    selection.start === selection.end &&
+                    (selection.start === pair.startTag.start ||
+                        selection.start === pair.startTag.end ||
+                        selection.start === pair.endTag.start ||
+                        selection.start === pair.endTag.end);
+
+                if (touchesTags || selectionInsideBody || cursorInsideBody || cursorNextToTag) {
+                    if (!best || pair.body.end - pair.body.start < best.body.end - best.body.start) {
+                        best = pair;
+                    }
+                }
+            }
+
+            return best ? [best.startTag, best.endTag] : [];
+        }
+
+        function recomputeTagHighlights() {
+            const el = contentsInputRef;
+            const text = form.contents || "";
+            if (!el) {
+                setTagHighlights([]);
+                return;
+            }
+
+            const selection = clampSelectionRange(text, el.selectionStart, el.selectionEnd);
+            setTagHighlights(findActiveTagRanges(text, selection));
+        }
+
+        const highlightSegments = createMemo(() => {
+            const text = form.contents || "";
+            const ranges = [...tagHighlights()]
+                .map((r) => ({
+                    start: Math.max(0, Math.min(r.start, text.length)),
+                    end: Math.max(0, Math.min(r.end, text.length))
+                }))
+                .filter((r) => r.end > r.start)
+                .sort((a, b) => a.start - b.start);
+
+            const segments: { text: string; highlight: boolean }[] = [];
+            let cursor = 0;
+
+            for (const range of ranges) {
+                if (range.start > cursor) {
+                    segments.push({ text: text.slice(cursor, range.start), highlight: false });
+                }
+                segments.push({ text: text.slice(range.start, range.end), highlight: true });
+                cursor = range.end;
+            }
+
+            if (cursor < text.length) {
+                segments.push({ text: text.slice(cursor), highlight: false });
+            }
+
+            if (segments.length === 0) {
+                segments.push({ text: text || " ", highlight: false });
+            }
+
+            return segments;
+        });
+
+        function syncHighlightScroll() {
+            if (!contentsInputRef) return;
+            setHighlightScroll({
+                top: contentsInputRef.scrollTop,
+                left: contentsInputRef.scrollLeft
+            });
+        }
+
+        function toggleWrap(prefix: string, suffix = prefix, opts: { trimEdges?: boolean } = {}) {
+            const el = contentsInputRef;
+            if (!el) return;
+
+            const { selectionStart, selectionEnd, value } = el;
+            if (selectionStart === null || selectionEnd === null) return;
+            if (selectionStart === selectionEnd) return; // do nothing without a selection
+
+            let selStart = selectionStart;
+            let selEnd = selectionEnd;
+
+            if (opts.trimEdges) {
+                while (selStart < selEnd && /\s/.test(value[selStart])) selStart++;
+                while (selEnd > selStart && /\s/.test(value[selEnd - 1])) selEnd--;
+            }
+
+            if (selStart === selEnd) return; // selection was only whitespace
+
+            const selected = value.slice(selStart, selEnd);
+            const before = value.slice(0, selStart);
+            const after = value.slice(selEnd);
+
+            const adjacentWrapped =
+                selStart >= prefix.length &&
+                selEnd + suffix.length <= value.length &&
+                value.slice(selStart - prefix.length, selStart) === prefix &&
+                value.slice(selEnd, selEnd + suffix.length) === suffix;
+
+            const enclosingWrapped = (() => {
+                const open = value.lastIndexOf(prefix, Math.max(0, selStart - prefix.length));
+                if (open < 0) return null;
+                const close = value.indexOf(suffix, Math.max(selEnd, open + prefix.length));
+                if (close < 0) return null;
+                if (open <= selStart && close >= selEnd) {
+                    return { open, close };
+                }
+                return null;
+            })();
+
+            const innerWrapped =
+                selected.startsWith(prefix) &&
+                selected.endsWith(suffix) &&
+                selected.length >= prefix.length + suffix.length;
+
+            let nextValue = value;
+            let nextStart = selectionStart;
+            let nextEnd = selectionEnd;
+
+            if (adjacentWrapped || enclosingWrapped) {
+                // Remove wrapper that surrounds the selection (adjacent or enclosing)
+                const wrapStart = adjacentWrapped ? selStart - prefix.length : enclosingWrapped!.open;
+                const wrapEnd = adjacentWrapped ? selEnd + suffix.length : enclosingWrapped!.close + suffix.length;
+                nextValue = value.slice(0, wrapStart) + value.slice(wrapStart + prefix.length, wrapEnd - suffix.length) + value.slice(wrapEnd);
+                const offset = prefix.length;
+                nextStart = selectionStart - offset;
+                nextEnd = selectionEnd - offset;
+            } else if (innerWrapped) {
+                // Remove wrapper included in selection
+                const inner = selected.slice(prefix.length, selected.length - suffix.length);
+                nextValue = before + inner + after;
+                nextStart = selStart;
+                nextEnd = selStart + inner.length;
+            } else {
+                // Add wrapper
+                nextValue = before + prefix + selected + suffix + after;
+                nextStart = selStart + prefix.length;
+                nextEnd = nextStart + selected.length;
+            }
+
+            setForm("contents", nextValue);
+
+            queueMicrotask(() => {
+                el.focus();
+                el.setSelectionRange(nextStart, nextEnd);
+                recomputeTagHighlights();
+            });
+        }
+
+        createEffect(() => {
+            form.contents;
+            queueMicrotask(recomputeTagHighlights);
+        });
+
         return (
-            <div class="recipe-text">
+            <div
+                class="recipe-text"
+                classList={{ "md-wide": viewMode() === "split" }}
+            >
                 <div class="md-header-row">
                     <p>Markdown Editor</p>
                     <div class="md-controls">
@@ -417,34 +622,80 @@ export default function RecipeEditor(props: { recipe?: any, onSaveSuccess?: () =
                                 Both
                             </button>
                         </div>
-                        <button
-                            type="button"
-                            class="md-toggle-btn"
-                            onClick={() => setEditorExpanded((v) => !v)}
-                        >
-                            {editorExpanded() ? "Normal width" : "Full width"}
-                        </button>
                     </div>
                 </div>
                 <div
                     class="md-editor"
                     classList={{
-                        expanded: editorExpanded(),
                         "mode-plain": viewMode() === "plain",
                         "mode-preview": viewMode() === "preview"
                     }}
                 >
                     <Show when={viewMode() !== "preview"}>
                         <div class="md-input">
-                            <textarea
-                                id="contents"
-                                name="contents"
-                                class="recipe-text-textarea"
-                                classList={{ "dirty-input": isDirty(["contents"]) }}
-                                value={form.contents}
-                                onInput={(e) => setForm("contents", e.currentTarget.value)}
-                                placeholder="Write your recipe here using markdown..."
-                            />
+                            <div class="md-input-row">
+                                <div class="md-textarea-stack">
+                                    <div class="md-highlights" aria-hidden="true">
+                                        <div
+                                            class="md-highlights-content"
+                                            style={{
+                                                transform: `translate(${-highlightScroll().left}px, ${-highlightScroll().top}px)`
+                                            }}
+                                        >
+                                            <For each={highlightSegments()}>
+                                                {(segment) =>
+                                                    segment.highlight ? (
+                                                        <mark class="md-tag-highlight">
+                                                            {segment.text || "\u00A0"}
+                                                        </mark>
+                                                    ) : (
+                                                        segment.text || "\u00A0"
+                                                    )
+                                                }
+                                            </For>
+                                        </div>
+                                    </div>
+                                    <textarea
+                                        id="contents"
+                                        name="contents"
+                                        ref={(el) => {
+                                            contentsInputRef = el;
+                                            queueMicrotask(() => {
+                                                syncHighlightScroll();
+                                                recomputeTagHighlights();
+                                            });
+                                        }}
+                                        class="recipe-text-textarea"
+                                        classList={{ "dirty-input": isDirty(["contents"]) }}
+                                        value={form.contents}
+                                        onInput={(e) => {
+                                            setForm("contents", e.currentTarget.value);
+                                            queueMicrotask(recomputeTagHighlights);
+                                        }}
+                                        onSelect={recomputeTagHighlights}
+                                        onKeyUp={recomputeTagHighlights}
+                                        onClick={recomputeTagHighlights}
+                                        onScroll={syncHighlightScroll}
+                                        placeholder="Write your recipe here using markdown..."
+                                    />
+                                </div>
+                                <Show when={viewMode() === "split"}>
+                                    <div class="md-toolbar">
+                                        <button type="button" onClick={() => toggleWrap("**", "**", { trimEdges: true })}>
+                                            Bold
+                                        </button>
+                                        <button type="button" onClick={() => toggleWrap("_", "_", { trimEdges: true })}>
+                                            Italic
+                                        </button>
+                                        <button type="button" onClick={() => toggleWrap("- ", "")}>
+                                            Bullet
+                                        </button>
+                                        <button type="button" onClick={() => toggleWrap("[", "](url)")}>
+                                            Link
+                                        </button>
+                                    </div>
+                                </Show>
+                            </div>
                         </div>
                     </Show>
                     <Show when={viewMode() !== "plain"}>
@@ -454,4 +705,16 @@ export default function RecipeEditor(props: { recipe?: any, onSaveSuccess?: () =
             </div>
         );
     }
+
+    return (
+        <div class="recipe-viewer">
+            <div class="recipe-content">
+                <TitleSection />
+                <ThumbnailSection />
+                <RecipeCardSection />
+                <MarkdownEditorSection />
+                <button onClick={submitRecipe}>Save Recipe</button>
+            </div>
+        </div>
+    );
 }
