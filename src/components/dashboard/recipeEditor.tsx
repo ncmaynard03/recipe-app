@@ -1,6 +1,7 @@
 import { createStore } from "solid-js/store";
 import { createEffect, createMemo, createSignal, For, Show } from "solid-js";
 import { supabase } from "~/supabase/supabase-client";
+import { saveRecipe } from "~/supabase/recipe-client";
 import MarkdownIt from "markdown-it";
 import "~/styling/recipe-editor.css";
 
@@ -154,7 +155,6 @@ export default function RecipeEditor(props: { recipe?: any, onSaveSuccess?: () =
         }
 
         const send = {
-            recipe_id: form.recipe_id,
             recipe_title: form.recipe_title,
             prep_time: Number.isFinite(form.prep_time) ? form.prep_time : 0,
             cook_time: Number.isFinite(form.cook_time) ? form.cook_time : 0,
@@ -165,15 +165,19 @@ export default function RecipeEditor(props: { recipe?: any, onSaveSuccess?: () =
             is_public: Boolean(form.is_public)
         };
 
-        await fetch("/api/recipes", {
-            method: "POST",
-            body: JSON.stringify(send),
-            headers: { "Content-Type": "application/json" }
+        const saved = await saveRecipe({
+            ...send,
+            recipe_id: Number.isFinite(form.recipe_id) ? Number(form.recipe_id) : undefined,
+            author_id: form.author_id
         });
+
+        if (saved?.recipe_id && saved.recipe_id !== form.recipe_id) {
+            setForm("recipe_id", saved.recipe_id);
+        }
 
         setPendingImage(null);
         setPreviewUrl(null);
-        markSavedState(cloneRecipeState({ ...form, image_url: finalImagePath }));
+        markSavedState(cloneRecipeState(saved ?? { ...form, image_url: finalImagePath, recipe_id: form.recipe_id }));
         props.onSaveSuccess?.();
     }
 

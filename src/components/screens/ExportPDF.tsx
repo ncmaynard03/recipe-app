@@ -1,5 +1,6 @@
 import { createSignal, For, Show, createResource, Suspense, createMemo, onMount } from "solid-js";
 import { supabase } from "~/supabase/supabase-client";
+import { fetchRecipesWithUser, getPublicThumbnailUrl } from "~/supabase/recipe-client";
 import "~/styling/screens/export-screen.css"
 import Plate from "~/assets/food-plate.jpg";
 
@@ -12,13 +13,10 @@ export default function ExportPDF() {
         setUserId(user?.id || null);
     });
 
-    const [headers] = createResource(
-        () => typeof window !== "undefined",
-        async () => {
-            const res = await fetch("/api/recipes");
-            return res.json();
-        }
-    );
+    const [headers] = createResource(() => userId(), async (uid) => {
+        if (!uid) return [];
+        return fetchRecipesWithUser(uid);
+    });
 
     const userHeaders = createMemo(() => {
         if (!userId()) return [];
@@ -68,7 +66,7 @@ export default function ExportPDF() {
                                         }}
                                         onClick={() => selectRecipes(recipeID)}
                                     >
-                                        <img src={r.image_url ? `/api/public-thumbnail?path=${encodeURIComponent(r.image_url)}` : Plate} alt="Recipe preview" />
+                                        <img src={getPublicThumbnailUrl(r.image_url) || Plate} alt="Recipe preview" />
                                         <h3>{r.recipe_title}</h3>
                                     </div>
                                 )

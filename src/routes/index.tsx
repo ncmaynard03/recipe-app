@@ -4,7 +4,7 @@ import { supabase } from "~/supabase/supabase-client";
 import type { Session } from "@supabase/supabase-js";
 
 // Import your dashboard component
-import Dashboard from "./dashboard";
+import Dashboard from "~/components/dashboard/Dashboard";
 
 export default function IndexPage() {
   const [session, setSession] = createSignal<Session | null>(null);

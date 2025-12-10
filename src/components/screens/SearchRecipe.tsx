@@ -7,6 +7,7 @@ import Plate from "~/assets/food-plate.jpg";
 import "~/styling/screens/search-recipe.css";
 import RecipeViewer from "../dashboard/recipeViewer";
 import { userId } from "~/stores/user";
+import { fetchAllRecipes, fetchRecipeById, fetchSavedRecipes, getPublicThumbnailUrl, toggleSavedRecipe } from "~/supabase/recipe-client";
 
 type SortOption = "title-asc" | "title-desc" | "author-asc" | "author-desc" | "oldest" | "newest";
 
@@ -36,16 +37,24 @@ export default function SearchRecipe() {
         () => (typeof window !== "undefined" ? selectedId() : null),
         async (id) => {
             if (!id) return null;
-            const res = await fetch(`/api/recipes/${id}`);
-            return res.json();
+            try {
+                return await fetchRecipeById(id);
+            } catch (err) {
+                console.error("Failed to load recipe", err);
+                return null;
+            }
         }
     );
 
     const [recipes] = createResource(
         () => typeof window !== "undefined",
         async () => {
-            const res = await fetch("/api/recipes");
-            return res.json();
+            try {
+                return await fetchAllRecipes();
+            } catch (err) {
+                console.error("Failed to load recipes", err);
+                return [];
+            }
         }
     );
 
@@ -93,13 +102,8 @@ export default function SearchRecipe() {
 
     async function fetchSaved(uid: string) {
         try {
-            const res = await fetch(`/api/saved-recipes?user_id=${encodeURIComponent(uid)}`);
-            if (!res.ok) {
-                console.warn("Failed to load saved recipes", await res.text());
-                return;
-            }
-            const data = await res.json();
-            const ids = Array.isArray(data) ? data.map((r: any) => Number(r.recipe_id)).filter(Number.isFinite) : [];
+            const saved = await fetchSavedRecipes(uid);
+            const ids = Array.isArray(saved) ? saved.map((r: any) => Number(r.recipe_id)).filter(Number.isFinite) : [];
             setSavedIds(ids);
         } catch (err) {
             console.error("Failed to load saved recipes", err);
@@ -109,11 +113,7 @@ export default function SearchRecipe() {
     async function toggleSave(recipeId: number, save: boolean) {
         if (!userId()) return;
         try {
-            await fetch("/api/saved-recipes", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ user_id: userId(), recipe_id: recipeId, save })
-            });
+            await toggleSavedRecipe(userId()!, recipeId, save);
             await fetchSaved(userId());
         } catch (err) {
             console.error("Failed to toggle save", err);
@@ -185,7 +185,7 @@ export default function SearchRecipe() {
                                     {(recipe) => (
                                         <div class="search-card" onClick={() => setSelectedId(recipe.recipe_id)}>
                                             <div class="search-card-thumb">
-                                                <img src={recipe.image_url ? `/api/public-thumbnail?path=${encodeURIComponent(recipe.image_url)}` : Plate} alt="Recipe preview" />
+                                                <img src={getPublicThumbnailUrl(recipe.image_url) || Plate} alt="Recipe preview" />
                                                 {(() => {
                                                     const isPublic = recipe.is_public !== false;
                                                     return (

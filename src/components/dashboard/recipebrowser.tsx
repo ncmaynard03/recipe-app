@@ -1,4 +1,5 @@
 import { createMemo, createResource, For, Show } from "solid-js";
+import { fetchRecipesWithUser, getPublicThumbnailUrl } from "~/supabase/recipe-client";
 import Plate from "~/assets/food-plate.jpg";
 
 export default function RecipeBrowser(props: { onSelect: (id: number | null) => void, selected: number | null, userId?: string, savedRecipes?: any[] }) {
@@ -8,8 +9,7 @@ export default function RecipeBrowser(props: { onSelect: (id: number | null) => 
         async (uid) => {
             if (!uid) return [];
 
-            const res = await fetch(`/api/recipes?author_id=${encodeURIComponent(uid)}`);
-            return res.json();
+            return fetchRecipesWithUser(uid);
         }
     );
 
@@ -49,7 +49,7 @@ export default function RecipeBrowser(props: { onSelect: (id: number | null) => 
                                             )
                                         }
                                     >
-                                        <img src={r.image_url ? `/api/public-thumbnail?path=${encodeURIComponent(r.image_url)}` : Plate} alt="Recipe preview" />
+                                        <img src={getPublicThumbnailUrl(r.image_url) || Plate} alt="Recipe preview" />
                                         <div class="browsing-item-text">
                                             <h3>{r.recipe_title}</h3>
                                             {r.author_username && <p>{`Author: ${r.author_username}`}</p>}
@@ -81,7 +81,7 @@ export default function RecipeBrowser(props: { onSelect: (id: number | null) => 
                                             )
                                         }
                                     >
-                                        <img src={r.image_url ? `/api/public-thumbnail?path=${encodeURIComponent(r.image_url)}` : Plate} alt="Recipe preview" />
+                                        <img src={getPublicThumbnailUrl(r.image_url) || Plate} alt="Recipe preview" />
                                         <div class="browsing-item-text">
                                             <h3>{r.recipe_title}</h3>
                                             {r.author_username && <p>{`Author: ${r.author_username}`}</p>}

@@ -25,7 +25,7 @@ export default function SignInPage() {
     // If logged in, redirect to dashboard
     createEffect(() => {
         if (!loading() && session()) {
-            navigate("/dashboard");
+            navigate("/");
         }
     });
 
