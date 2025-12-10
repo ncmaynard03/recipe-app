@@ -1,5 +1,4 @@
 import { Title } from "@solidjs/meta";
-import { HttpStatusCode } from "@solidjs/start";
 import "~/styling/404/404.css";
 
 //Set of random 404 pages to serve
@@ -86,7 +85,6 @@ export default function NotFound() {
       <div class="not-found-container">
         <div class="not-found-content">
           <Title>Not Found</Title>
-          <HttpStatusCode code={404} />
           <Selected404 />
           </div>
       </div>

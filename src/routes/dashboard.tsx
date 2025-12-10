@@ -6,5 +6,3 @@ export default function DashboardRedirect() {
   onMount(() => navigate("/"));
   return null;
 }
-
-export const prerender = true;
